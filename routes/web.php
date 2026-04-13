@@ -21,6 +21,9 @@ Route::middleware('auth')->prefix('/admin')->group(function () {
     Route::post('/menus/{id}/update-position', [App\Http\Controllers\Admin\MenuController::class, 'updatePosition'])->name('menus.updatePosition');
     Route::resource('/espacement-menus', App\Http\Controllers\Admin\EspacementMenuController::class);
     Route::resource('/sidebar-menus', App\Http\Controllers\Admin\SidebarMenuController::class);
+
+    // Gestion des paramètres du site
+    Route::resource('/general-settings', App\Http\Controllers\Admin\GeneralSettingController::class);
     // Deconnexion
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('admin.logout');
 });

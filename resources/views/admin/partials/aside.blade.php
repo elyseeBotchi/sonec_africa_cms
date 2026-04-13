@@ -144,7 +144,7 @@
                 <a href="{{ route('menus.index') }}" class="px-6 py-2 hover:bg-slate-50">
                     Menus de navigation
                 </a>
-                <a href="#"  class="px-6 py-2 hover:bg-slate-50">
+                <a href="{{ route('general-settings.index') }}"  class="px-6 py-2 hover:bg-slate-50 ">
                     Paramètres du site
                 </a>
                 <a href="#"  class="px-6 py-2 hover:bg-slate-50">
