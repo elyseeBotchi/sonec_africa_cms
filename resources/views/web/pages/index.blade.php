@@ -235,35 +235,29 @@
             </div>
         </section>
 
-        <section id="trust-section" class="py-20 bg-gray-50">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-4">Ils nous font confiance</h2>
-                    <p class="text-xl text-gray-600">Des partenaires prestigieux à travers l'Afrique</p>
-                </div>
+        @if(isset(get_accueil_content()['clients']) && get_accueil_content()['clients']->isNotEmpty())
+            <section id="trust-section" class="py-20 bg-gray-50">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-4">Ils nous font confiance</h2>
+                        <p class="text-xl text-gray-600">Des partenaires prestigieux à travers l'Afrique</p>
+                    </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
-                    <div class="bg-white p-6 rounded-lg flex items-center justify-center h-24 grayscale hover:grayscale-0 transition-all">
-                        <div class="text-2xl font-bold text-gray-400">CLIENT 1</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg flex items-center justify-center h-24 grayscale hover:grayscale-0 transition-all">
-                        <div class="text-2xl font-bold text-gray-400">CLIENT 2</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg flex items-center justify-center h-24 grayscale hover:grayscale-0 transition-all">
-                        <div class="text-2xl font-bold text-gray-400">CLIENT 3</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg flex items-center justify-center h-24 grayscale hover:grayscale-0 transition-all">
-                        <div class="text-2xl font-bold text-gray-400">CLIENT 4</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg flex items-center justify-center h-24 grayscale hover:grayscale-0 transition-all">
-                        <div class="text-2xl font-bold text-gray-400">CLIENT 5</div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg flex items-center justify-center h-24 grayscale hover:grayscale-0 transition-all">
-                        <div class="text-2xl font-bold text-gray-400">CLIENT 6</div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center">
+                        @foreach (get_accueil_content()['clients'] as $client)
+                            <div class="bg-white p-6 rounded-lg flex items-center justify-center h-24 grayscale hover:grayscale-0 transition-all">
+                                @if($client->logo_url || $client->logo)
+                                    <img class="h-12 object-contain" src="{{ $client->logo_url ?? asset('storage/'.$client->logo) }}" alt="{{ $client->name }}">    
+                                @else
+                                    <div class="text-2xl font-bold text-gray-400">{{ $client->name }}</div>
+                                @endif
+                            </div>
+                        @endforeach
+                        
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
         <section id="industries-section" class="py-20 bg-white">
             <div class="container mx-auto px-6">
@@ -324,50 +318,31 @@
             </div>
         </section>
 
-        <section id="partners-section" class="py-20 bg-gray-50 overflow-hidden">
-            <div class="container mx-auto px-6 mb-12">
-                <div class="text-center">
-                    <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-4">Nos Partenaires Technologiques</h2>
-                    <p class="text-xl text-gray-600">Des alliances stratégiques avec les leaders mondiaux de la tech</p>
-                </div>
-            </div>
+        @if(isset(get_accueil_content()['partenaires']) && get_accueil_content()['partenaires']->isNotEmpty())
 
-            <div class="relative">
-                <div class="flex gap-12 partner-scroll">
-                    <div class="flex-shrink-0 bg-white px-12 py-8 rounded-lg flex items-center justify-center min-w-[200px]">
-                        <div class="text-3xl font-bold text-gray-300">MICROSOFT</div>
-                    </div>
-                    <div class="flex-shrink-0 bg-white px-12 py-8 rounded-lg flex items-center justify-center min-w-[200px]">
-                        <div class="text-3xl font-bold text-gray-300">AWS</div>
-                    </div>
-                    <div class="flex-shrink-0 bg-white px-12 py-8 rounded-lg flex items-center justify-center min-w-[200px]">
-                        <div class="text-3xl font-bold text-gray-300">ORACLE</div>
-                    </div>
-                    <div class="flex-shrink-0 bg-white px-12 py-8 rounded-lg flex items-center justify-center min-w-[200px]">
-                        <div class="text-3xl font-bold text-gray-300">SAP</div>
-                    </div>
-                    <div class="flex-shrink-0 bg-white px-12 py-8 rounded-lg flex items-center justify-center min-w-[200px]">
-                        <div class="text-3xl font-bold text-gray-300">IBM</div>
-                    </div>
-                    <div class="flex-shrink-0 bg-white px-12 py-8 rounded-lg flex items-center justify-center min-w-[200px]">
-                        <div class="text-3xl font-bold text-gray-300">CISCO</div>
-                    </div>
-                    <div class="flex-shrink-0 bg-white px-12 py-8 rounded-lg flex items-center justify-center min-w-[200px]">
-                        <div class="text-3xl font-bold text-gray-300">MICROSOFT</div>
-                    </div>
-                    <div class="flex-shrink-0 bg-white px-12 py-8 rounded-lg flex items-center justify-center min-w-[200px]">
-                        <div class="text-3xl font-bold text-gray-300">AWS</div>
-                    </div>
-                    <div class="flex-shrink-0 bg-white px-12 py-8 rounded-lg flex items-center justify-center min-w-[200px]">
-                        <div class="text-3xl font-bold text-gray-300">ORACLE</div>
-                    </div>
-                    <div class="flex-shrink-0 bg-white px-12 py-8 rounded-lg flex items-center justify-center min-w-[200px]">
-                        <div class="text-3xl font-bold text-gray-300">SAP</div>
+            <section id="partners-section" class="py-20 bg-gray-50 overflow-hidden">
+                <div class="container mx-auto px-6 mb-12">
+                    <div class="text-center">
+                        <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-4">Nos Partenaires Technologiques</h2>
+                        <p class="text-xl text-gray-600">Des alliances stratégiques avec les leaders mondiaux de la tech</p>
                     </div>
                 </div>
-            </div>
-        </section>
 
+                <div class="relative">
+                    <div class="flex gap-12 partner-scroll">
+                        @foreach (get_accueil_content()['partenaires'] as $partenaire)
+                            <div class="flex-shrink-0 bg-white px-12 py-8 rounded-lg flex items-center justify-center min-w-[200px]">
+                                @if($partenaire->logo_url || $partenaire->logo)
+                                    <img class="h-12 object-contain" src="{{ $partenaire->logo_url ?? asset('storage/'.$partenaire->logo) }}" alt="{{ $partenaire->name }}">
+                                @else
+                                    <div class="text-3xl font-bold text-gray-300">{{ $partenaire->name }}</div>
+                                @endif
+                            </div>                            
+                        @endforeach                        
+                    </div>
+                </div>
+            </section>
+        @endif
         
         <section id="news-section" class="py-20 bg-white">
             <div class="container mx-auto px-6">
@@ -449,70 +424,36 @@
             </div>
         </section>
 
-        <section id="testimonials-section" class="py-20 bg-gray-50">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-4">Ce que disent nos clients</h2>
-                    <p class="text-xl text-gray-600">Des témoignages qui reflètent notre engagement envers l'excellence</p>
-                </div>
-
-                <div class="grid lg:grid-cols-3 gap-8">
-                    <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow">
-                        <div class="flex items-center gap-1 text-sonec-lime mb-4">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="text-gray-700 mb-6 italic">"EcoleWeb a complètement transformé la gestion de notre établissement. L'interface est intuitive et le support client exceptionnel. Nos parents et enseignants sont ravis."</p>
-                        <div class="flex items-center gap-4">
-                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Client" class="w-12 h-12 rounded-full object-cover">
-                            <div>
-                                <div class="font-bold text-sonec-dark">Aminata Diallo</div>
-                                <div class="text-sm text-gray-600">Directrice, Lycée Excellence</div>
-                            </div>
-                        </div>
+        @if(isset(get_accueil_content()['temoignages']) && get_accueil_content()['temoignages']->isNotEmpty())
+            <section id="testimonials-section" class="py-20 bg-gray-50">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-4">Ce que disent nos clients</h2>
+                        <p class="text-xl text-gray-600">Des témoignages qui reflètent notre engagement envers l'excellence</p>
                     </div>
 
-                    <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow">
-                        <div class="flex items-center gap-1 text-sonec-lime mb-4">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="text-gray-700 mb-6 italic">"Grâce à GDEC, nous avons optimisé tous nos processus internes. La productivité a augmenté de 40% et nos coûts opérationnels ont diminué significativement."</p>
-                        <div class="flex items-center gap-4">
-                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Client" class="w-12 h-12 rounded-full object-cover">
-                            <div>
-                                <div class="font-bold text-sonec-dark">Mohamed Konaté</div>
-                                <div class="text-sm text-gray-600">DG, Industries Modernes SA</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow">
-                        <div class="flex items-center gap-1 text-sonec-lime mb-4">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                        <p class="text-gray-700 mb-6 italic">"SonecPay nous a permis de sécuriser nos transactions tout en offrant une expérience fluide à nos clients. Un vrai game-changer pour notre activité e-commerce."</p>
-                        <div class="flex items-center gap-4">
-                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" alt="Client" class="w-12 h-12 rounded-full object-cover">
-                            <div>
-                                <div class="font-bold text-sonec-dark">Fatou Ndiaye</div>
-                                <div class="text-sm text-gray-600">CEO, AfriShop Online</div>
-                            </div>
-                        </div>
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        @foreach (get_accueil_content()['temoignages'] as $temoignage)
+                            <div class="bg-white p-8 rounded-xl shadow-md hover:shadow-xl transition-shadow">
+                                <div class="flex items-center gap-1 text-sonec-lime mb-4">
+                                    @for ($i = 0; $i < 5; $i++)
+                                        <i class="fas fa-star"></i>
+                                    @endfor
+                                </div>
+                                <p class="text-gray-700 mb-6 italic">"{{ $temoignage->message }}"</p>
+                                <div class="flex items-center gap-4">
+                                    <img src="{{ $temoignage->photo_url ?? asset('storage/'.$temoignage->photo) }}" alt="{{ $temoignage->name }}" class="w-12 h-12 rounded-full object-cover">
+                                    <div>
+                                        <div class="font-bold text-sonec-dark">{{ $temoignage->name }}</div>
+                                        <div class="text-sm text-gray-600">{{ $temoignage->position }}</div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        @endforeach                       
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
         @if(isset(get_accueil_content()['accroche']) && get_accueil_content()['accroche'])
             <section id="cta-section" class="py-20 bg-sonec-dark">

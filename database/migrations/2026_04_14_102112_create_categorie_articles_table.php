@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('clients', function (Blueprint $table) {
+        Schema::create('categorie_articles', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('logo_url')->nullable();
-            $table->string('logo')->nullable();
-            $table->string('url')->nullable();
+            $table->string('label')->nullable();
+            $table->string('slug')->nullable();
             $table->string('page_key')->nullable();
             $table->timestamps();
         });
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('categorie_articles');
     }
 };

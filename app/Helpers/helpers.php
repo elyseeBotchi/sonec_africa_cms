@@ -36,7 +36,10 @@ if (!function_exists('get_accueil_content')) {
         $carousels = \App\Models\Carousel::orderBy('created_at', 'desc')->get();
         $services = \App\Models\Service::orderBy('created_at', 'desc')->get();
         $accroche = \App\Models\Accroche::where('page_key', 'accueil')->first();
-        
+        $clients = \App\Models\Client::where('page_key', 'accueil')->orderBy('created_at', 'desc')->get();
+        $temoignages = \App\Models\Temoignage::where('page_key', 'accueil')->orderBy('created_at', 'desc')->get();
+        $partenaires = \App\Models\Partenaire::where('page_key', 'accueil')->orderBy('created_at', 'desc')->get();  
+
         return [
             // 'accueilContent' => $accueilContent,
             'presentationEntreprise' => $presentationEntreprise,
@@ -44,6 +47,9 @@ if (!function_exists('get_accueil_content')) {
             'carousels' => $carousels,
             'services' => $services,
             'accroche' => $accroche,
+            'clients' => $clients,
+            'temoignages' => $temoignages,
+            'partenaires' => $partenaires,
         ];
     }
 }

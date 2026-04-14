@@ -70,6 +70,36 @@ class StoreAccueilContentRequest extends FormRequest
             'about_image_url' => 'nullable|string|max:255',
             'about_cta_label' => 'nullable|string|max:255',
             'about_cta_url' => 'nullable|string|max:255',
+
+            // Partenaires
+            'partenaires' => 'nullable|array',
+            'partenaires.*.id' => 'nullable|exists:partenaires,id',
+            'partenaires.*.name' => 'nullable|string|max:255',
+            'partenaires.*.logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'partenaires.*.logo_url' => 'nullable|string|max:255',
+            'partenaires.*.url' => 'nullable|url|max:255',
+            'partenaires.*.page_key' => 'nullable|string|max:255',
+
+            // Témoignages
+            'temoignages' => 'nullable|array',
+            'temoignages.*.id' => 'nullable|exists:temoignages,id',
+            'temoignages.*.name' => 'nullable|string|max:255',
+            'temoignages.*.position' => 'nullable|string|max:255',
+            'temoignages.*.message' => 'nullable|string',
+            'temoignages.*.photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'temoignages.*.photo_url' => 'nullable|string|max:255',
+            // 'temoignages.*.note' => 'nullable|integer|min:1|max:5',
+            'temoignages.*.page_key' => 'nullable|string|max:255',
+            'temoignages.*.company' => 'nullable|string|max:255',
+
+            // Clients
+            'clients' => 'nullable|array',
+            'clients.*.id' => 'nullable|exists:clients,id',
+            'clients.*.name' => 'nullable|string|max:255',
+            'clients.*.logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'clients.*.logo_url' => 'nullable|string|max:255',
+            'clients.*.url' => 'nullable|url|max:255',
+            'clients.*.page_key' => 'nullable|string|max:255',
         ];
     }
 

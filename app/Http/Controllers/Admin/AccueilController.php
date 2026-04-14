@@ -16,7 +16,14 @@ class AccueilController extends Controller
         $seo = \App\Models\Seo::where('page_key', 'accueil')->first();
         $accroche = \App\Models\Accroche::where('page_key', 'accueil')->first();
         $presentation = \App\Models\PresentationEntreprise::where('page_key', 'accueil')->first();
-        return view('admin.pages.gestion-page-accueil.index', compact('carousels', 'services', 'seo', 'accroche', 'presentation'));
+
+        $temoignages = \App\Models\Temoignage::where('page_key', 'accueil')->orderBy('created_at', 'desc')->get();
+        $clients = \App\Models\Client::where('page_key', 'accueil')->orderBy('created_at', 'desc')->get();
+        $partenaires = \App\Models\Partenaire::where('page_key', 'accueil')->orderBy('created_at', 'desc')->get();  
+
+
+
+        return view('admin.pages.gestion-page-accueil.index', compact('carousels', 'services', 'seo', 'accroche', 'presentation', 'temoignages', 'clients', 'partenaires'));
     }
 
     public function save(StoreAccueilContentRequest $request)
@@ -37,32 +44,7 @@ class AccueilController extends Controller
                 'cta_label' => $validatedData['accroche_cta_label'],
                 'cta_url' => $validatedData['accroche_cta_url'],
             ]
-        );
-
-        // Sauvegarde de la section "À propos"
-        // if ($request->hasFile('about_image')) {
-        //     $imagePath = $request->file('about_image')->store('public/about_images');
-        //     $imageUrl = \Storage::url($imagePath);
-        //     $validatedData['about_image_url'] = $imageUrl;
-        // } else {
-        //     $imageUrl = null;
-        // }
-
-        // \App\Models\PresentationEntreprise::updateOrCreate(
-        //     ['page_key' => 'accueil'],
-        //     [
-        //         'title' => $validatedData['about_title'],
-        //         'subtitle' => $validatedData['about_subtitle'],
-        //         'description' => $validatedData['about_description'],
-        //         'image_url' => $imageUrl,
-        //         'cta_label' => $validatedData['about_cta_label'],
-        //         'cta_url' => $validatedData['about_cta_url'],
-        //         'annees_experience' => $validatedData['about_annees_experience'],
-        //         'clients' => $validatedData['about_clients'],
-        //         'pays' => $validatedData['about_pays'],
-        //         'image' => $validatedData['about_image'],
-        //     ]
-        // );
+        );       
         // Sauvegarde de la section "À propos"
         $imagePath = null;
 
@@ -160,6 +142,92 @@ class AccueilController extends Controller
                 }
             }
         }
+
+        // Sauvegarde des partenaires 
+        if (isset($validatedData['partenaires'])) {
+            foreach ($validatedData['partenaires'] as $index => $partenaireData) {
+                $imageFile = $request->file("partenaires.{$index}.logo");
+                if (isset($partenaireData['id'])) {
+                    $partenaire = \App\Models\Partenaire::find($partenaireData['id']);
+                    if (!$partenaire) continue;
+
+                    if ($imageFile) {
+                        if ($partenaire->logo && \Storage::exists('public/' . $partenaire->logo)) {
+                            \Storage::delete('public/' . $partenaire->logo);
+                        }
+                        $path = $imageFile->store('partenaires', 'public');
+                        $partenaireData['logo'] = $path;
+                    }
+
+                    unset($partenaireData['id']);
+                    $partenaire->update($partenaireData);
+                } else {
+                    if ($imageFile) {
+                        $path = $imageFile->store('partenaires', 'public');
+                        $partenaireData['logo'] = $path;
+                    }
+                    \App\Models\Partenaire::create($partenaireData);
+                }
+            }
+        }
+
+        // Sauvegarde des témoignages  avec gestion des images
+        if (isset($validatedData['temoignages'])) {
+            foreach ($validatedData['temoignages'] as $index => $temoignageData) {
+                $imageFile = $request->file("temoignages.{$index}.logo");
+                if (isset($temoignageData['id'])) {
+                    $temoignage = \App\Models\Temoignage::find($temoignageData['id']);
+                    if (!$temoignage) continue;     
+                    if ($imageFile) {
+                        if ($temoignage->logo && \Storage::exists('public/' . $temoignage->logo)) {
+                            \Storage::delete('public/' . $temoignage->logo);
+                        }
+                        $path = $imageFile->store('temoignages', 'public');
+                        $temoignageData['logo'] = $path;
+                    }
+                    unset($temoignageData['id']);
+                    $temoignage->update($temoignageData);
+                } else {
+                    if ($imageFile) {
+                        $path = $imageFile->store('temoignages', 'public');
+                        $temoignageData['logo'] = $path;
+                    }
+                    \App\Models\Temoignage::create($temoignageData);
+                }
+            }
+        }
+
+        // Sauvegarde des clients avec gestion des images
+        if (isset($validatedData['clients'])) {
+            foreach ($validatedData['clients'] as $index => $clientData) {
+                $imageFile = $request->file("clients.{$index}.logo");
+                if (isset($clientData['id'])) {
+                    $client = \App\Models\Client::find($clientData['id']);
+                    if (!$client) continue; 
+                    if ($imageFile) {
+                        if ($client->logo && \Storage::exists('public/' . $client->logo)) {
+                            \Storage::delete('public/' . $client->logo);
+                        }
+                        $path = $imageFile->store('clients', 'public');
+                        $clientData['logo'] = $path;
+                    }
+                    unset($clientData['id']);
+                    $client->update($clientData);
+                } else {
+                    if ($imageFile) {
+                        $path = $imageFile->store('clients', 'public');
+                        $clientData['logo'] = $path;
+                    }
+                    \App\Models\Client::create($clientData);
+                }
+            }
+        }
+        
+        
+
+
+
+
         $data = [
                 'success' => true,
                 'message' => 'Contenu de la page d\'accueil sauvegardé avec succès.',

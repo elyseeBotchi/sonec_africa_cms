@@ -11,12 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tags', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->nullable();
-            $table->string('slug')->nullable()->unique();
-            $table->string('page_key')->nullable();
-            $table->timestamps();
+        Schema::table('temoignages', function (Blueprint $table) {
+            //
+            $table->string('company')->nullable()->after('position');
         });
     }
 
@@ -25,6 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tags');
+        Schema::table('temoignages', function (Blueprint $table) {
+            //
+            $table->dropColumn('company');
+        });
     }
 };
