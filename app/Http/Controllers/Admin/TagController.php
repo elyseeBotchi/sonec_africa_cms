@@ -33,6 +33,8 @@ class TagController extends Controller
     {
         try {
             $validated = $request->validated();
+            $validated['page_key'] = 'actualites';
+
             Tag::create($validated);
 
             $data = [   

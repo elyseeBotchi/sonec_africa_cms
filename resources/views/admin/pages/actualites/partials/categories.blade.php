@@ -102,7 +102,7 @@
     <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative " >
         
         <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 focus:outline-none" onclick="toggleCategorieModal()">
-            <i class="fas fa-times"></i>Fermer
+            <i class="fas fa-times"></i>
         </button>
         <h2 class="text-xl font-bold text-sonec-dark mb-4">Ajouter une categorie</h2>
         

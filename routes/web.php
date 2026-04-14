@@ -30,6 +30,7 @@ Route::middleware('auth')->prefix('/admin')->group(function () {
 
     Route::get('actualites', [App\Http\Controllers\Admin\ActualiteController::class, 'index'])->name('admin.actualites');
     Route::resource('/categorie-articles', App\Http\Controllers\Admin\CategorieArticleController::class);
+    Route::resource('/tags', App\Http\Controllers\Admin\TagController::class);
     
 
 

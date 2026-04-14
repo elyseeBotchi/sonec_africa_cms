@@ -166,7 +166,7 @@
 
                         statusBadge.classList.add('hidden');
 
-                        // window.location.reload();
+                        window.location.reload();
                     }, 1200);
 
                     
@@ -323,7 +323,281 @@
         }
 
 
-        // Gest
+        // Gestion des tags
+        function toggleTagModal() {
+            const modal = document.getElementById('tag-modal');
+            modal.classList.toggle('opacity-0');
+            modal.classList.toggle('pointer-events-none');
+        }
+
+        function addtagItem() {
+            toggleTagModal();
+        }
+
+        function editTagItem(tagId) {            
+            // Fermer tous les modals ouverts d'abord
+            document.querySelectorAll('[id^="edit-tag-modal-"]').forEach(modal => {
+                modal.classList.add('opacity-0');
+                modal.classList.add('pointer-events-none');
+            });
+
+            const modal = document.getElementById('edit-tag-modal-' + tagId);
+            modal.classList.remove('opacity-0');
+            modal.classList.remove('pointer-events-none');
+        }
+        function closeEditTagModal(tagId) {
+
+            const modal = document.getElementById('edit-tag-modal-' + tagId);
+            modal.classList.add('opacity-0');
+            modal.classList.add('pointer-events-none');
+        }
+
+        function toggleDeleteTagModal() {            
+            const tagId = event.target.closest('tr').getAttribute('data-id');
+            const modal = document.getElementById('delete-tag-modal-' + tagId);
+            modal.classList.toggle('opacity-0');
+            modal.classList.toggle('pointer-events-none');
+        }
+
+        function closeDeleteTagModal(tagId) {
+            const modal = document.getElementById('delete-tag-modal-' + tagId);
+            modal.classList.add('opacity-0');
+            modal.classList.add('pointer-events-none');
+        }
+
+        document.getElementById('name').addEventListener('input', function() {
+            // Doire pourvoir gérer les accents et les caractères spéciaux comme "é" ou "ç" et les convertir en "e" et "c"
+            const slug = this.value.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '') 
+                .replace(/[^a-z0-9]+/g, '-') 
+                .replace(/^-+|-+$/g, '');
+            document.getElementById('tagSlug').value = 'tag/'+slug;
+        });
+
+        document.querySelectorAll('[id^="name-"]').forEach(input => {
+            input.addEventListener('input', function() {
+                const id = this.id.split('-')[1];
+                const editSlug = this.value.toLowerCase()
+                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') 
+                    .replace(/[^a-z0-9]+/g, '-') 
+                    .replace(/^-+|-+$/g, '');
+                // document.getElementById(`editSlug-${id}`).value = editSlug;
+                // document.getElementById(`editUrl-${id}`).value = '/' + editSlug;
+
+                document.getElementById(`tagSlug-${id}`).value = 'tag/'+editSlug;
+
+            });
+        });
+        document.getElementById('tag-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            formData.append('page_key','actualites');
+           
+            const btn = this.querySelector('button[type="submit"]');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enregistrement...';
+            btn.disabled = true;
+
+            console.log('FormData entries:');
+            for (let pair of formData.entries()) {
+                console.log(pair[0]+ ': ' + pair[1]);
+            }
+
+            fetch("{{ route('tags.store') }}", {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                    'Accept': 'application/json'
+                },
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+
+                console.log(data);
+                const statusBadge = document.getElementById('status-badge');
+                statusBadge.classList.remove('hidden');
+
+                const successMessage = document.querySelector('#toast .success-message');
+                const successDescription = document.querySelector('#toast .success-description');
+
+                if (data.success===true) {
+                    toggleCategorieModal();
+                    successMessage.textContent = data.message || 'Enregistrement effectué !';
+                    successDescription.textContent = data.description || 'Tag enregistré avec succès.';
+
+                    statusBadge.classList.add('hidden');
+                    showToast();
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalContent;
+                        btn.disabled = false;
+                        btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                      
+                        window.location.reload();
+                    }, 1200);
+
+                    
+
+                } else {
+                    showToastError();
+                    btn.innerHTML = originalContent;
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-75', 'cursor-not-allowed');
+
+                    // Afficher les erreurs de validation
+                    const errorsDiv = document.getElementById('form-errors');
+                    errorsDiv.innerHTML = '';
+                    if (data.errors) {
+                        Object.values(data.errors).forEach(error => {
+                            const errorP = document.createElement('p');
+                            errorP.textContent = error[0];
+                            errorsDiv.appendChild(errorP);
+                        });
+                        errorsDiv.classList.remove('hidden');
+                    }
+
+                    statusBadge.classList.add('hidden');
+
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const errorMessage = document.querySelector('#toastError .error-message');
+                const errorDescription = document.querySelector('#toastError .error-description');
+                errorMessage.textContent = 'Erreur lors de l\'enregistrement du tag';
+                errorDescription.textContent = 'Une erreur est survenue lors de l\'enregistrement du tag. Veuillez réessayer.';
+
+                showToastError();
+            });
+        });
+
+        document.querySelectorAll('[id^="edit-tag-form-"]').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const tagId = this.getAttribute('data-tag-id');
+                const formData = new FormData(this);
+
+                const btn = document.querySelector(`#edit-tag-modal-${tagId} button[type="submit"]`);
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enregistrement en cours...';
+                btn.disabled = true;
+          
+                formData.append('_method', 'PUT');
+
+                // console.log("Données envoyées :", Array.from(formData.entries()));
+
+                fetch(`/admin/tags/${tagId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        'Accept': 'application/json'
+                    },
+                    body: formData,
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const successMessage = document.querySelector('#toast .success-message');
+                    const successDescription = document.querySelector('#toast .success-description');
+
+                    if (data.success===true) {
+                        successMessage.textContent = data.message || 'Modification effectuée !';
+                        successDescription.textContent = data.description || 'Tag modifié avec succès.';
+
+                        showToast();
+                        setTimeout(() => {
+                            btn.innerHTML = originalContent;
+                            btn.disabled = false;
+                            btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                            window.location.reload();
+                        }, 1200);
+                        closeEditTagModal(tagId);
+                    } else {
+                        showToastError();
+                        btn.innerHTML = originalContent;
+                        btn.disabled = false;
+                        btn.classList.remove('opacity-75', 'cursor-not-allowed');
+
+                        const errorsDiv = document.getElementById('form-errors');
+                        errorsDiv.innerHTML = '';
+                        if (data.errors) {
+                            Object.values(data.errors).forEach(error => {
+                                const errorP = document.createElement('p');
+                                errorP.textContent = error[0];
+                                errorsDiv.appendChild(errorP);
+                            });
+                            errorsDiv.classList.remove('hidden');
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const errorMessage = document.querySelector('#toastError .error-message');
+                    const errorDescription = document.querySelector('#toastError .error-description');
+                    errorMessage.textContent = 'Erreur lors de la modification du menu';
+                    errorDescription.textContent = 'Une erreur est survenue lors de la modification du menu. Veuillez réessayer.';
+                    showToastError();
+                });
+            });
+        });
+
+        function deleteTagItem(tagId) {
+            // Afficher le modal de confirmation de suppression
+            toggleDeleteTagModal();
+
+            // Ajouter un écouteur d'événement au bouton de confirmation de suppression
+            const confirmBtn = document.querySelector(`#delete-tag-modal-${tagId} button.bg-red-500`);
+            confirmBtn.addEventListener('click', function() {
+                const btn = document.querySelector(`#edit-tag-modal-${tagId} button[type="submit"]`);
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enregistrement en cours...';
+                btn.disabled = true;
+                fetch(`/admin/tags/${tagId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        'Accept': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success===true) {
+                        const successMessage = document.querySelector('#toast .success-message');
+                        const successDescription = document.querySelector('#toast .success-description');
+                        successMessage.textContent = data.message || 'Suppression effectuée !';
+                        successDescription.textContent = data.description || 'Le Tag a été supprimée avec succès.';
+
+                        showToast();
+                        setTimeout(() => {
+                            btn.innerHTML = originalContent;
+                            btn.disabled = false;
+                            btn.classList.remove('opacity-75', 'cursor-not-allowed');
+
+                            closeDeleteTagModal(tagId);
+                            // toggleDeleteTagModal();
+                        }, 1200);
+                        window.location.reload();
+                    } else {
+                        const errorMessage = document.querySelector('#toastError .error-message');
+                        const errorDescription = document.querySelector('#toastError .error-description');
+                        errorMessage.textContent = data.message || 'Erreur lors de la suppression du menu';
+                        errorDescription.textContent = data.error || '. Veuillez réessayer.';
+                        showToastError();
+
+                        closeDeleteTagModal(tagId);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const errorMessage = document.querySelector('#toastError .error-message');
+                    const errorDescription = document.querySelector('#toastError .error-description');
+                    errorMessage.textContent = 'Erreur lors de la suppression du menu';
+                    errorDescription.textContent = 'Une erreur est survenue lors de la suppression du menu. Veuillez réessayer.';
+                    showToastError();
+                });
+            });
+        }
 
 
 

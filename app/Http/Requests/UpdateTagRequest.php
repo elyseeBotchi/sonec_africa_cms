@@ -24,7 +24,8 @@ class UpdateTagRequest extends FormRequest
     {
         return [
             'name' => 'filled|string|max:255',
-            'slug' => 'filled|string|max:255|unique:categories,slug',
+            'slug' => 'sometimes|string|max:255', 
+
         ];
     }
 
