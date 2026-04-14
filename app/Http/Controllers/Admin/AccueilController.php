@@ -102,18 +102,7 @@ class AccueilController extends Controller
             ]
         );
 
-        // Sauvegarde des carousels
-        // if (isset($validatedData['carousels'])) {
-        //     foreach ($validatedData['carousels'] as $carouselData) {
-        //         if (isset($carouselData['id'])) {
-        //             $carousel = \App\Models\Carousel::find($carouselData['id']);
-        //             $carousel->update($carouselData);
-        //         } else {
-        //             // Stockage de l'image du carousel
-        //             \App\Models\Carousel::create($carouselData);
-        //         }
-        //     }
-        // }
+        
         if (isset($validatedData['carousels'])) {
             foreach ($validatedData['carousels'] as $index => $carouselData) {
                 

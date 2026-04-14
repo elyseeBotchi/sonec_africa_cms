@@ -4,17 +4,17 @@
         
         <div class="grid md:grid-cols-2 gap-6">
             <div>
-                <label for="meta_title" class="block text-xs font-bold text-slate-400 uppercase mb-1">Meta Title</label>
-                <input type="text" id="meta_title" name="meta_title" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold" value="{!! $generalSetting->meta_title ?? '' !!}">
+                <label for="seo_title" class="block text-xs font-bold text-slate-400 uppercase mb-1">Meta Title</label>
+                <input type="text" id="seo_title" name="seo_title" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold" value="{!! $seo->title ?? '' !!}">
             </div>
             <div>
-                <label for="meta_keywords" class="block text-xs font-bold text-slate-400 uppercase mb-1">Meta Keywords (séparés par des virgules)</label>
-                <textarea id="meta_keywords" name="meta_keywords" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" rows="3">{!! $generalSetting->meta_keywords ?? '' !!}</textarea>
+                <label for="seo_keywords" class="block text-xs font-bold text-slate-400 uppercase mb-1">Meta Keywords (séparés par des virgules)</label>
+                <textarea id="seo_keywords" name="seo_keywords" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" rows="3">{!! $seo->keywords ?? '' !!}</textarea>
             </div>
         </div>
         <div class="mt-4">
-            <label for="meta_description" class="block text-xs font-bold text-slate-400 uppercase mb-1">Meta Description</label>
-            <textarea id="meta_description" name="meta_description" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm" rows="4" maxlength="160">{!! $generalSetting->meta_description ?? '' !!}</textarea>
+            <label for="seo_description" class="block text-xs font-bold text-slate-400 uppercase mb-1">Meta Description</label>
+            <textarea id="seo_description" name="seo_description" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm" rows="4" maxlength="160">{!! $seo->description ?? '' !!}</textarea>
             <p class="text-xs text-slate-400 mt-1">La meta description doit être concise et contenir les mots-clés principaux pour un meilleur référencement (160 caractères maximum).</p>
         </div>
         <input type="hidden" name="seo_page_key" value="accueil">

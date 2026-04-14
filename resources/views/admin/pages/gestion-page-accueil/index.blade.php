@@ -212,22 +212,7 @@
         //     container.appendChild(newSlide);
         // }
 
-        // function addSlideService() {
-        //     const container = document.getElementById('services-container');
-        //     const index = container.children.length;
-        //     const newService = document.createElement('div');
-
-        //     newService.className = 'border border-slate-200 rounded-xl p-4';
-        //     newService.innerHTML = `
-        //         <label for="icon-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Icône (classe FontAwesome)</label>
-        //         <input type="text" id="icon-${index}" name="icon[]" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-mono text-blue-500" value=""> 
-        //         <label for="title-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1 mt-4">Titre</label>
-        //         <input type="text" id="title-${index}" name="title[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg text-sonec-dark focus:ring-2 focus:ring-green-500 outline-none" value="">
-        //         <label for="description-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1 mt-4">Description</label>
-        //         <textarea id="description-${index}" name="description[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-green-500 outline-none" rows="4"></textarea>
-        //     `;
-        //     container.appendChild(newService);
-        // }
+        
         function addSlideService() {
             const grid = document.getElementById('services-grid');
             const index = Date.now();
@@ -327,17 +312,6 @@
                 if (imageInput?.files[0]) formData.append(`carousels[${index}][image]`, imageInput.files[0]);
             });
 
-            // document.querySelectorAll('#carousel-container .relative').forEach((slide, index) => {
-            //     const idInput = slide.querySelector('input[name="id[]"]');
-            //     if (idInput) formData.append(`carousels[${index}][id]`, idInput.value);
-            //     formData.append(`carousels[${index}][title]`, slide.querySelector('input[name="title[]"]')?.value ?? '');
-            //     formData.append(`carousels[${index}][subtitle]`, slide.querySelector('textarea[name="subtitle[]"]')?.value ?? '');
-            //     formData.append(`carousels[${index}][cta_label]`, slide.querySelector('input[name="cta_text[]"]')?.value ?? '');
-            //     formData.append(`carousels[${index}][cta_url]`, slide.querySelector('input[name="cta_url[]"]')?.value ?? '');
-            //     formData.append(`carousels[${index}][image_url]`, slide.querySelector('input[name="image_url[]"]')?.value ?? '');
-            //     const imageInput = slide.querySelector('input[name="image[]"]');
-            //     if (imageInput?.files[0]) formData.append(`carousels[${index}][image]`, imageInput.files[0]);
-            // });
 
             formData.append('seo_title', val('seo_title'));
             formData.append('seo_description', val('seo_description'));
