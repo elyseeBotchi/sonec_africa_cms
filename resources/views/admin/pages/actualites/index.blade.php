@@ -84,12 +84,17 @@
             modal.classList.add('pointer-events-none');
         }
 
-        function toggleDeleteCategorieModal() {
-            // Recuperer l'id du menu à supprimer à partir du dataset de la ligne cliquée
+        function toggleDeleteCategorieModal() {            
             const categorieId = event.target.closest('tr').getAttribute('data-id');
             const modal = document.getElementById('delete-categorie-modal-' + categorieId);
             modal.classList.toggle('opacity-0');
             modal.classList.toggle('pointer-events-none');
+        }
+
+        function closeDeleteCategorieModal(categorieId) {
+            const modal = document.getElementById('delete-categorie-modal-' + categorieId);
+            modal.classList.add('opacity-0');
+            modal.classList.add('pointer-events-none');
         }
 
         document.getElementById('label').addEventListener('input', function() {
@@ -268,6 +273,57 @@
                 });
             });
         });
+        function deleteCategorieItem(categorieId) {
+            // Afficher le modal de confirmation de suppression
+            toggleDeleteCategorieModal();
+
+            // Ajouter un écouteur d'événement au bouton de confirmation de suppression
+            const confirmBtn = document.querySelector(`#delete-categorie-modal-${categorieId} button.bg-red-500`);
+            confirmBtn.addEventListener('click', function() {
+                fetch(`/admin/categorie-articles/${categorieId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        'Accept': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success===true) {
+                        const successMessage = document.querySelector('#toast .success-message');
+                        const successDescription = document.querySelector('#toast .success-description');
+                        successMessage.textContent = data.message || 'Suppression effectuée !';
+                        successDescription.textContent = data.description || 'La catégorie a été supprimée avec succès.';
+
+                        showToast();
+                        setTimeout(() => {
+                            closeDeleteCategorieModal(categorieId);
+                            toggleDeleteCategorieModal();
+                        }, 1200);
+                        window.location.reload();
+                    } else {
+                        const errorMessage = document.querySelector('#toastError .error-message');
+                        const errorDescription = document.querySelector('#toastError .error-description');
+                        errorMessage.textContent = data.message || 'Erreur lors de la suppression du menu';
+                        errorDescription.textContent = data.error || '. Veuillez réessayer.';
+                        showToastError();
+
+                        closeDeleteCategorieModal(categorieId);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const errorMessage = document.querySelector('#toastError .error-message');
+                    const errorDescription = document.querySelector('#toastError .error-description');
+                    errorMessage.textContent = 'Erreur lors de la suppression du menu';
+                    errorDescription.textContent = 'Une erreur est survenue lors de la suppression du menu. Veuillez réessayer.';
+                    showToastError();
+                });
+            });
+        }
+
+
+        // Gest
 
 
 

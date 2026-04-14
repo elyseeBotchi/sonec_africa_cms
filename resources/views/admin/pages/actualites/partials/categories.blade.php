@@ -66,6 +66,28 @@
                                 </form>
                             </div>
                         </div>
+
+
+                        <div id="delete-categorie-modal-{{ $categorie->id }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity z-50 " >
+                            <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative " >
+                                
+                                <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 focus:outline-none" onclick="closeDeleteCategorieModal({{ $categorie->id }})">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                <h2 class="text-xl font-bold text-sonec-dark mb-4">Confirmer la suppression</h2>
+                                
+                                <p class="mb-6 text-slate-700">Êtes-vous sûr de vouloir supprimer la catégorie <span class="font-bold">{{ $categorie->label }}</span> ? Cette action est irréversible.</p>
+
+                                <div class="flex justify-end gap-4">
+                                    <button onclick="closeDeleteCategorieModal({{ $categorie->id }})" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md font-bold text-sm transition-all">
+                                        Annuler
+                                    </button>
+                                    <button onclick="deleteCategorieItem({{ $categorie->id }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-bold text-sm transition-all flex items-center gap-2">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </tbody>
             </table>
