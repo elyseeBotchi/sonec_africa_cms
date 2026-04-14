@@ -8,12 +8,13 @@
     </div>
     <div id="carousel-container" class="space-y-6">
         @foreach($carousels as $index => $carousel)
-            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden">
+            <div data-slide class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden" data-index="{{ $index }}" data-id="{{ $carousel->id }}" >
                 <div class="absolute top-0 left-0 w-2 h-full bg-purple-500"></div>
                 <button onclick="removeSlide({{ $index }})" class="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors">
                     <i class="fas fa-trash text-xs"></i>
                 </button>
                 <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2"><i class="fas fa-star text-purple-500"></i> Slide {{ $index + 1 }}</h3>
+                 <input type="hidden" name="id[]" value="{{ $carousel->id }}">
                 <div class="space-y-4">
                     <div>
                         <label for="title-{{ $index }}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Titre Principal</label>

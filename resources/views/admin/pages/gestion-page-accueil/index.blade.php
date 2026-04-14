@@ -114,51 +114,103 @@
             }
         });
 
-
         function addSlide() {
             const container = document.getElementById('carousel-container');
-            const index = container.children.length;
-            const newSlide = document.createElement('div');
+            const count = container.querySelectorAll('[data-slide]').length + 1;
 
-            newSlide.className = 'bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden';
-            newSlide.innerHTML = `
+            const div = document.createElement('div');
+            div.setAttribute('data-slide', '');
+            div.className = 'bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden';
+            div.innerHTML = `
                 <div class="absolute top-0 left-0 w-2 h-full bg-purple-500"></div>
-                <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2"><i class="fas fa-star text-purple-500"></i> Slide ${index + 1}</h3>
+                <button type="button" onclick="removeSlide(this)" class="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors">
+                    <i class="fas fa-trash text-xs"></i>
+                </button>
+                <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2">
+                    <i class="fas fa-star text-purple-500"></i> Slide ${count}
+                </h3>
+                {{-- Pas d'input id hidden pour les nouveaux slides --}}
                 <div class="space-y-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Titre Principal</label>
-                        <input id="title-${index}" type="text" name="title[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="">
+                        <input type="text" name="title[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" placeholder="Titre du slide">
                     </div>
                     <div>
                         <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Sous-titre</label>
-                        <textarea id="subtitle-${index}" name="subtitle[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-purple-500 outline-none" rows="2"></textarea>
+                        <textarea name="subtitle[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-purple-500 outline-none" rows="2" placeholder="Sous-titre"></textarea>
                     </div>
                     <div class="flex gap-4">
                         <div class="flex-1">
-                            <label for="cta-text-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Texte Bouton</label>
-                            <input id="cta-text-${index}" type="text" name="cta_text[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm" value="">
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Texte Bouton</label>
+                            <input type="text" name="cta_text[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm" placeholder="En savoir plus">
                         </div>
                         <div class="flex-1">
-                            <label for="cta-url-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Lien Bouton</label>
-                            <input id="cta-url-${index}" type="text" name="cta_url[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" value="">
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Lien Bouton</label>
+                            <input type="text" name="cta_url[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" placeholder="https://...">
                         </div>
                         <div class="flex-1">
-                            <label for="image-url-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Url de l'image</label>
-                            <input id="image-url-${index}" type="text" name="image_url[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" value="">   
-                        </div>
-                    </div>
-                    <div class="preview bg-slate-50 rounded-xl p-4 flex items-center justify-center border border-slate-200 border-dashed mt-6">
-                        <div class="text-center">
-                            <i class="fas fa-image text-3xl text-slate-300 mb-2"></i>
-                            <p class="text-xs text-slate-400">Aperçu image</p>
-                            <input id="image-${index}" type="file" name="image[]" class="hidden">
-                            <label for="image-${index}" class="mt-2 text-xs bg-white px-3 py-1 rounded border hover:bg-slate-100">Ajouter une image</label>
+                            <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Url de l'image</label>
+                            <input type="text" name="image_url[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" placeholder="https://...">
                         </div>
                     </div>
                 </div>
+                <div class="preview bg-slate-50 rounded-xl p-4 flex items-center justify-center border border-slate-200 border-dashed mt-6">
+                    <div class="text-center">
+                        <i class="fas fa-image text-3xl text-slate-300 mb-2"></i>
+                        <p class="text-xs text-slate-400">Aperçu image</p>
+                        <input type="file" name="image[]" class="hidden" id="image-new-${Date.now()}">
+                        <label class="mt-2 text-xs bg-white px-3 py-1 rounded border hover:bg-slate-100 cursor-pointer">Changer</label>
+                    </div>
+                </div>
             `;
-            container.appendChild(newSlide);
+            container.appendChild(div);
         }
+
+
+        // function addSlide() {
+        //     const container = document.getElementById('carousel-container');
+        //     const index = container.children.length;
+        //     const newSlide = document.createElement('div');
+
+        //     newSlide.className = 'bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden';
+        //     newSlide.innerHTML = `
+        //         <div class="absolute top-0 left-0 w-2 h-full bg-purple-500"></div>
+        //         <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2"><i class="fas fa-star text-purple-500"></i> Slide ${index + 1}</h3>
+        //         <div class="space-y-4">
+        //             <div>
+        //                 <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Titre Principal</label>
+        //                 <input id="title-${index}" type="text" name="title[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="">
+        //             </div>
+        //             <div>
+        //                 <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Sous-titre</label>
+        //                 <textarea id="subtitle-${index}" name="subtitle[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-purple-500 outline-none" rows="2"></textarea>
+        //             </div>
+        //             <div class="flex gap-4">
+        //                 <div class="flex-1">
+        //                     <label for="cta-text-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Texte Bouton</label>
+        //                     <input id="cta-text-${index}" type="text" name="cta_text[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm" value="">
+        //                 </div>
+        //                 <div class="flex-1">
+        //                     <label for="cta-url-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Lien Bouton</label>
+        //                     <input id="cta-url-${index}" type="text" name="cta_url[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" value="">
+        //                 </div>
+        //                 <div class="flex-1">
+        //                     <label for="image-url-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Url de l'image</label>
+        //                     <input id="image-url-${index}" type="text" name="image_url[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" value="">   
+        //                 </div>
+        //             </div>
+        //             <div class="preview bg-slate-50 rounded-xl p-4 flex items-center justify-center border border-slate-200 border-dashed mt-6">
+        //                 <div class="text-center">
+        //                     <i class="fas fa-image text-3xl text-slate-300 mb-2"></i>
+        //                     <p class="text-xs text-slate-400">Aperçu image</p>
+        //                     <input id="image-${index}" type="file" name="image[]" class="hidden">
+        //                     <label for="image-${index}" class="mt-2 text-xs bg-white px-3 py-1 rounded border hover:bg-slate-100">Ajouter une image</label>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     `;
+        //     container.appendChild(newSlide);
+        // }
 
         // function addSlideService() {
         //     const container = document.getElementById('services-container');
@@ -209,12 +261,8 @@
         }
 
         // Supprimer un slide du carousel
-        function removeSlide(index) {
-            const container = document.getElementById('carousel-container');
-            const slide = container.children[index];
-            if (slide) {
-                container.removeChild(slide);
-            }
+        function removeSlide(btn) {
+            btn.closest('[data-slide]').remove();
         }
 
         // Supprimer un service
@@ -267,9 +315,9 @@
                 formData.append(`services[${index}][description]`, service.querySelector('textarea[name="description[]"]')?.value ?? '');
             });
 
-            document.querySelectorAll('#carousel-container .relative').forEach((slide, index) => {
+            document.querySelectorAll('#carousel-container [data-slide]').forEach((slide, index) => {
                 const idInput = slide.querySelector('input[name="id[]"]');
-                if (idInput) formData.append(`carousels[${index}][id]`, idInput.value);
+                if (idInput?.value) formData.append(`carousels[${index}][id]`, idInput.value);
                 formData.append(`carousels[${index}][title]`, slide.querySelector('input[name="title[]"]')?.value ?? '');
                 formData.append(`carousels[${index}][subtitle]`, slide.querySelector('textarea[name="subtitle[]"]')?.value ?? '');
                 formData.append(`carousels[${index}][cta_label]`, slide.querySelector('input[name="cta_text[]"]')?.value ?? '');
@@ -278,6 +326,18 @@
                 const imageInput = slide.querySelector('input[name="image[]"]');
                 if (imageInput?.files[0]) formData.append(`carousels[${index}][image]`, imageInput.files[0]);
             });
+
+            // document.querySelectorAll('#carousel-container .relative').forEach((slide, index) => {
+            //     const idInput = slide.querySelector('input[name="id[]"]');
+            //     if (idInput) formData.append(`carousels[${index}][id]`, idInput.value);
+            //     formData.append(`carousels[${index}][title]`, slide.querySelector('input[name="title[]"]')?.value ?? '');
+            //     formData.append(`carousels[${index}][subtitle]`, slide.querySelector('textarea[name="subtitle[]"]')?.value ?? '');
+            //     formData.append(`carousels[${index}][cta_label]`, slide.querySelector('input[name="cta_text[]"]')?.value ?? '');
+            //     formData.append(`carousels[${index}][cta_url]`, slide.querySelector('input[name="cta_url[]"]')?.value ?? '');
+            //     formData.append(`carousels[${index}][image_url]`, slide.querySelector('input[name="image_url[]"]')?.value ?? '');
+            //     const imageInput = slide.querySelector('input[name="image[]"]');
+            //     if (imageInput?.files[0]) formData.append(`carousels[${index}][image]`, imageInput.files[0]);
+            // });
 
             formData.append('seo_title', val('seo_title'));
             formData.append('seo_description', val('seo_description'));

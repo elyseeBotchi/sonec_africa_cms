@@ -25,3 +25,23 @@ if (!function_exists('get_general_settings')) {
     }
 }
 
+
+// Fonction pour récuperer le contenu de la page d'accueil
+if (!function_exists('get_accueil_content')) {
+    function get_accueil_content()
+    {
+        // $accueilContent = \App\Models\AccueilContent::first();
+        $presentationEntreprise = \App\Models\PresentationEntreprise::where('page_key', 'accueil')->first();
+        $seo = \App\Models\Seo::where('page_key', 'accueil')->first();
+        $carousels = \App\Models\Carousel::orderBy('created_at', 'desc')->get();
+        $services = \App\Models\Service::where('page_key', 'accueil')->get();
+
+        return [
+            'accueilContent' => $accueilContent,
+            'presentationEntreprise' => $presentationEntreprise,
+            'seo' => $seo,
+            'carousels' => $carousels,
+            'services' => $services,
+        ];
+    }
+}
