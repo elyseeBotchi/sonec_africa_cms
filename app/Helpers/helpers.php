@@ -34,14 +34,16 @@ if (!function_exists('get_accueil_content')) {
         $presentationEntreprise = \App\Models\PresentationEntreprise::where('page_key', 'accueil')->first();
         $seo = \App\Models\Seo::where('page_key', 'accueil')->first();
         $carousels = \App\Models\Carousel::orderBy('created_at', 'desc')->get();
-        $services = \App\Models\Service::where('page_key', 'accueil')->get();
-
+        $services = \App\Models\Service::orderBy('created_at', 'desc')->get();
+        $accroche = \App\Models\Accroche::where('page_key', 'accueil')->first();
+        
         return [
-            'accueilContent' => $accueilContent,
+            // 'accueilContent' => $accueilContent,
             'presentationEntreprise' => $presentationEntreprise,
             'seo' => $seo,
             'carousels' => $carousels,
             'services' => $services,
+            'accroche' => $accroche,
         ];
     }
 }

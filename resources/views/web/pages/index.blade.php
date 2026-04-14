@@ -4,55 +4,39 @@
 
     <main class="pt-20">
         <section id="hero-carousel" class="relative h-[600px] lg:h-[700px] overflow-hidden bg-gray-900">
-            <div class="carousel-slide active">
-                <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/371fdf937d-b35fd7097d2b5e942838.png" alt="modern african tech workspace with professionals working on computers bright natural light">
-                <div class="absolute inset-0 bg-sonec-dark/60 flex items-center">
-                    <div class="container mx-auto px-6">
-                        <div class="max-w-2xl">
-                            <h1 class="text-4xl lg:text-6xl font-bold text-white mb-6">Innovation Technologique en Afrique</h1>
-                            <p class="text-xl text-gray-200 mb-8">Des solutions digitales qui transforment les entreprises et les institutions</p>
-                            <a href="#" class="inline-block bg-sonec-green text-white px-8 py-4 rounded-lg font-semibold hover:bg-sonec-lime hover:text-sonec-dark transition-colors">
-                                Découvrir nos solutions
-                            </a>
+            @foreach (get_accueil_content()['carousels'] as $carousel)
+                <div class="carousel-slide {{ $loop->first ? 'active' : '' }}">
+                    @if ($carousel->image_url)
+                        <img class="w-full h-full object-cover" src="{{ $carousel->image_url }}" alt="{{ $carousel->title }}">
+                    @else
+                     <img class="w-full h-full object-cover" src="{{ asset('storage/'.$carousel->image) }}" alt="{{ $carousel->title }}">
+                    @endif   
+                    <div class="absolute inset-0 bg-sonec-dark/60 flex items-center">
+                        <div class="container mx-auto px-6">
+                            <div class="max-w-2xl">
+                                <h1 class="text-4xl lg:text-6xl font-bold text-white mb-6">{{ $carousel->title }}</h1>
+                                <p class="text-xl text-gray-200 mb-8">{{ $carousel->description }}</p>
+                                @if ($carousel->cta_label && $carousel->cta_url)
+                                    <a href="{{ $carousel->cta_url }}" class="inline-block bg-sonec-green text-white px-8 py-4 rounded-lg font-semibold hover:bg-sonec-lime hover:text-sonec-dark transition-colors">
+                                        {{ $carousel->cta_label }}
+                                    </a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                
+            @endforeach
 
-            <div class="carousel-slide">
-                <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/b20148e2bf-bf9659b43858c9dd05a5.png" alt="african students in modern classroom using tablets and digital learning technology">
-                <div class="absolute inset-0 bg-sonec-dark/60 flex items-center">
-                    <div class="container mx-auto px-6">
-                        <div class="max-w-2xl">
-                            <h1 class="text-4xl lg:text-6xl font-bold text-white mb-6">L'Éducation digitale de demain</h1>
-                            <p class="text-xl text-gray-200 mb-8">EcoleWeb révolutionne l'apprentissage avec des outils innovants et accessibles</p>
-                            <a href="#" class="inline-block bg-sonec-green text-white px-8 py-4 rounded-lg font-semibold hover:bg-sonec-lime hover:text-sonec-dark transition-colors">
-                                En savoir plus
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="carousel-slide">
-                <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/48669cc797-e8e729ee4a65062eec1c.png" alt="modern office building glass facade african city skyline professional business environment">
-                <div class="absolute inset-0 bg-sonec-dark/60 flex items-center">
-                    <div class="container mx-auto px-6">
-                        <div class="max-w-2xl">
-                            <h1 class="text-4xl lg:text-6xl font-bold text-white mb-6">Partenaire de votre croissance</h1>
-                            <p class="text-xl text-gray-200 mb-8">Des solutions sur mesure pour accompagner votre transformation digitale</p>
-                            <a href="#" class="inline-block bg-sonec-green text-white px-8 py-4 rounded-lg font-semibold hover:bg-sonec-lime hover:text-sonec-dark transition-colors">
-                                Contactez-nous
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+           
 
             <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-20">
-                <button class="carousel-dot w-3 h-3 rounded-full bg-white/50 active"></button>
+                @foreach (get_accueil_content()['carousels'] as $carousel)
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-white/50 {{ $loop->first ? 'active' : '' }}"></button>
+                @endforeach
+                {{-- <button class="carousel-dot w-3 h-3 rounded-full bg-white/50 active"></button>
                 <button class="carousel-dot w-3 h-3 rounded-full bg-white/50"></button>
-                <button class="carousel-dot w-3 h-3 rounded-full bg-white/50"></button>
+                <button class="carousel-dot w-3 h-3 rounded-full bg-white/50"></button> --}}
             </div>
 
             <button id="carousel-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center text-white transition-colors z-20">
@@ -63,81 +47,83 @@
             </button>
         </section>
 
-        <section id="quick-overview" class="py-16 bg-white border-b border-gray-100">
-            <div class="container mx-auto px-6">
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-sonec-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-graduation-cap text-sonec-green text-2xl"></i>
-                        </div>
-                        <h3 class="font-semibold text-sonec-dark text-sm">Éducation</h3>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-sonec-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-chart-line text-sonec-green text-2xl"></i>
-                        </div>
-                        <h3 class="font-semibold text-sonec-dark text-sm">Gestion d'entreprise</h3>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-sonec-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-credit-card text-sonec-green text-2xl"></i>
-                        </div>
-                        <h3 class="font-semibold text-sonec-dark text-sm">Paiements</h3>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-sonec-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-mobile-alt text-sonec-green text-2xl"></i>
-                        </div>
-                        <h3 class="font-semibold text-sonec-dark text-sm">Solutions mobiles</h3>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-sonec-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-cloud text-sonec-green text-2xl"></i>
-                        </div>
-                        <h3 class="font-semibold text-sonec-dark text-sm">Cloud services</h3>
-                    </div>
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-sonec-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <i class="fas fa-shield-alt text-sonec-green text-2xl"></i>
-                        </div>
-                        <h3 class="font-semibold text-sonec-dark text-sm">Cybersécurité</h3>
+        @if(isset(get_accueil_content()['services']) && get_accueil_content()['services'])
+        
+            <section id="quick-overview" class="py-16 bg-white border-b border-gray-100">
+                <div class="container mx-auto px-6">
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+                        @foreach (get_accueil_content()['services'] as $service)
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-sonec-green/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    @if($service->icon && str_starts_with($service->icon, 'fa'))
+                                        <i class="{{ $service->icon }} text-sonec-green text-2xl"></i>
+                                    @else
+                                        {{ $service->icon }}
+                                    @endif
+                                </div>
+                                <h3 class="font-semibold text-sonec-dark text-sm">{{ $service->title }}</h3>
+                            </div>
+                            
+                        @endforeach
+                        
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
-        <section id="about-section" class="py-20 bg-gray-50">
-            <div class="container mx-auto px-6">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
-                    <div>
-                        <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-6">Leader Africain de la transformation digitale</h2>
-                        <p class="text-lg text-gray-700 mb-6">Depuis notre création, SONEC Africa s'est imposé comme le partenaire de confiance des entreprises et institutions qui souhaitent accélérer leur transformation numérique.</p>
-                        <p class="text-lg text-gray-700 mb-8">Nous combinons expertise technologique, connaissance approfondie du marché africain et engagement envers l'excellence pour délivrer des solutions qui génèrent un impact réel et mesurable.</p>
-                        <div class="grid grid-cols-3 gap-6 mb-8">
-                            <div class="text-center">
-                                <div class="text-4xl font-bold text-sonec-green mb-2">15+</div>
-                                <div class="text-sm text-gray-600">Années d'expertise</div>
+        @if(isset(get_accueil_content()['presentationEntreprise']) && get_accueil_content()['presentationEntreprise'])
+            <section id="about-section" class="py-20 bg-gray-50">
+                <div class="container mx-auto px-6">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-6">{{ get_accueil_content()['presentationEntreprise']->title }}</h2>
+
+                            @if(get_accueil_content()['presentationEntreprise']->description && str_contains(get_accueil_content()['presentationEntreprise']->description, '<p>') || str_contains(get_accueil_content()['presentationEntreprise']->description, '<br>') || str_contains(get_accueil_content()['presentationEntreprise']->description, '<div>'))
+                                {!! get_accueil_content()['presentationEntreprise']->description !!}
+                            @else
+                                <p class="text-lg text-gray-700 mb-6">{!! get_accueil_content()['presentationEntreprise']->description !!}</p>
+                            @endif
+
+                            
+                            <div class="grid grid-cols-3 gap-6 mb-8">
+                                <div class="text-center">
+                                    <div class="text-4xl font-bold text-sonec-green mb-2">{{get_accueil_content()['presentationEntreprise']->annees_experience}}</div>
+                                    <div class="text-sm text-gray-600">Années d'expertise</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-4xl font-bold text-sonec-green mb-2">{{get_accueil_content()['presentationEntreprise']->clients}}</div>
+                                    <div class="text-sm text-gray-600">Clients satisfaits</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-4xl font-bold text-sonec-green mb-2">{{get_accueil_content()['presentationEntreprise']->pays}}</div>
+                                    <div class="text-sm text-gray-600">Pays d'implantation</div>
+                                </div>
                             </div>
-                            <div class="text-center">
-                                <div class="text-4xl font-bold text-sonec-green mb-2">500+</div>
-                                <div class="text-sm text-gray-600">Clients satisfaits</div>
-                            </div>
-                            <div class="text-center">
-                                <div class="text-4xl font-bold text-sonec-green mb-2">12</div>
-                                <div class="text-sm text-gray-600">Pays d'implantation</div>
-                            </div>
+                            @if(get_accueil_content()['presentationEntreprise']->cta_label && get_accueil_content()['presentationEntreprise']->cta_url)
+                                <a href="{{ get_accueil_content()['presentationEntreprise']->cta_url }}" class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
+                                    {{ get_accueil_content()['presentationEntreprise']->cta_label }}
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            @endif
                         </div>
-                        <a href="#" class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
-                            Découvrir notre histoire
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                    <div class="h-[500px] overflow-hidden rounded-2xl shadow-xl">
-                        <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/c0ef666f3e-734a16213f6c25d79d43.png" alt="diverse african business team collaboration modern office space professional environment">
+                        
+                        @if(get_accueil_content()['presentationEntreprise']->image_url || get_accueil_content()['presentationEntreprise']->image)
+                        
+                        <div class="h-[500px] overflow-hidden rounded-2xl shadow-xl">
+                            @if(get_accueil_content()['presentationEntreprise']->image_url && get_accueil_content()['presentationEntreprise']->image)
+                                <img class="w-full h-full object-cover" src="{{ get_accueil_content()['presentationEntreprise']->image_url }}" alt="{{ get_accueil_content()['presentationEntreprise']->title }}">  
+                            @elseif(get_accueil_content()['presentationEntreprise']->image_url && !get_accueil_content()['presentationEntreprise']->image)
+                                <img class="w-full h-full object-cover" src="{{ get_accueil_content()['presentationEntreprise']->image_url }}" alt="{{ get_accueil_content()['presentationEntreprise']->title }}">  
+                            @else
+                                 <img class="w-full h-full object-cover" src="{{ asset('storage/'.get_accueil_content()['presentationEntreprise']->image) }}" alt="{{ get_accueil_content()['presentationEntreprise']->title }}">   
+                            @endif
+                            {{-- <img class="w-full h-full object-cover" src="{{ get_accueil_content()['presentationEntreprise']->image_url }}" alt="diverse african business team collaboration modern office space professional environment"> --}}
+                        </div>
+                        @endif
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
         <section id="solutions-section" class="py-20 bg-white">
             <div class="container mx-auto px-6">
@@ -382,6 +368,7 @@
             </div>
         </section>
 
+        
         <section id="news-section" class="py-20 bg-white">
             <div class="container mx-auto px-6">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-16">
@@ -527,35 +514,42 @@
             </div>
         </section>
 
-        <section id="cta-section" class="py-20 bg-sonec-dark">
-            <div class="container mx-auto px-6">
-                <div class="max-w-4xl mx-auto text-center">
-                    <h2 class="text-4xl lg:text-5xl font-bold text-white mb-6">Prêt à transformer votre entreprise ?</h2>
-                    <p class="text-xl text-gray-300 mb-10">Rejoignez les centaines d'organisations qui font confiance à SONEC Africa pour leur transformation digitale</p>
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a href="#" class="inline-block bg-sonec-green text-white px-8 py-4 rounded-lg font-semibold hover:bg-sonec-lime hover:text-sonec-dark transition-colors">
-                            Demander une démo
-                        </a>
-                        <a href="#" class="inline-block bg-white text-sonec-dark px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                            Nous contacter
-                        </a>
-                    </div>
-                    <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-white">
-                        <div>
-                            <div class="text-4xl font-bold text-sonec-lime mb-2">24/7</div>
-                            <div class="text-gray-300">Support client</div>
+        @if(isset(get_accueil_content()['accroche']) && get_accueil_content()['accroche'])
+            <section id="cta-section" class="py-20 bg-sonec-dark">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-4xl mx-auto text-center">
+                        <h2 class="text-4xl lg:text-5xl font-bold text-white mb-6">{{ get_accueil_content()['accroche']->title }}</h2>
+                        <p class="text-xl text-gray-300 mb-10">{{ get_accueil_content()['accroche']->subtitle }}</p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            @if(get_accueil_content()['accroche']->cta_label && get_accueil_content()['accroche']->cta_url)
+                                <a href="{{ get_accueil_content()['accroche']->cta_url }}" class="inline-block bg-sonec-green text-white px-8 py-4 rounded-lg font-semibold hover:bg-sonec-lime hover:text-sonec-dark transition-colors">
+                                    {{ get_accueil_content()['accroche']->cta_label }}
+                                </a>
+                            @endif
+                            {{-- <a href="#" class="inline-block bg-sonec-green text-white px-8 py-4 rounded-lg font-semibold hover:bg-sonec-lime hover:text-sonec-dark transition-colors">
+                                Demander une démo
+                            </a> --}}
+                            <a href="#" class="inline-block bg-white text-sonec-dark px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                                Nous contacter
+                            </a>
                         </div>
-                        <div>
-                            <div class="text-4xl font-bold text-sonec-lime mb-2">99.9%</div>
-                            <div class="text-gray-300">Disponibilité</div>
-                        </div>
-                        <div>
-                            <div class="text-4xl font-bold text-sonec-lime mb-2">100%</div>
-                            <div class="text-gray-300">Satisfaction client</div>
+                        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-white">
+                            <div>
+                                <div class="text-4xl font-bold text-sonec-lime mb-2">24/7</div>
+                                <div class="text-gray-300">Support client</div>
+                            </div>
+                            <div>
+                                <div class="text-4xl font-bold text-sonec-lime mb-2">99.9%</div>
+                                <div class="text-gray-300">Disponibilité</div>
+                            </div>
+                            <div>
+                                <div class="text-4xl font-bold text-sonec-lime mb-2">100%</div>
+                                <div class="text-gray-300">Satisfaction client</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
     </main>
 @endsection

@@ -325,8 +325,8 @@
             formData.append('about_pays', val('about_pays'));
             formData.append('about_description', val('about_description'));
             formData.append('about_page_key', 'accueil');
-            formData.append('about_cta_label', val('cta_label'));
-            formData.append('about_cta_url', val('cta_url'));
+            formData.append('about_cta_label', val('about_cta_label'));
+            formData.append('about_cta_url', val('about_cta_url'));
             formData.append('about_image_url', val('about_image_url'));
 
 
@@ -371,10 +371,12 @@
                         btn.innerHTML = originalContent;
                         btn.disabled = false;
                         btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                        statusBadge.classList.add('hidden');
+
+
+                        window.location.reload();
                     }, 1200);
                     
-                    statusBadge.classList.add('hidden');
-                    // window.location.reload();
 
                 } else {
                     showToastError();
@@ -383,6 +385,7 @@
                     btn.classList.remove('opacity-75', 'cursor-not-allowed');
 
                     const errorsDiv = document.getElementById('form-errors');
+                    const errorMsg = document.querySelector('#toastError .error-message')
                     if (errorsDiv) {
                         errorsDiv.innerHTML = '';
                         if (data.errors) {
@@ -390,8 +393,11 @@
                                 const p = document.createElement('p');
                                 p.textContent = error[0];
                                 errorsDiv.appendChild(p);
+
+                                errorMsg.textContent = error[0];
                             });
                             errorsDiv.classList.remove('hidden');
+
                         }
                     }
                 }

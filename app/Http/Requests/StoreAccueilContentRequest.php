@@ -67,9 +67,9 @@ class StoreAccueilContentRequest extends FormRequest
             'about_annees_experience' => 'nullable|string|max:255',
             'about_clients' => 'nullable|string|max:255',
             'about_pays' => 'nullable|string|max:255',
-            'about_image_url' => 'nullable|url|max:255',
+            'about_image_url' => 'nullable|string|max:255',
             'about_cta_label' => 'nullable|string|max:255',
-            'about_cta_url' => 'nullable|url|max:255',
+            'about_cta_url' => 'nullable|string|max:255',
         ];
     }
 
