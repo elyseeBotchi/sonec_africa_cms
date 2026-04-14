@@ -28,6 +28,11 @@ Route::middleware('auth')->prefix('/admin')->group(function () {
     Route::post('config/accueil', [App\Http\Controllers\Admin\AccueilController::class, 'save'])->name('admin.accueil.save');
 
 
+    Route::get('actualites', [App\Http\Controllers\Admin\ActualiteController::class, 'index'])->name('admin.actualites');
+    Route::resource('/categorie-articles', App\Http\Controllers\Admin\CategorieArticleController::class);
+    
+
+
 
     // Deconnexion
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('admin.logout');

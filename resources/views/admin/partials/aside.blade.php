@@ -91,7 +91,7 @@
             </div>
         </div>
 
-        <a href="#" onclick="switchPage('blog')" id="nav-page-ecoleweb" class="nav-item flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
+        <a href="{{ route('admin.actualites') }}" id="nav-page-ecoleweb" class="nav-item flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
             <i class="fas fa-graduation-cap w-5 text-yellow-500"></i> Actualité
         </a>
         <!-- Qui sommes-nous avec sous-menu -->

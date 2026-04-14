@@ -27,28 +27,28 @@
             <div class="space-y-8">
            
 
-            {{-- Affichage des erreurs serveurs --}}
-            <div id="form-errors" class="bg-red-100 text-red-700 p-4 rounded mb-6 hidden"></div>
+                {{-- Affichage des erreurs serveurs --}}
+                <div id="form-errors" class="bg-red-100 text-red-700 p-4 rounded mb-6 hidden"></div>
 
 
-            <div id="tab-content" class="tab-content p-8 rounded-3xl shadow-sm border border-slate-100">
-                <div id="tab-content-home-content" class="tab-pane active">
-                    @include('admin.pages.gestion-page-accueil.partials.content')
-                </div>
-                <div id="tab-content-home-media" class="tab-pane hidden">
+                <div id="tab-content" class="tab-content p-8 rounded-3xl shadow-sm border border-slate-100">
+                    <div id="tab-content-home-content" class="tab-pane active">
+                        @include('admin.pages.gestion-page-accueil.partials.content')
+                    </div>
+                    <div id="tab-content-home-media" class="tab-pane hidden">
+                        
+                        @include('admin.pages.gestion-page-accueil.partials.media') 
+                    </div>
+                    <div id="tab-content-home-collaboration" class="tab-pane hidden">
+                        @include('admin.pages.gestion-page-accueil.partials.collaboration')
+                    </div>
+                    <div id="tab-content-home-seo" class="tab-pane hidden">
+                        @include('admin.pages.gestion-page-accueil.partials.seo')
+                    </div>
                     
-                    @include('admin.pages.gestion-page-accueil.partials.media') 
-                </div>
-                <div id="tab-content-home-collaboration" class="tab-pane hidden">
-                    @include('admin.pages.gestion-page-accueil.partials.collaboration')
-                </div>
-                <div id="tab-content-home-seo" class="tab-pane hidden">
-                    @include('admin.pages.gestion-page-accueil.partials.seo')
-                </div>
-                
 
+                </div>
             </div>
-        </div>
         </div>
         
     </div>
@@ -59,7 +59,7 @@
             document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.add('hidden'));
             // Afficher le contenu de la tab sélectionnée
             document.getElementById(`tab-content-home-${tab}`).classList.remove('hidden');
-                // Mettre à jour le style des boutons. le bouton actif aura un fond blanc et une ombre, les autres seront gris
+                
             document.querySelectorAll('.tab-content button').forEach(button => {
                 if (button.textContent.trim() === (tab === 'content' ? 'Contenu' : tab === 'media' ? 'Images & Médias' : tab === 'collaboration' ? 'Collaborations & témoignages' :  'SEO & Méta')) {
                     button.classList.add('bg-white', 'shadow-sm', 'text-sonec-dark');
@@ -147,51 +147,6 @@
             container.appendChild(div);
         }
 
-
-        // function addSlide() {
-        //     const container = document.getElementById('carousel-container');
-        //     const index = container.children.length;
-        //     const newSlide = document.createElement('div');
-
-        //     newSlide.className = 'bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden';
-        //     newSlide.innerHTML = `
-        //         <div class="absolute top-0 left-0 w-2 h-full bg-purple-500"></div>
-        //         <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2"><i class="fas fa-star text-purple-500"></i> Slide ${index + 1}</h3>
-        //         <div class="space-y-4">
-        //             <div>
-        //                 <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Titre Principal</label>
-        //                 <input id="title-${index}" type="text" name="title[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="">
-        //             </div>
-        //             <div>
-        //                 <label class="block text-xs font-bold text-slate-400 uppercase mb-1">Sous-titre</label>
-        //                 <textarea id="subtitle-${index}" name="subtitle[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-purple-500 outline-none" rows="2"></textarea>
-        //             </div>
-        //             <div class="flex gap-4">
-        //                 <div class="flex-1">
-        //                     <label for="cta-text-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Texte Bouton</label>
-        //                     <input id="cta-text-${index}" type="text" name="cta_text[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm" value="">
-        //                 </div>
-        //                 <div class="flex-1">
-        //                     <label for="cta-url-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Lien Bouton</label>
-        //                     <input id="cta-url-${index}" type="text" name="cta_url[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" value="">
-        //                 </div>
-        //                 <div class="flex-1">
-        //                     <label for="image-url-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Url de l'image</label>
-        //                     <input id="image-url-${index}" type="text" name="image_url[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" value="">   
-        //                 </div>
-        //             </div>
-        //             <div class="preview bg-slate-50 rounded-xl p-4 flex items-center justify-center border border-slate-200 border-dashed mt-6">
-        //                 <div class="text-center">
-        //                     <i class="fas fa-image text-3xl text-slate-300 mb-2"></i>
-        //                     <p class="text-xs text-slate-400">Aperçu image</p>
-        //                     <input id="image-${index}" type="file" name="image[]" class="hidden">
-        //                     <label for="image-${index}" class="mt-2 text-xs bg-white px-3 py-1 rounded border hover:bg-slate-100">Ajouter une image</label>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     `;
-        //     container.appendChild(newSlide);
-        // }
 
         
         function addSlideService() {
