@@ -119,68 +119,6 @@
         }
     });
 
-    document.getElementById('logo_footer').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const preview = document.querySelector('.preview-area-logo-footer');
-
-                // Remplacer tout le contenu par l'image + overlay
-                preview.innerHTML = `
-                    <div class="relative group">
-                        <img src="${e.target.result}" alt="Logo du footer" class="max-h-full max-w-full rounded-lg">
-                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
-                            <label for="logo_footer" class="text-xs bg-white px-3 py-1 rounded border hover:bg-slate-100 cursor-pointer">
-                                <i class="fas fa-pencil-alt mr-1"></i> Changer
-                            </label>
-                        </div>
-                    </div>
-                    <input id="logo_footer" type="file" class="hidden" accept="image/*" name="logo_footer">
-                `;
-
-                // Réattacher l'écouteur sur le nouvel input
-                document.getElementById('logo_footer').addEventListener('change', arguments.callee.bind(null, { target: { files: [] } }));
-                attachLogoFooterListener();
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    function attachLogoFooterListener() {
-        const input = document.getElementById('logo_footer');
-        if (!input) return;
-
-        input.addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const preview = document.querySelector('.preview-area-logo-footer');
-
-                preview.innerHTML = `
-                    <div class="relative group">
-                        <img src="${e.target.result}" alt="Logo du footer" class="max-h-full max-w-full rounded-lg">
-                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
-                            <label for="logo_footer" class="text-xs bg-white px-3 py-1 rounded border hover:bg-slate-100 cursor-pointer">
-                                <i class="fas fa-pencil-alt mr-1"></i> Changer
-                            </label>
-                        </div>
-                    </div>
-                    <input id="logo_footer" type="file" class="hidden" accept="image/*" name="logo_footer">
-                `;
-
-                // Réattacher l'écouteur sur le nouvel input généré
-                attachLogoFooterListener();
-            };
-            reader.readAsDataURL(file);
-        });
-    }
-
-    // Initialisation
-    attachLogoFooterListener();
-
     function saveAll() {
         const btn = document.querySelector('button[onclick="saveAll()"]');
         const originalContent = btn.innerHTML;

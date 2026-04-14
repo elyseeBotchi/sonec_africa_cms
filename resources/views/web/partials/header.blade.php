@@ -2,8 +2,13 @@
     <div class="container mx-auto px-6">
         <div class="flex justify-between items-center py-4">
             <div id="logo-container" class="flex items-center">
-                <div class="w-32 h-10 bg-sonec-dark rounded flex items-center justify-center">
-                    <span class="text-white font-bold text-xl">SONEC</span>
+                <div class="w-32 h-10 {{ get_general_settings()->site_logo ? : 'bg-sonec-dark' }} rounded flex items-center justify-center">
+                    @if(get_general_settings()->site_logo)
+                        <img src="{{ asset('/storage/' . get_general_settings()->site_logo) }}" alt="Logo du header" class="max-h-full max-w-full">   
+                    @else
+                        <span class="text-white font-bold text-xl">SONEC</span>
+                    @endif
+                    {{-- <span class="text-white font-bold text-xl">SONEC</span> --}}
                 </div>
             </div>
 

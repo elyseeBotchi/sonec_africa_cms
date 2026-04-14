@@ -23,7 +23,7 @@
 
         <p class="px-6 text-xs font-bold text-slate-400 uppercase tracking-widest mt-8 mb-2">Gestion des Pages</p>
         
-        <a href="#" onclick="switchPage('home')" id="nav-page-home" class="nav-item flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
+        <a href="{{ route('admin.accueil') }}" id="nav-page-home" class="nav-item flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
             <i class="fas fa-home w-5 text-purple-500"></i> Accueil
         </a>
         <!-- Solutions avec sous-menu -->

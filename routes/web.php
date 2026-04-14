@@ -24,6 +24,11 @@ Route::middleware('auth')->prefix('/admin')->group(function () {
 
     // Gestion des paramètres du site
     Route::resource('/general-settings', App\Http\Controllers\Admin\GeneralSettingController::class);
+    Route::get('config/accueil', [App\Http\Controllers\Admin\AccueilController::class, 'index'])->name('admin.accueil');
+    Route::post('config/accueil', [App\Http\Controllers\Admin\AccueilController::class, 'save'])->name('admin.accueil.save');
+
+
+
     // Deconnexion
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('admin.logout');
 });
