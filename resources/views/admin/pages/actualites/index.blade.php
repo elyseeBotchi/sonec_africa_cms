@@ -599,8 +599,79 @@
             });
         }
 
+        // Gestion des articles
+        function addArticleItem(){
+            window.location.href= "{{ route('articles.create') }}"
+        }
 
+        function toggleDeleteArticleModal(articleId) {
+            const modal = document.getElementById('delete-article-modal-' + articleId);
+            modal.classList.toggle('opacity-0');
+            modal.classList.toggle('pointer-events-none');
+        }
 
+        function closeDeleteArticleModal(articleId) {
+            const modal = document.getElementById('delete-article-modal-' + articleId);
+            modal.classList.add('opacity-0');
+            modal.classList.add('pointer-events-none');
+        }
+
+        function deleteArticleItem(articleId) {
+            // Afficher le modal de confirmation de suppression
+            toggleDeleteArticleModal(articleId);
+
+            // Ajouter un écouteur d'événement au bouton de confirmation de suppression
+            const confirmBtn = document.querySelector(`#delete-article-modal-${articleId} button.bg-red-500`);
+            confirmBtn.addEventListener('click', function() {
+                const btn = document.querySelector(`#delete-article-modal-${articleId} button[type="submit"]`);
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Suppression en cours...';
+                btn.disabled = true;
+                fetch(`/admin/articles/${articleId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        'Accept': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success===true) {
+                        const successMessage = document.querySelector('#toast .success-message');
+                        const successDescription = document.querySelector('#toast .success-description');
+                        successMessage.textContent = data.message || 'Suppression effectuée !';
+                        successDescription.textContent = data.description || 'L\'article a été supprimé avec succès.';
+
+                        showToast();
+                        setTimeout(() => {
+                            btn.innerHTML = originalContent;
+                            btn.disabled = false;
+                            btn.classList.remove('opacity-75', 'cursor-not-allowed');
+
+                            closeDeleteArticleModal(articleId);
+                            // toggleDeleteArticleModal();
+                        }, 1200);
+                        window.location.reload();
+                    } else {
+                        const errorMessage = document.querySelector('#toastError .error-message');
+                        const errorDescription = document.querySelector('#toastError .error-description');
+                        errorMessage.textContent = data.message || 'Erreur lors de la suppression de l\'article';
+                        errorDescription.textContent = data.error || '. Veuillez réessayer.';
+                        showToastError();
+
+                        closeDeleteArticleModal(articleId);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const errorMessage = document.querySelector('#toastError .error-message');
+                    const errorDescription = document.querySelector('#toastError .error-description');
+                    errorMessage.textContent = 'Erreur lors de la suppression de l\'article';
+                    errorDescription.textContent = 'Une erreur est survenue lors de la suppression de l\'article. Veuillez réessayer.';
+                    showToastError();
+                });
+            });
+        }
 
     </script>
 @endsection

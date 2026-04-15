@@ -7,8 +7,17 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}" >
     <script src="https://cdn.tailwindcss.com"></script>
+    {{-- Charger TinyMCE --}}
+    {{-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> --}}
+    {{-- <script src="{{ asset('assets/js/tinymce/tinymce.min.js') }}"></script> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Place the first <script> tag in your HTML's <head> -->
+<script src="https://cdn.tiny.cloud/1/w96o6s9z16xn8z6mtipqsil6ns77luq64hg670qndl5z91ir/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+
+
+
+    
     <script>
         tailwind.config = {
             theme: {
@@ -152,6 +161,30 @@
                 document.getElementById('status-badge').classList.remove('hidden');
                 input.classList.add('bg-yellow-50', 'border-yellow-200');
             });
+        });
+    </script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: [
+            // Core editing features
+            'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+            // Your account includes a free trial of TinyMCE premium features
+            // Try the most popular premium features until Apr 29, 2026:
+            'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'advtemplate', 'tinymceai', 'uploadcare', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+            ],
+            toolbar: 'undo redo | tinymceai-chat tinymceai-quickactions tinymceai-review | blocks fontfamily fontsize | bold italic underline strikethrough | link media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography uploadcare | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+            ],
+            tinymceai_token_provider: async () => {
+            await fetch(`https://demo.api.tiny.cloud/1/w96o6s9z16xn8z6mtipqsil6ns77luq64hg670qndl5z91ir/auth/random`, { method: "POST", credentials: "include" });
+            return { token: await fetch(`https://demo.api.tiny.cloud/1/w96o6s9z16xn8z6mtipqsil6ns77luq64hg670qndl5z91ir/jwt/tinymceai`, { credentials: "include" }).then(r => r.text()) };
+            },
+            uploadcare_public_key: 'c22d95532e9e6d46e4d6',
         });
     </script>
 </body>

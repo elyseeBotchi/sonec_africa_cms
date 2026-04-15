@@ -11,7 +11,7 @@ class Article extends Model
         'title',
         'content',
         'image_url',
-        'image',
+        'image_article',
         'slug',
         'page_key',
         'user_id',
@@ -24,8 +24,24 @@ class Article extends Model
         'notes',
         'author',
         'description_courte',
+        'position_auteur',
+        'photo_auteur',
+        'photo_auteur_url',
+        'a_la_une',
+        'position_auteur',
+        'photo_auteur',
+        'photo_auteur_url',
 
     ];
+
+    protected $casts = [
+        'is_published' => 'boolean',
+        'activer_partage_reseaux_sociaux' => 'boolean',
+        'a_la_une' => 'boolean',
+        'published_at' => 'datetime',
+    ];
+
+    
 
     public function category()
     {

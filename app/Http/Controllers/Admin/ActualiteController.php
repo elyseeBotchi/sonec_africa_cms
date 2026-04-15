@@ -12,8 +12,9 @@ class ActualiteController extends Controller
     {
         $categories = \App\Models\CategorieArticle::all();
         $tags = \App\Models\Tag::all();
+        $articles = \App\Models\Article::all();
 
 
-        return view('admin.pages.actualites.index', compact('categories', 'tags'));
+        return view('admin.pages.actualites.index', compact('categories', 'tags','articles'));
     }
 }
