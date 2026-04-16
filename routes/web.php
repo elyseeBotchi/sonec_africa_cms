@@ -27,6 +27,9 @@ Route::middleware('auth')->prefix('/admin')->group(function () {
     Route::get('config/accueil', [App\Http\Controllers\Admin\AccueilController::class, 'index'])->name('admin.accueil');
     Route::post('config/accueil', [App\Http\Controllers\Admin\AccueilController::class, 'save'])->name('admin.accueil.save');
 
+    Route::get('config/qui-sommes-nous/decouvrir-sonec-africa', [App\Http\Controllers\Admin\QuiSommesNousController::class, 'index'])->name('admin.decouvrir-sonec-africa');
+    Route::post('config/qui-sommes-nous/decouvrir-sonec-africa', [App\Http\Controllers\Admin\QuiSommesNousController::class, 'save'])->name('admin.decouvrir-sonec-africa.save');
+
 
     Route::get('actualites', [App\Http\Controllers\Admin\ActualiteController::class, 'index'])->name('admin.actualites');
     Route::resource('/categorie-articles', App\Http\Controllers\Admin\CategorieArticleController::class);

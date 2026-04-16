@@ -181,52 +181,7 @@
             btn.closest('[data-service]').remove();
         }
 
-        // function addClientSection(){
-        //     const container = document.getElementById('client-container');
-        //     const index = container.querySelectorAll('[data-client]').length + 1;
-
-        //     const div = document.createElement('div');
-        //     div.setAttribute('data-client', '');
-        //     div.className = 'bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden';
-        //     div.innerHTML = `
-        //         <div class="absolute top-0 left-0 w-2 h-full bg-purple-500"></div>
-        //         <button onclick="removeClientSection(this)" class="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors">
-        //             <i class="fas fa-trash text-xs"></i>
-        //         </button>
-        //         <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2"><i class="fas fa-star text-purple-500"></i> Client ${index + 1}</h3>
-        //         <input type="hidden" name="client_page_key" value="accueil">
-        //         <div class="space-y-4">
-        //             <div>
-        //                 <label for="client_name-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Nom</label>
-        //                 <input type="text" id="client_name-${index}" name="client_name[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" placeholder="Nom du client">
-        //             </div>
-                
-        //             <div class="flex gap-4">
-                        
-        //                 <div class="flex-1">
-        //                     <label for="client_url-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Lien Bouton</label>
-        //                     <input type="text" id="client_url-${index}" name="client_url[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" placeholder="https://...">
-        //                 </div>
-        //                  <div class="flex-1">
-        //                         <label for="client_logo_url-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Url de l'image</label>
-        //                         <input type="text" id="client_logo_url-${index}" name="client_logo_url[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" >
-        //                     </div>
-
-        //                 </div>
-        //             </div>
-        //             <div class="preview bg-slate-50 rounded-xl p-4 flex items-center justify-center border border-slate-200 border-dashed mt-6">
-        //                 <div class="text-center">
-        //                     <i class="fas fa-image text-3xl text-slate-300 mb-2"></i>
-        //                     <p class="text-xs text-slate-400">Aperçu image</p>
-        //                     <input type="file" name="client_logo[]" class="hidden" id="client_logo-${index}">
-        //                     <label for="client_logo-${index}" class="mt-2 text-xs bg-white px-3 py-1 rounded border hover:bg-slate-100 cursor-pointer">Changer</label>
-        //                 </div>
-        //             </div>
-        //         </div>
-                    
-        //             `;
-        //     container.appendChild(div);
-        // }
+        
         // Attacher la prévisualisation sur un input file donné
         function attachClientLogoPreview(input) {
             input.addEventListener('change', function () {
