@@ -147,7 +147,7 @@ class AccueilController extends Controller
         if (isset($validatedData['partenaires'])) {
             foreach ($validatedData['partenaires'] as $index => $partenaireData) {
                 $imageFile = $request->file("partenaires.{$index}.logo");
-                if (isset($partenaireData['id'])) {
+                if (!empty($partenaireData['id'])) {
                     $partenaire = \App\Models\Partenaire::find($partenaireData['id']);
                     if (!$partenaire) continue;
 
@@ -201,7 +201,7 @@ class AccueilController extends Controller
         if (isset($validatedData['clients'])) {
             foreach ($validatedData['clients'] as $index => $clientData) {
                 $imageFile = $request->file("clients.{$index}.logo");
-                if (isset($clientData['id'])) {
+                if (!empty($clientData['id'])) {
                     $client = \App\Models\Client::find($clientData['id']);
                     if (!$client) continue; 
                     if ($imageFile) {

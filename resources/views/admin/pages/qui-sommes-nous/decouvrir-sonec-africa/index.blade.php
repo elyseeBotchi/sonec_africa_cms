@@ -433,7 +433,11 @@
             // engagement items
             document.querySelectorAll('#engagements-container [data-engagement-item]').forEach((engagementItem, index) => {
                 const idInput = engagementItem.querySelector('input[name="id[]"]');
-                if (idInput) formData.append(`engagements[${index}][id]`, idInput.value);
+                // if (idInput) formData.append(`engagements[${index}][id]`, idInput.value);
+                if (idInput && idInput.value.trim() !== '') {
+                    formData.append(`engagements[${index}][id]`, idInput.value);
+                }
+
                 formData.append(`engagements[${index}][icon]`, engagementItem.querySelector('input[name="engagement_item_icon[]"]')?.value ?? '');
                 formData.append(`engagements[${index}][title]`, engagementItem.querySelector('input[name="engagement_item_title[]"]')?.value ?? '');
                 formData.append(`engagements[${index}][description]`, engagementItem.querySelector('textarea[name="engagement_item_description[]"]')?.value ?? '');
@@ -443,7 +447,9 @@
             // pilliers
             document.querySelectorAll('#pilier-container [data-pilier]').forEach((pilier, index) => {
                 const idInput = pilier.querySelector('input[name="id[]"]');
-                if (idInput) formData.append(`piliers[${index}][id]`, idInput.value);
+                if (idInput && idInput.value.trim() !== '') {
+                    formData.append(`piliers[${index}][id]`, idInput.value);
+                }
                 formData.append(`piliers[${index}][icon]`, pilier.querySelector('input[name="pilier_icon[]"]')?.value ?? '');
                 formData.append(`piliers[${index}][title]`, pilier.querySelector('input[name="pilier_title[]"]')?.value ?? '');
                 formData.append(`piliers[${index}][description]`, pilier.querySelector('textarea[name="pilier_description[]"]')?.value ?? '');
@@ -453,7 +459,9 @@
             // chiffres
             document.querySelectorAll('#chiffres-container [data-chiffre]').forEach((chiffre, index) => {
                 const idInput = chiffre.querySelector('input[name="id[]"]');
-                if (idInput) formData.append(`chiffres[${index}][id]`, idInput.value);
+                if (idInput && idInput.value.trim() !== '') {
+                    formData.append(`chiffres[${index}][id]`, idInput.value);
+                }
                 formData.append(`chiffres[${index}][label]`, chiffre.querySelector('input[name="chiffre_label[]"]')?.value ?? '');
                 formData.append(`chiffres[${index}][value]`, chiffre.querySelector('input[name="chiffre_value[]"]')?.value ?? '');
                 formData.append(`chiffres[${index}][icon]`, chiffre.querySelector('input[name="chiffre_icon[]"]')?.value ?? '');
@@ -464,7 +472,9 @@
             // Approches
             document.querySelectorAll('#approche-container [data-approche]').forEach((approche, index) => {
                 const idInput = approche.querySelector('input[name="id[]"]');
-                if (idInput) formData.append(`approches[${index}][id]`, idInput.value);
+                if (idInput && idInput.value.trim() !== '') {
+                    formData.append(`approches[${index}][id]`, idInput.value);
+                }
                 formData.append(`approches[${index}][title]`, approche.querySelector('input[name="approche_title[]"]')?.value ?? '');
                 formData.append(`approches[${index}][description]`, approche.querySelector('textarea[name="approche_description[]"]')?.value ?? '');
                 formData.append(`approches[${index}][section_key]`, approche.querySelector('input[name="approche_section_key[]"]')?.value ?? '');
@@ -473,7 +483,9 @@
             // Certifications
             document.querySelectorAll('#certifications-container [data-certifications]').forEach((certification, index) => {
                 const idInput = certification.querySelector('input[name="id[]"]');
-                if (idInput) formData.append(`certifications[${index}][id]`, idInput.value);
+                if (idInput && idInput.value.trim() !== '') {
+                    formData.append(`certifications[${index}][id]`, idInput.value);
+                }
                 formData.append(`certifications[${index}][label]`, certification.querySelector('input[name="certification_label[]"]')?.value ?? '');
                 formData.append(`certifications[${index}][icon]`, certification.querySelector('input[name="certification_icon[]"]')?.value ?? '');
                 formData.append(`certifications[${index}][description]`, certification.querySelector('textarea[name="certification_description[]"]')?.value ?? '');
