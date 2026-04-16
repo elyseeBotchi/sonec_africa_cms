@@ -115,7 +115,7 @@
                 <a href="{{ route('admin.histoire') }}" onclick="switchPage('about-history')" class="px-6 py-2 hover:bg-slate-50">
                     Notre Histoire
                 </a>
-                <a href="#" onclick="switchPage('about-team')" class="px-6 py-2 hover:bg-slate-50">
+                <a href="{{ route('admin.notre-equipe') }}" onclick="switchPage('about-team')" class="px-6 py-2 hover:bg-slate-50">
                     Équipe de direction
                 </a>
             </div>
