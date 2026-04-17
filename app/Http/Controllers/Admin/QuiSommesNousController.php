@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreDecouvrirSonecRequest;
 use App\Http\Requests\StoreEquipeContentRequest;
 use App\Http\Requests\StoreHistoireRequest;
+use App\Http\Requests\StoreImplantationContentRequest;
 use App\Models\Accroche;
 use App\Models\BanniereHero;
+use App\Models\BureauPays;
 use App\Models\Certfication;
 use App\Models\Chiffre;
 use App\Models\Equipe;
@@ -422,7 +424,6 @@ class QuiSommesNousController extends Controller
                             'icon'        => $chiffre['icon']        ?? null,
                         ];
 
-                        // ✅ isset() ne suffit pas, il faut aussi vérifier que la valeur est non vide
                         if (!empty($chiffre['id'])) {
                             Chiffre::updateOrCreate(
                                 ['id' => $chiffre['id']],
@@ -946,5 +947,243 @@ class QuiSommesNousController extends Controller
             ];
             return response()->json($data, 500);
         }
+    }
+
+    // Page Implantation
+    public function implantation()
+    {
+        $page_key = 'implantation';
+        $bureaux = BureauPays::where('page_key', $page_key)->get();
+        $banniere = BanniereHero::where('page_key', $page_key)->first();
+        $seo = Seo::where('page_key', $page_key)->first();
+        $accroche = Accroche::where('page_key', $page_key)->first();
+        $chiffres = Chiffre::where('page_key', $page_key)->where('section_key', 'chiffres')->get();
+        $about = SectionPage::where('page_key', $page_key)->where('section_key', 'about')->first();
+        $section_premiere = SectionPage::where('page_key', $page_key)->where('section_key', 'section_premiere')->first();
+        return view('admin.pages.qui-sommes-nous.implantation.index', compact('bureaux', 'banniere', 'seo', 'accroche', 'page_key', 'chiffres', 'about', 'section_premiere'));
+    }
+
+    // sauvegarder ou mettre à jour les contenus de la page Implantation
+    public function saveImplantationContent(StoreImplantationContentRequest $request){
+        try {
+            $validatedData = $request->validated();
+            $imagePath = null;
+            $imagePathAbout = null;
+            $sectionPremiereImagePath= null;
+
+             // Sauvegarder la bannière
+            if (isset($validatedData['banniere_title']) || isset($validatedData['banniere_subtitle']) || isset($validatedData['banniere_image']) || isset($validatedData['banniere_image_url'])) {
+                
+                if ($request->hasFile('banniere_image')) {
+                    $existing = \App\Models\BanniereHero::where('page_key', $validatedData['page_key'])->first();
+                    if ($existing && $existing->image && \Storage::exists('public/' . $existing->image)) {
+                        \Storage::delete('public/' . $existing->image);
+                    }
+
+                    $imagePath = $request->file('banniere_image')->store('hero_images', 'public');
+                }
+
+                $banniereData = [
+                    'page_key' => $validatedData['page_key'],
+                    'section_key' => $validatedData['banniere_section_key'],
+                    'title' => $validatedData['banniere_title'] ?? null,
+                    'subtitle' => $validatedData['banniere_subtitle'] ?? null,
+                    'image_url' => $validatedData['banniere_image_url'] ?? null,
+                    'cta_label' => $validatedData['banniere_cta_label'] ?? null,
+                    'cta_url' => $validatedData['banniere_cta_url'] ?? null,
+                    ...($imagePath ? ['image' => $imagePath] : []),
+                ];
+
+                BanniereHero::updateOrCreate(
+                    ['page_key' => $validatedData['page_key'], 'section_key' => $validatedData['banniere_section_key']],
+                    $banniereData
+                );
+            }
+
+            // Sauvegarder les chiffres
+            if (isset($validatedData['chiffres']) && is_array($validatedData['chiffres'])) {
+                
+                $submittedIds = collect($validatedData['chiffres'])
+                                ->pluck('id')
+                                ->filter() // retire null et ""
+                                ->values();
+
+                Chiffre::where('page_key', $validatedData['page_key'])
+                                ->whereNotIn('id', $submittedIds)
+                                ->delete();
+
+            
+                foreach ($validatedData['chiffres'] as $chiffre) {
+                    $chiffreData = [
+                        'page_key'    => $validatedData['page_key'],
+                        'section_key' => 'chiffres',
+                        'label'       => $chiffre['label']       ?? null,
+                        'value'       => $chiffre['value']       ?? null,
+                        'description' => $chiffre['description'] ?? null,
+                        'icon'        => $chiffre['icon']        ?? null,
+                    ];
+
+                    if (!empty($chiffre['id'])) {
+                        Chiffre::updateOrCreate(
+                            ['id' => $chiffre['id']],
+                            $chiffreData
+                        );
+                    } else {
+                        Chiffre::create($chiffreData);
+                    }
+                }
+            }
+
+            // Sauvegarde de l'accroche
+            if(!empty($validatedData['accroche_title']) || !empty($validatedData['accroche_subtitle']) || !empty($validatedData['accroche_description']) || !empty($validatedData['accroche_cta_label']) || !empty($validatedData['accroche_cta_url'])) {
+
+                \App\Models\Accroche::updateOrCreate(
+                    ['page_key' => $validatedData['page_key']],
+                    [
+                        'title' => $validatedData['accroche_title'],
+                        'subtitle' => $validatedData['accroche_subtitle'],
+                        'description' => $validatedData['accroche_description'],
+                        'cta_label' => $validatedData['accroche_cta_label'],
+                        'cta_url' => $validatedData['accroche_cta_url'],
+                        'section_key' => 'accroche',
+                        'page_key' => $validatedData['page_key'],
+                    ]
+                );
+            }
+
+            // Sauvegarde du SEO
+            if(!empty($validatedData['seo_title']) || !empty($validatedData['seo_description']) || !empty($validatedData['seo_keywords'])) {
+                \App\Models\Seo::updateOrCreate(
+                    ['page_key' => $validatedData['seo_page_key']],
+                    [
+                        'title' => $validatedData['seo_title'],
+                        'description' => $validatedData['seo_description'],
+                        'keywords' => $validatedData['seo_keywords'],
+                    ]
+                );
+            }
+
+            // Sauvegarder la section premiere
+            if ($request->hasFile('section_premiere_image')) {
+                    // Supprimer l'ancienne image si elle existe
+                    $existing = \App\Models\SectionPage::where('page_key', $validatedData['page_key'])->where('section_key', 'section_premiere')->first();
+                    if ($existing && $existing->image && \Storage::exists('public/' . $existing->image)) {
+                        \Storage::delete('public/' . $existing->image);
+                    }
+
+                    $sectionPremiereImagePath = $request->file('section_premiere_image')->store('section_images', 'public');
+            }
+
+            if(isset($validatedData['section_premiere_title']) || isset($validatedData['section_premiere_subtitle']) || isset($validatedData['section_premiere_description']) || isset($validatedData['section_premiere_cta_label']) || isset($validatedData['section_premiere_cta_url']) || isset($validatedData['section_premiere_image']) || isset($validatedData['section_premiere_image_url'])) {
+                $sectionPremiereData = [
+                    'page_key' => $validatedData['page_key'],
+                    'section_key' => 'section_premiere',
+                    'title' => $validatedData['section_premiere_title'] ?? null,
+                    'subtitle' => $validatedData['section_premiere_subtitle'] ?? null,
+                    'description' => $validatedData['section_premiere_description'] ?? null,
+                    'cta_label' => $validatedData['section_premiere_cta_label'] ?? null,
+                    'cta_url' => $validatedData['section_premiere_cta_url'] ?? null,
+                    'image_url' => $validatedData['section_premiere_image_url'] ?? null,
+                    ...($request->hasFile('section_premiere_image') ? ['image' => $sectionPremiereImagePath] : []),
+                ];
+                SectionPage::updateOrCreate(
+                    ['page_key' => $validatedData['page_key'], 'section_key' => 'section_premiere'],
+                    $sectionPremiereData
+                );
+            }
+
+            // Sauvegarder les bureaux
+            if (isset($validatedData['bureaux']) && is_array($validatedData['bureaux'])) {
+                $submittedIds = collect($validatedData['bureaux'])
+                                ->pluck('id')
+                                ->filter()
+                                ->values();
+                BureauPays::where('page_key', $validatedData['page_key'])
+                                ->whereNotIn('id', $submittedIds)
+                                ->delete();
+                foreach ($validatedData['bureaux'] as $index => $bureau) {
+                    // stocker l'image si elle est présente
+                    $bureauImagePath = null;
+                    if (isset($bureau['image']) && $request->hasFile("bureaux.$index.image")) {
+                        $existing = \App\Models\BureauPays::where('id', $bureau['id'] ?? 0)->first();
+                        if ($existing && $existing->image && \Storage::exists('public/' . $existing->image)) {
+                            \Storage::delete('public/' . $existing->image);
+                        }
+                        $bureauImagePath = $request->file("bureaux.$index.image")->store('bureau_images', 'public');
+                    }
+                    $bureauData = [
+                        'page_key' => $validatedData['page_key'],
+                        'section_key' => $validatedData['section_key'] ?? 'bureaux',
+                        'pays' => $bureau['pays'] ?? null,
+                        'code_pays' => $bureau['code_pays'] ?? null,
+                        'adresse' => $bureau['adresse'] ?? null,
+                        'telephone' => $bureau['telephone'] ?? null,
+                        'ville' => $bureau['ville'] ?? null,
+                        'email' => $bureau['email'] ?? null,
+                        'image_url' => $bureau['image_url'] ?? null,
+                        'latitude' => $bureau['latitude'] ?? null,
+                        'longitude' => $bureau['longitude'] ?? null,
+                        'representant' => $bureau['representant'] ?? null,
+                        'maps_url' => $bureau['maps_url'] ?? null,
+                        'type_bureau' => $bureau['type_bureau'] ?? null,
+                        ...($bureauImagePath ? ['image_url' => $bureauImagePath] : []),
+                    ];
+                    if (!empty($bureau['id'])) {
+                        BureauPays::updateOrCreate(
+                            ['id' => $bureau['id']],
+                            $bureauData
+                        );
+                    } else {
+                        BureauPays::create($bureauData);
+                    }
+                }
+            }
+
+            // section about
+             if ($request->hasFile('about_image')) {
+                    // Supprimer l'ancienne image si elle existe
+                    $existing = \App\Models\SectionPage::where('page_key', $validatedData['page_key'])->where('section_key', 'section_premiere')->first();
+                    if ($existing && $existing->image && \Storage::exists('public/' . $existing->image)) {
+                        \Storage::delete('public/' . $existing->image);
+                    }
+
+                $imagePathAbout = $request->file('about_image')->store('section_images', 'public');
+            }
+            if(isset($validatedData['about_title']) || isset($validatedData['about_description'])   
+            /*|| isset($validatedData['about_image']) || isset($validatedData['about_image_url'])*/) {
+                $aboutData = [
+                    'page_key' => $validatedData['page_key'],
+                    'section_key' => $validatedData['about_section_key'] ?? 'about',
+                    'title' => $validatedData['about_title'] ?? null,
+                    'subtitle' => $validatedData['about_subtitle'] ?? null,
+                    'description' => $validatedData['about_description'] ?? null,
+                    'cta_label' => $validatedData['about_cta_label'] ?? null,
+                    'cta_url' => $validatedData['about_cta_url'] ?? null,
+                    'image_url' => $validatedData['about_image_url'] ?? null,
+                    ...($imagePathAbout ? ['image' => $imagePathAbout] : []),
+                    // ...($request->hasFile('about_image') ? ['image' => $aboutImagePath] : []),
+                ];
+                SectionPage::updateOrCreate(
+                    ['page_key' => $validatedData['page_key'], 'section_key' => $validatedData['about_section_key'] ?? 'about'],
+                    $aboutData
+                );
+            }
+
+            $data = [
+                'success' => true,
+                'message' => 'Contenu de la page Implantation sauvegardé avec succès.',
+            ];
+            return response()->json($data, 200);
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            $data = [
+                'success' => false,
+                'message' => 'Une erreur est survenue lors de la sauvegarde du contenu de la page Implantation.',
+                'error' => $th->getMessage(),
+            ];
+            return response()->json($data, 500);
+        }
+            
     }
 }

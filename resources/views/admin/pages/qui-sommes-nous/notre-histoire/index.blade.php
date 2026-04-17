@@ -413,7 +413,7 @@
                         statusBadge.classList.add('hidden');
 
 
-                        // window.location.reload();
+                        window.location.reload();
                     }, 1200);
                     
 

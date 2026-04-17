@@ -118,6 +118,10 @@
                 <a href="{{ route('admin.notre-equipe') }}" onclick="switchPage('about-team')" class="px-6 py-2 hover:bg-slate-50">
                     Équipe de direction
                 </a>
+               
+                 <a href="{{ route('admin.implantation') }}" onclick="switchPage('about-implantation')" class="px-6 py-2 hover:bg-slate-50">
+                     Implantation
+                 </a>   
             </div>
         </div>
 
