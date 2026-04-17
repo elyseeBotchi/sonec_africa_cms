@@ -125,7 +125,7 @@
             </div>
         </div>
 
-        <a href="#" onclick="switchPage('careers')" id="nav-page-blog" class="nav-item flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
+        <a href="{{ route('offres-emploi.index') }}" onclick="switchPage('careers')" id="nav-page-blog" class="nav-item flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
             <i class="fas fa-newspaper w-5 text-pink-500"></i> Carrières
         </a>
 

@@ -27,4 +27,9 @@ class BureauPays extends Model
         'image_url',
         'type_bureau',
     ];
+
+    public function offreEmplois()
+    {
+        return $this->hasMany(OffreEmploi::class, 'bureau_pays_id');
+    }
 }

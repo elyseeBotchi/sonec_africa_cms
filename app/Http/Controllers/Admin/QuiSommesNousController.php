@@ -1150,7 +1150,7 @@ class QuiSommesNousController extends Controller
                 $imagePathAbout = $request->file('about_image')->store('section_images', 'public');
             }
             if(isset($validatedData['about_title']) || isset($validatedData['about_description'])   
-            /*|| isset($validatedData['about_image']) || isset($validatedData['about_image_url'])*/) {
+                /*|| isset($validatedData['about_image']) || isset($validatedData['about_image_url'])*/) {
                 $aboutData = [
                     'page_key' => $validatedData['page_key'],
                     'section_key' => $validatedData['about_section_key'] ?? 'about',
