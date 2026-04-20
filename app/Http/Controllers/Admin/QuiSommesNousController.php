@@ -960,6 +960,8 @@ class QuiSommesNousController extends Controller
         $chiffres = Chiffre::where('page_key', $page_key)->where('section_key', 'chiffres')->get();
         $about = SectionPage::where('page_key', $page_key)->where('section_key', 'about')->first();
         $section_premiere = SectionPage::where('page_key', $page_key)->where('section_key', 'section_premiere')->first();
+        
+        
         return view('admin.pages.qui-sommes-nous.implantation.index', compact('bureaux', 'banniere', 'seo', 'accroche', 'page_key', 'chiffres', 'about', 'section_premiere'));
     }
 

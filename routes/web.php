@@ -40,9 +40,12 @@ Route::middleware('auth')->prefix('/admin')->group(function () {
     Route::resource('/categorie-articles', App\Http\Controllers\Admin\CategorieArticleController::class);
     Route::resource('/tags', App\Http\Controllers\Admin\TagController::class);
     Route::resource('/articles', App\Http\Controllers\Admin\ArticleController::class);
-    
+    Route::resource('/solutions', App\Http\Controllers\Admin\SolutionController::class);
+
+
 
     Route::resource('/offres-emploi', App\Http\Controllers\Admin\OffreEmploiController::class);
+    
 
     // Deconnexion
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('admin.logout');

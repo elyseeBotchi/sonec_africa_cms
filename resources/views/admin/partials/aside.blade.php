@@ -27,32 +27,44 @@
             <i class="fas fa-home w-5 text-purple-500"></i> Accueil
         </a>
         <!-- Solutions avec sous-menu -->
-        <div class="relative">
-            <a href="#"
-            onclick="toggleSubMenu(event, 'solutions-submenu')"
-            id="nav-page-solutions"
-            class="nav-item flex items-center justify-between gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
-                <span class="flex items-center gap-3">
-                    <i class="fas fa-layer-group w-5 text-blue-500"></i>
-                    Solutions
-                </span>
-                <i class="fas fa-chevron-down text-xs"></i>
-            </a>
+        @if(count(get_solutions()) > 0)
+            <div class="relative">
+                <a href="#"
+                onclick="toggleSubMenu(event, 'solutions-submenu')"
+                id="nav-page-solutions"
+                class="nav-item flex items-center justify-between gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
+                    <span class="flex items-center gap-3">
+                        <i class="fas fa-layer-group w-5 text-blue-500"></i>
+                        Solutions
+                    </span>
+                    <i class="fas fa-chevron-down text-xs"></i>
+                </a>
 
-            <!-- Sous-menus -->
-            <div id="solutions-submenu"
-                class="submenu hidden ml-8 flex flex-col border-l border-slate-200">
-                <a href="#" onclick="switchPage('ecoleweb')" class="px-6 py-2 hover:bg-slate-50">
-                    ECOLEWEB
-                </a>
-                <a href="#" onclick="switchPage('solution-sante')" class="px-6 py-2 hover:bg-slate-50">
-                    GDEC
-                </a>
-                <a href="#" onclick="switchPage('solution-agriculture')" class="px-6 py-2 hover:bg-slate-50">
-                    SONEC PAY
-                </a>
+                <!-- Sous-menus -->
+                <div id="solutions-submenu"
+                    class="submenu hidden ml-8 flex flex-col border-l border-slate-200">
+                    @foreach (get_solutions() as $solution)
+                        <a href="{{ route('solutions.edit', $solution->id) }}" class="px-6 py-2 hover:bg-slate-50">
+                            {{ $solution->title }}
+                        </a>                        
+                    @endforeach
+                    {{-- <a href="#" onclick="switchPage('ecoleweb')" class="px-6 py-2 hover:bg-slate-50">
+                        ECOLEWEB
+                    </a>
+                    <a href="#" onclick="switchPage('solution-sante')" class="px-6 py-2 hover:bg-slate-50">
+                        GDEC
+                    </a>
+                    <a href="#" onclick="switchPage('solution-agriculture')" class="px-6 py-2 hover:bg-slate-50">
+                        SONEC PAY
+                    </a> --}}
+
+                </div>
             </div>
-        </div>
+        @else
+            <a href="{{ route('solutions.index') }}" id="nav-page-solutions" class="nav-item flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
+                <i class="fas fa-layer-group w-5 text-blue-500"></i> Solutions
+            </a>
+        @endif
 
 
         <!-- Industries avec sous-menu -->

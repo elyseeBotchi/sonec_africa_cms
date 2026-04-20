@@ -109,6 +109,8 @@ class StoreImplantationContentRequest extends FormRequest
             'mimes' => 'Le champ :attribute doit être une image de type :values.',
             'exists' => 'Le champ :attribute doit exister dans la base de données.',
             'url' => 'Le champ :attribute doit être une URL valide.',
+            'array' => 'Le champ :attribute doit être un tableau.',
+            'email' => 'Le champ :attribute doit être une adresse email valide.',
         ];
     }
 }

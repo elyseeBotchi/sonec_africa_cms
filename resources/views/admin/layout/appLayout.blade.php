@@ -164,8 +164,7 @@
         });
     </script>
     <script>
-        tinymce.init({
-            selector: 'textarea',
+        const tinyMCEConfig = {
             plugins: [
             // Core editing features
             'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
@@ -185,6 +184,10 @@
             return { token: await fetch(`https://demo.api.tiny.cloud/1/w96o6s9z16xn8z6mtipqsil6ns77luq64hg670qndl5z91ir/jwt/tinymceai`, { credentials: "include" }).then(r => r.text()) };
             },
             uploadcare_public_key: 'c22d95532e9e6d46e4d6',
+        };
+        tinymce.init({
+            selector: 'textarea',
+            ...tinyMCEConfig
         });
     </script>
 </body>

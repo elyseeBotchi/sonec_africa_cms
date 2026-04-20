@@ -53,3 +53,11 @@ if (!function_exists('get_accueil_content')) {
         ];
     }
 }
+
+// Fonction pour recuperer les solutions
+if (!function_exists('get_solutions')) {
+    function get_solutions()
+    {
+        return \App\Models\Solution::where('mis_avant', true)->orderBy('created_at', 'desc')->get();
+    }
+}
