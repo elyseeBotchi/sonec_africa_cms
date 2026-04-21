@@ -76,7 +76,7 @@
                                     <a href="{{ route('secteur-expertise.edit',['secteur_expertise' => $secteur->id]) }}" class="bg-transparent text-blue-500 px-3 py-1 text-sm transition-all flex items-center gap-1">
                                         <i class="fas fa-pencil"></i>
                                     </a>
-                                    <button class="bg-transparent text-red-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="deleteSecteur({{ $secteur->id }})" data-id="{{ $secteur->id }}" data-label="{{ $secteur->name }}" data-toggle="tooltip" data-title="Supprimer {{ $secteur->name }}">
+                                    <button class="bg-transparent text-red-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="deleteSecteurExpertise({{ $secteur->id }})" data-id="{{ $secteur->id }}" data-label="{{ $secteur->name }}" data-toggle="tooltip" data-title="Supprimer {{ $secteur->name }}">
                                         <i class="fas fa-trash"></i> 
                                     </button>
                                 </td>
@@ -96,7 +96,7 @@
                                         <button onclick="closeDeleteSecteurModal({{ $secteur->id }})" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md font-bold text-sm transition-all">
                                             Annuler
                                         </button>
-                                        <button onclick="deleteSecteur({{ $secteur->id }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-bold text-sm transition-all flex items-center gap-2">
+                                        <button onclick="deleteSecteurExpertise({{ $secteur->id }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-bold text-sm transition-all flex items-center gap-2">
                                             <i class="fas fa-trash"></i> Supprimer
                                         </button>
                                     </div>

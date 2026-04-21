@@ -313,9 +313,7 @@ class SecteurExpertiseController extends Controller
                         SecteurExpertiseChiffre::create($chiffreData);
                     }
                 }
-            }
-
-                     
+            }                     
 
             // Partenaires de la solution
             if (isset($validatedData['partenaires']) && is_array($validatedData['partenaires'])) {
@@ -459,7 +457,6 @@ class SecteurExpertiseController extends Controller
      */
     public function destroy(SecteurExpertise $secteurExpertise)
     {
-        //
         try {
             $secteurExpertise->delete();
             return response()->json([
