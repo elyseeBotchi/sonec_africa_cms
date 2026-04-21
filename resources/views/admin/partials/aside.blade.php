@@ -68,7 +68,37 @@
 
 
         <!-- Industries avec sous-menu -->
-        <div class="relative">
+        @if(count(get_secteurs_expertise()) > 0)
+             <div class="relative">
+                <a href="#"
+                onclick="toggleSubMenu(event, 'industries-submenu')"
+                id="nav-page-industries"
+                class="nav-item flex items-center justify-between gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
+                    <span class="flex items-center gap-3">
+                        <i class="fas fa-university w-5 text-sonec-green"></i>
+                        Industries
+                    </span>
+                    <i class="fas fa-chevron-down text-xs"></i>
+                </a>
+                <div id="industries-submenu"
+                    class="submenu hidden ml-8 flex flex-col border-l border-slate-200">
+                    @foreach (get_secteurs_expertise() as $secteur)
+                        <a href="{{ route('secteur-expertise.edit', $secteur->id) }}" class="px-6 py-2 hover:bg-slate-50">
+                            {{ $secteur->name }}
+                        </a>                        
+                    @endforeach
+                    <a href="{{ route('secteur-expertise.index') }}" class="px-6 py-2 hover:bg-slate-50">
+                        Tous les secteurs d'expertise
+                    </a>
+                    
+                </div>
+            </div>
+        @else
+            <a href="{{ route('secteur-expertise.index') }}" id="nav-page-industries" class="nav-item flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
+                <i class="fas fa-university w-5 text-sonec-green"></i> Industries   
+            </a>
+        @endif
+        {{-- <div class="relative">
             <a href="#"
             onclick="toggleSubMenu(event, 'industries-submenu')"
             id="nav-page-banking"
@@ -101,7 +131,7 @@
                     Industrie & Énergie
                 </a>
             </div>
-        </div>
+        </div> --}}
 
         <a href="{{ route('admin.actualites') }}" id="nav-page-ecoleweb" class="nav-item flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
             <i class="fas fa-graduation-cap w-5 text-yellow-500"></i> Actualité

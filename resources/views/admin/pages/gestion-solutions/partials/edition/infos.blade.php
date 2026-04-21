@@ -128,44 +128,92 @@
 </div>
 
 {{-- Chiffres clés --}}
-<div class="bg-white  mb-8 p-8 rounded-3xl shadow-sm border border-slate-100">
+<div class="bg-white mb-8 p-8 rounded-3xl shadow-sm border border-slate-100">
     <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2">
         <i class="fas fa-chart-bar text-green-500"></i> Section "Chiffres clés"
-
     </h3>
 
     <div id="chiffres-cles-container" class="space-y-6">
         <div id="chiffres-cles-grid" class="grid md:grid-cols-2 gap-6">
-            {{-- Afficher les chiffres clés depuis la bd --}}
+
             @foreach($solution->chiffres as $index => $chiffre)
-                <div data-chiffre class="bg-slate-50 p-4 rounded-xl border border-slate-200 relative">    
-                    <div class="col-span-2 flex justify-end">
-                        <button type="button" onclick="removeChiffreCleSolution(this)" class="text-red-500 hover:text-red-700 text-sm font-bold">
+                @php $i = $index + 1; @endphp
+
+                <div data-chiffre class="chiffre-cle-item bg-slate-50 p-4 rounded-xl border border-slate-200 relative">
+
+                    <div class="flex justify-end mb-2">
+                        <button type="button" onclick="removeChiffreCleSolution(this)"
+                            class="text-red-500 hover:text-red-700 text-sm font-bold">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
-                    <input type="hidden" name="chiffre_cle[{{ $index }}][id]" value="{{ $chiffre->id }}">
-                    <div>
-                        <label for="label_chiffre_cle_{{ $index }}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Libellé chiffre clé</label>
-                        <input type="text" id="label_chiffre_cle_{{ $index }}" name="label_chiffre_cle_{{ $index }}" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="ex: 500+" value="{{ $chiffre->label ?? '' }}">
+
+                    <input type="hidden"
+                        name="chiffre_id_{{ $i }}"
+                        value="{{ $chiffre->id }}">
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label for="label_chiffre_cle_{{ $i }}"
+                                class="block text-xs font-bold text-slate-400 uppercase mb-1">
+                                Libellé chiffre clé
+                            </label>
+                            <input type="text"
+                                id="label_chiffre_cle_{{ $i }}"
+                                name="label_chiffre_cle_{{ $i }}[]"
+                                value="{{ $chiffre->label ?? '' }}"
+                                placeholder="ex: 500+"
+                                class="w-full p-3 bg-white border border-slate-200 rounded-xl font-normal text-sm">
+                        </div>
+
+                        <div>
+                            <label for="valeur_chiffre_cle_{{ $i }}"
+                                class="block text-xs font-bold text-slate-400 uppercase mb-1">
+                                Valeur chiffre clé
+                            </label>
+                            <input type="text"
+                                id="valeur_chiffre_cle_{{ $i }}"
+                                name="valeur_chiffre_cle_{{ $i }}[]"
+                                value="{{ $chiffre->value ?? '' }}"
+                                placeholder="ex: 500+"
+                                class="w-full p-3 bg-white border border-slate-200 rounded-xl font-normal text-sm">
+                        </div>
+
+                        <div>
+                            <label for="icon_chiffre_cle_{{ $i }}"
+                                class="block text-xs font-bold text-slate-400 uppercase mb-1">
+                                Icône (optionnel)
+                            </label>
+                            <input type="text"
+                                id="icon_chiffre_cle_{{ $i }}"
+                                name="icon_chiffre_cle_{{ $i }}[]"
+                                value="{{ $chiffre->icon ?? '' }}"
+                                placeholder="ex: fas fa-users"
+                                class="w-full p-3 bg-white border border-slate-200 rounded-xl font-normal text-sm">
+                        </div>
+
+                        <div class="col-span-2">
+                            <label for="description_chiffre_cle_{{ $i }}"
+                                class="block text-xs font-bold text-slate-400 uppercase mb-1">
+                                Description
+                            </label>
+                            <textarea
+                                id="description_chiffre_cle_{{ $i }}"
+                                name="description_chiffre_cle_{{ $i }}[]"
+                                placeholder="ex: Clients satisfaits"
+                                class="w-full p-3 bg-white border border-slate-200 rounded-xl font-normal text-sm"
+                            >{{ $chiffre->description ?? '' }}</textarea>
+                        </div>
                     </div>
-                    <div>
-                        <label for="valeur_chiffre_cle_{{ $index }}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Valeur chiffre clé</label>
-                        <input type="text" id="valeur_chiffre_cle_{{ $index }}" name="valeur_chiffre_cle_{{ $index }}" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="ex: 500+" value="{{ $chiffre->value ?? '' }}">
-                    </div>  
-                    <div>
-                        <label for="icon_chiffre_cle_{{ $index }}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Icone du chiffre clé (optionnel, si pas d'image)</label>
-                        <input type="text" id="icon_chiffre_cle_{{ $index }}" name="icon_chiffre_cle_{{ $index }}" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="ex: fas fa-users" value="{{ $chiffre->icon ?? '' }}">  
-                    </div>
-                    <div>
-                        <label for="description_chiffre_cle_{{ $index }}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Description du chiffre clé</label>
-                        <textarea id="description_chiffre_cle_{{ $index }}" name="description_chiffre_cle_{{ $index }}" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="ex: Clients satisfaits">{{ $chiffre->description ?? '' }}</textarea>
-                    </div>
+
                 </div>
             @endforeach
+
         </div>
     </div>
-    <button type="button" onclick="addChiffreCleSolution()" class="mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm flex items-center gap-2">
+
+    <button type="button" onclick="addChiffreCleSolution()"
+        class="mt-4 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm flex items-center gap-2">
         <i class="fas fa-plus"></i> Ajouter un chiffre clé
     </button>
 </div>

@@ -61,3 +61,11 @@ if (!function_exists('get_solutions')) {
         return \App\Models\Solution::where('mis_avant', true)->orderBy('created_at', 'desc')->get();
     }
 }
+
+// Fonction pour récuperer les secteurs d'expertise
+if (!function_exists('get_secteurs_expertise')) {
+    function get_secteurs_expertise()
+    {
+        return \App\Models\SecteurExpertise::where('mis_avant', true)->orderBy('created_at', 'desc')->get();
+    }
+}

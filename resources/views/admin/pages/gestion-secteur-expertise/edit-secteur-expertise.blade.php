@@ -4,7 +4,7 @@
 
     <header class="h-16 bg-white border-b border-slate-200 flex justify-between items-center px-8 z-10">
         <div class="flex items-center gap-4">
-            <h2 id="header-title" class="text-xl font-bold text-sonec-dark">Solutions</h2>
+            <h2 id="header-title" class="text-xl font-bold text-sonec-dark">Secteur d'Expertise</h2>
             <span id="status-badge" class="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-md border border-green-200 hidden">Modifications en cours</span>
         </div>
         <div class="flex items-center gap-4">
@@ -20,9 +20,9 @@
         <div class=" max-w-5xl mx-auto">
             <div class="flex gap-1 bg-slate-200 p-1 rounded-xl mb-8 w-fit">
                 <button onclick="showTab('infos')" class="px-6 py-2 rounded-lg bg-white font-bold shadow-sm text-sm  text-sonec-dark">Informations générales</button>
-                <button onclick="showTab('fonctionnalites')" class="px-6 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-sonec-dark">Fonctionnalités</button>
+                {{-- <button onclick="showTab('fonctionnalites')" class="px-6 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-sonec-dark">Fonctionnalités</button> --}}
                 <button onclick="showTab('partenaires')" class="px-6 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-sonec-dark">Partenaires</button>
-                <button onclick="showTab('temoignages')" class="px-6 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-sonec-dark">Témoignages</button>
+                {{-- <button onclick="showTab('temoignages')" class="px-6 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-sonec-dark">Témoignages</button> --}}
                 <button onclick="showTab('personnalisation')" class="px-6 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-sonec-dark">Personnalisation de sections</button>
                 <button onclick="showTab('seo')" class="px-6 py-2 rounded-lg text-sm font-bold text-slate-500 hover:text-sonec-dark">SEO & Méta</button>
             </div>
@@ -34,22 +34,22 @@
 
                 <div id="tab-content" class="tab-content p-8 rounded-3xl shadow-sm border border-slate-100">
                     <div id="tab-content-infos" class="tab-pane active">
-                        @include('admin.pages.gestion-solutions.partials.edition.infos')
+                        @include('admin.pages.gestion-secteur-expertise.partials.edition.infos')
                     </div>
-                    <div id="tab-content-fonctionnalites" class="tab-pane hidden">
-                        @include('admin.pages.gestion-solutions.partials.edition.fonctionnalites')
-                    </div>
+                    {{-- <div id="tab-content-fonctionnalites" class="tab-pane hidden">
+                        @include('admin.pages.gestion-secteur-expertise.partials.edition.fonctionnalites')
+                    </div> --}}
                     <div id="tab-content-partenaires" class="tab-pane hidden">
-                        @include('admin.pages.gestion-solutions.partials.edition.partenaires')
+                        @include('admin.pages.gestion-secteur-expertise.partials.edition.partenaires')
                     </div>
-                    <div id="tab-content-temoignages" class="tab-pane hidden">
-                        @include('admin.pages.gestion-solutions.partials.edition.temoignages')
-                    </div>
+                    {{-- <div id="tab-content-temoignages" class="tab-pane hidden">
+                        @include('admin.pages.gestion-secteur-expertise.partials.edition.temoignages')
+                    </div> --}}
                     <div id="tab-content-personnalisation" class="tab-pane hidden">
-                        @include('admin.pages.gestion-solutions.partials.edition.personnalisation') 
+                        @include('admin.pages.gestion-secteur-expertise.partials.edition.personnalisation') 
                     </div>
                     <div id="tab-content-seo" class="tab-pane hidden">
-                        @include('admin.pages.gestion-solutions.partials.edition.seo')
+                        @include('admin.pages.gestion-secteur-expertise.partials.edition.seo')
                     </div>
                     
                 </div>
@@ -66,14 +66,14 @@
             document.getElementById('tab-content-' + tab).classList.remove('hidden');
         }
 
-        document.getElementById('image_couverture_solution').addEventListener('change', function(event) {
+        document.getElementById('image_couverture_secteur_expertise').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     // Afficher l'aperçu de l'image
                     // const preview = document.querySelector('#preview-area-logo').parentElement.querySelector('i');
-                    const preview = document.querySelector('.preview-area-image-couverture-solution');
+                    const preview = document.querySelector('.preview-area-image-couverture-secteur-expertise');
                     const icon = preview.querySelector('i');
                     if (icon) {
                         icon.remove(); 
@@ -87,8 +87,8 @@
             }
         });
 
-        // Ajouter chiffres clés de la solution
-        function addChiffreCleSolution() {
+        // Ajouter chiffres clés du secteur d'expertise
+        function addChiffreCleSecteurExpertise() {
             const container = document.getElementById('chiffres-cles-grid');
             // Compte tous les items présents (Blade + JS) pour éviter les doublons d'index
             const index = container.querySelectorAll('[data-chiffre]').length + 1;
@@ -98,7 +98,7 @@
             item.classList.add('chiffre-cle-item', 'bg-slate-50', 'p-4', 'rounded-xl', 'border', 'border-slate-200', 'relative');
             item.innerHTML = `
                 <div class="flex justify-end mb-2">
-                    <button type="button" onclick="removeChiffreCleSolution(this)"
+                    <button type="button" onclick="removeChiffreCleSecteurExpertise(this)"
                         class="text-red-500 hover:text-red-700 text-sm font-bold">
                         <i class="fas fa-trash"></i>
                     </button>
@@ -158,12 +158,12 @@
             container.appendChild(item);
         }
 
-        function removeChiffreCleSolution(button) {
+        function removeChiffreCleSecteurExpertise(button) {
             button.closest('[data-chiffre]')?.remove();
         }
 
         // Partenaires
-        function addPartenaireSolutionSection() {
+        function addPartenaireSecteurExpertise() {
             const container = document.getElementById('partenaires-grid');
             const index = container.querySelectorAll('[data-partenaire]').length + 1;
 
@@ -172,7 +172,7 @@
             partenaireItem.classList.add('bg-white', 'p-8', 'rounded-3xl', 'shadow-sm', 'border', 'border-slate-100', 'relative', 'overflow-hidden');
             partenaireItem.innerHTML = `
                 <div class="absolute top-0 left-0 w-2 h-full bg-purple-500"></div>
-                <button onclick="removePartenaireSolutionSection(this)" class="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors">
+                <button onclick="removePartenaireSecteurExpertise(this)" class="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors">
                     <i class="fas fa-trash text-xs"></i>
                 </button>
                 <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2"><i class="fas fa-star text-purple-500"></i> Partenaire </h3>
@@ -194,6 +194,10 @@
                             <label for="partenaire_logo_url_${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Url de l'image</label>
                             <input type="text" id="partenaire_logo_url_${index}" name="partenaire_logo_url_${index}[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" >    
                         </div>
+                        <div class="flex-1">
+                            <label for="partenaire_website_${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Url du site web</label>
+                            <input type="text" id="partenaire_website_${index}" name="partenaire_website_${index}[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" >    
+                        </div>
                     </div>
                     <div class="preview bg-slate-50 rounded-xl p-4 flex items-center justify-center border border-slate-200 border-dashed mt-6">
                         <div class="text-center">
@@ -209,7 +213,7 @@
             attachPartenaireLogoPreview(partenaireItem.querySelector('input[type="file"]'));    
         }
 
-        function removePartenaireSolutionSection(button) {
+        function removePartenaireSecteurExpertise(button) {
             const partenaireDiv = button.closest('[data-partenaire]');
             if (partenaireDiv) {
                 partenaireDiv.remove();
@@ -240,166 +244,10 @@
             });
         }
 
-        // Fonctionnalités
-        function addFonctionnalitesSolutionSection() {
-            const container = document.getElementById('fonctionnalites-grid');
-            // Compte tous les items existants (Blade + JS) pour éviter les doublons d'index
-            const index = container.querySelectorAll('[data-fonctionnalite]').length + 1;
-
-            const fonctionnaliteItem = document.createElement('div');
-            fonctionnaliteItem.setAttribute('data-fonctionnalite', '');
-            fonctionnaliteItem.classList.add(
-                'bg-white', 'p-8', 'rounded-3xl', 'shadow-sm',
-                'border', 'border-slate-100', 'relative', 'overflow-hidden'
-            );
-            fonctionnaliteItem.innerHTML = `
-                <div class="absolute top-0 left-0 w-2 h-full bg-purple-500"></div>
-                <button onclick="removeFonctionnaliteSolutionSection(this)"
-                    class="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors">
-                    <i class="fas fa-trash text-xs"></i>
-                </button>
-                <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2">
-                    <i class="fas fa-star text-purple-500"></i> Fonctionnalité ${index}
-                </h3>
-
-                <input type="hidden" name="fonctionnalite_page_key" value="{{ $page_key }}">
-                <input type="hidden" name="fonctionnalite_section_key" value="fonctionnalites">
-
-                <div class="space-y-4">
-                    <div>
-                        <label for="fonctionnalite_name_${index}"
-                            class="block text-xs font-bold text-slate-400 uppercase mb-1">
-                            Nom de la fonctionnalité
-                        </label>
-                        <input type="text"
-                            id="fonctionnalite_name_${index}"
-                            name="fonctionnalite_name_${index}[]"
-                            class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
-                    </div>
-
-                    <div>
-                        <label for="fonctionnalite_icon_${index}"
-                            class="block text-xs font-bold text-slate-400 uppercase mb-1">
-                            Classe Icône
-                        </label>
-                        <input type="text"
-                            id="fonctionnalite_icon_${index}"
-                            name="fonctionnalite_icon_${index}[]"
-                            placeholder="ex: fas fa-star"
-                            class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500">
-                    </div>
-
-                    <div>
-                        <label for="fonctionnalite_description_${index}"
-                            class="block text-xs font-bold text-slate-400 uppercase mb-1">
-                            Description
-                        </label>
-                        <textarea
-                            id="fonctionnalite_description_${index}"
-                            name="fonctionnalite_description_${index}[]"
-                            placeholder="ex: Description de la fonctionnalité"
-                            class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500"
-                        ></textarea>
-                    </div>
-                </div>
-            `;
-            container.appendChild(fonctionnaliteItem);
-        }
-        function removeFonctionnaliteSolutionSection(button) {
-            const fonctionnaliteDiv = button.closest('[data-fonctionnalite]');
-            if (fonctionnaliteDiv) {
-                fonctionnaliteDiv.remove();
-            }
-        }
-
-        // Témoignages
-        function addTemoignageSolutionSection() {
-            const container = document.getElementById('temoignages-grid');
-            const index = container.querySelectorAll('[data-temoignage]').length + 1;
-
-            const temoignageItem = document.createElement('div');
-            temoignageItem.setAttribute('data-temoignage', '');
-            temoignageItem.classList.add('bg-white', 'p-8', 'rounded-3xl', 'shadow-sm', 'border', 'border-slate-100', 'relative', 'overflow-hidden');
-            temoignageItem.innerHTML = `
-                <div class="absolute top-0 left-0 w-2 h-full bg-purple-500"></div>
-                <button onclick="removeTemoignageSolutionSection(this)" class="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors">
-                    <i class="fas fa-trash text-xs"></i>
-                </button>
-                <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2"><i class="fas fa-star text-purple-500"></i> Témoignage ${index} </h3>
-                
-                <input type="hidden" name="temoignage_page_key" value="{{ $page_key }}">
-                <input type="hidden" name="temoignage_section_key" value="temoignages">
-                <div class="space-y-4">
-                    <div>
-                        <label for="temoignage_name_${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Nom</label>
-                        <input type="text" id="temoignage_name_${index}" name="temoignage_name_${index}[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" >
-                    </div>
-                
-                    <div class="flex gap-4">
-                        <div class="flex-1">
-                            <label for="temoignage_company_${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Entreprise</label>
-                            <input type="text" id="temoignage_company_${index}" name="temoignage_company_${index}[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" >
-                        </div>  
-                        <div class="flex-1">
-                            <label for="temoignage_position_${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Position/Fonction</label>
-                            <input type="text" id="temoignage_position_${index}" name="temoignage_position_${index}[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" >
-                        </div>
-                        <div class="flex-1">
-                            <label for="temoignage_photo_url_${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Url de la photo</label>
-                            <input type="text" id="temoignage_photo_url_${index}" name="temoignage_photo_url_${index}[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" >    
-                        </div>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <label for="temoignage_message_${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Description Longue</label>
-                    <textarea id="temoignage_message_${index}" name="temoignage_message_${index}[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm h-32" placeholder="ex: Description du témoignage"></textarea>
-                </div>
-                <div class="preview bg-slate-50 rounded-xl p-4 flex items-center justify-center border border-slate-200 border-dashed mt-6">
-                    <div class="text-center">
-                        <i class="fas fa-image text-3xl text-slate-300 mb-2"></i>
-                        <p class="text-xs text-slate-400">Aperçu image</p>
-                        <input id="temoignage_photo_${index}" type="file" name="temoignage_photo_${index}[]" class="hidden">
-                        <label for="temoignage_photo_${index}" class="mt-2 text-xs bg-white px-3 py-1 rounded border hover:bg-slate-100 cursor-pointer">Ajouter une photo</label>
-                    </div>
-                </div>
-            `;
-            container.appendChild(temoignageItem);
-            attachTemoignagePhotoPreview(temoignageItem.querySelector('input[type="file"]'));
-        }
-
-        function attachTemoignagePhotoPreview(input) {
-            input.addEventListener('change', function () {
-                const file = this.files[0];
-                if (!file) return;
-
-                const inputId = input.id; // ✅ Capturer l'id dans le scope correct
-
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const previewDiv = input.closest('[data-temoignage]').querySelector('.preview .text-center');
-                    // const newInputId = inputId + '-new';
-                    previewDiv.innerHTML = `
-                        <img src="${e.target.result}" alt="Aperçu image" class="max-h-40 object-contain mb-2">
-                        <input type="file" name="temoignage_photo_${inputId}[]" class="hidden" id="temoignage_photo_${inputId}">
-                        <label for="temoignage_photo_${inputId}" class="mt-2 text-xs bg-white px-3 py-1 rounded border hover:bg-slate-100 cursor-pointer">Changer</label>
-                    `;
-                    // Réattacher l'écouteur sur le nouvel input généré
-                    attachTemoignagePhotoPreview(previewDiv.querySelector('input[type="file"]'));
-            };
-                reader.readAsDataURL(file);
-    
-            });
-        }
-
-        function removeTemoignageSolutionSection(button) {
-            const temoignageDiv = button.closest('[data-temoignage]');
-            if (temoignageDiv) {
-                temoignageDiv.remove();
-            }
-        }
-
         
-        function addPersonnalisationSection() {
+
+        // Personnalisation de sections
+        function addPersonnalisationSecteurExpertise() {
             const container = document.getElementById('personnalisation-grid');
             // Compte tous les items présents (Blade + JS ajoutés dynamiquement)
             const index = container.querySelectorAll('[data-personnalisation]').length + 1;
@@ -464,6 +312,8 @@
             button.closest('[data-personnalisation]')?.remove();
         }
 
+       
+
         // Enregistrement de toutes les données
         function saveAll() {
             const formData = new FormData();
@@ -475,50 +325,28 @@
             // Récupérer les données des différentes sections
             // Infos générales
             formData.append('page_key', '{{ $page_key }}');
-            formData.append('infos_title', document.getElementById('infos_title').value);
-            formData.append('infos_subtitle', document.getElementById('infos_subtitle').value);
-            // formData.append('infos_description', document.getElementById('infos_description').value);
-            formData.append('infos_resume_solution', document.getElementById('infos_resume_solution').value);
-            formData.append('infos_slug_solution', document.getElementById('infos_slug_solution').value);
-            formData.append('infos_contact_email_solution', document.getElementById('infos_contact_email_solution').value);
-            formData.append('infos_contact_phone_solution', document.getElementById('infos_contact_phone_solution').value);
-            formData.append('infos_cible_solution', document.getElementById('infos_cible_solution').value);
-            formData.append('infos_description_solution', document.getElementById('infos_description_solution').value);
-            // formData.append('infos_disponibilite_solution', document.getElementById('infos_disponibilite_solution').value);
-            // on peut selectionner disponibilite dans le select multiple, donc on va recuperer les valeurs selectionnées et les convertir en JSON avant de les envoyer
-            const disponibiliteSelect = document.getElementById('infos_disponibilite_solution');
-            const disponibiliteValues = Array.from(disponibiliteSelect.selectedOptions).map(option => option.value);
-            formData.append('infos_disponibilite_solution', JSON.stringify(disponibiliteValues));
+            formData.append('secteur_expertise_name', document.getElementById('secteur_expertise_name').value);
+            formData.append('secteur_expertise_title_hero', document.getElementById('secteur_expertise_title_hero').value);
+            formData.append('secteur_expertise_subtitle', document.getElementById('secteur_expertise_subtitle').value);
+            // formData.append('secteur_expertise_description', document.getElementById('secteur_expertise_description').value);
+            formData.append('secteur_expertise_resume', document.getElementById('secteur_expertise_resume').value);
+            formData.append('secteur_expertise_slug', document.getElementById('secteur_expertise_slug').value);
+            formData.append('secteur_expertise_contact_email', document.getElementById('secteur_expertise_contact_email').value);
+            formData.append('secteur_expertise_contact_phone', document.getElementById('secteur_expertise_contact_phone').value);
+            // formData.append('secteur_expertise_cible', document.getElementById('secteur_expertise_cible').value);
+            formData.append('secteur_expertise_description', document.getElementById('secteur_expertise_description').value);
+            // formData.append('secteur_expertise_disponibilite', document.getElementById('secteur_expertise_disponibilite').value);
+          
+            formData.append('secteur_expertise_mis_avant', document.getElementById('secteur_expertise_mis_avant').value);
+            formData.append('secteur_expertise_image_couverture', document.getElementById('image_couverture_secteur_expertise').files[0]);
+            formData.append('secteur_expertise_image_url', document.getElementById('secteur_expertise_image_couverture_url').value);
+            formData.append('secteur_expertise_cta_label_1', document.getElementById('secteur_expertise_cta_1_label').value);
+            formData.append('secteur_expertise_cta_label_2', document.getElementById('secteur_expertise_cta_2_label').value);
+            formData.append('secteur_expertise_cta_url_1', document.getElementById('secteur_expertise_cta_1_url').value);
+            formData.append('secteur_expertise_cta_url_2', document.getElementById('secteur_expertise_cta_2_url').value);
+            formData.append('secteur_expertise_icon', document.getElementById('secteur_expertise_icon').value);
 
 
-            formData.append('infos_mis_avant_solution', document.getElementById('infos_mis_avant_solution').value);
-            formData.append('infos_image_couverture_solution', document.getElementById('image_couverture_solution').files[0]);
-            formData.append('infos_image_url_solution', document.getElementById('infos_image_couverture_solution_url').value);
-            formData.append('infos_cta_label', document.getElementById('infos_cta_label').value);
-            formData.append('infos_cta_url', document.getElementById('infos_cta_url').value);
-            formData.append('infos_icon_solution', document.getElementById('infos_icon_solution').value);
-
-
-            // Fonctionnalités
-            // const fonctionnalites = [];
-            document.querySelectorAll('[data-fonctionnalite]').forEach((item, index) => {
-                const i = index + 1;
-                formData.append(`fonctionnalites[${index}][title]`,
-                    item.querySelector(`[name="fonctionnalite_name_${i}[]"]`)?.value ?? '');
-                formData.append(`fonctionnalites[${index}][icon]`,
-                    item.querySelector(`[name="fonctionnalite_icon_${i}[]"]`)?.value ?? '');
-                formData.append(`fonctionnalites[${index}][description]`,
-                    item.querySelector(`[name="fonctionnalite_description_${i}[]"]`)?.value ?? '');
-                // Transmet l'id existant pour permettre la mise à jour côté serveur
-                const idInput = item.querySelector(`[name="fonctionnalite_id_${i}"]`);
-                if (idInput?.value) {
-                    formData.append(`fonctionnalites[${index}][id]`, idInput.value);
-                }
-            });          
-
-
-            // Partenaires
-            
             document.querySelectorAll('[data-partenaire]').forEach((item, index) => {
                 formData.append(`partenaires[${index}][name]`,
                     item.querySelector('[name^="partenaire_name_"]')?.value ?? '');
@@ -532,48 +360,23 @@
                 formData.append(`partenaires[${index}][url]`,
                     item.querySelector('[name^="partenaire_url_"]')?.value ?? '');
 
+                formData.append(`partenaires[${index}][website]`,
+                    item.querySelector('[name^="partenaire_website_"]')?.value ?? '');
+
+
                 const idInput = item.querySelector('[name^="partenaire_id_"]');
                 if (idInput?.value) {
                     formData.append(`partenaires[${index}][id]`, idInput.value);
                 }
-            });
-            
+            });           
 
-            // Témoignages            
-            document.querySelectorAll('[data-temoignage]').forEach((item, index) => {
-                const i = index + 1;
+            // Personnalisation de sections
+            // document.querySelectorAll('[data-personnalisation]').forEach((item, index) => {
+            //     const i = index + 1;
+            //     formData.append(`personnalisation_sections[${index}][title]`, item.querySelector(`[name="personnalisation_title_${i}[]"]`)?.value ?? '');
+            //     formData.append(`personnalisation_sections[${index}][content]`, item.querySelector(`[name="personnalisation_content_${i}[]"]`)?.value ?? '');
+            // });
 
-                formData.append(`temoignages[${index}][author]`,
-                    item.querySelector(`[name="temoignage_name_${i}[]"]`)?.value ?? '');
-
-                formData.append(`temoignages[${index}][company]`,
-                    item.querySelector(`[name="temoignage_company_${i}[]"]`)?.value ?? '');
-
-                formData.append(`temoignages[${index}][position]`,
-                    item.querySelector(`[name="temoignage_position_${i}[]"]`)?.value ?? '');
-
-                formData.append(`temoignages[${index}][photo_url]`,
-                    item.querySelector(`[name="temoignage_photo_url_${i}[]"]`)?.value ?? '');
-
-                formData.append(`temoignages[${index}][content]`,
-                    item.querySelector(`[name="temoignage_message_${i}[]"]`)?.value ?? '');
-
-                formData.append(`temoignages[${index}][section_key]`,
-                    item.querySelector(`[name="temoignage_section_key_${i}"]`)?.value ?? 'temoignages');
-
-                // Ciblage précis du fichier — évite de matcher temoignage_photo_url_
-                const photoFile = item.querySelector(`input[type="file"][name="temoignage_photo_${i}[]"]`)?.files?.[0];
-                if (photoFile) {
-                    formData.append(`temoignages[${index}][photo]`, photoFile);
-                }
-
-                const idInput = item.querySelector(`[name="temoignage_id_${i}"]`);
-                if (idInput?.value) {
-                    formData.append(`temoignages[${index}][id]`, idInput.value);
-                }
-            });
-
-            // Personnalisation de sections            
             document.querySelectorAll('[data-personnalisation]').forEach((item, index) => {
                 const i = index + 1;
 
@@ -594,18 +397,18 @@
             formData.append('accroche_subtitle', document.querySelector(`[name="accroche_subtitle"]`).value);
             formData.append('accroche_description', document.querySelector(`[name="accroche_description"]`).value);
             formData.append('accroche_cta_label', document.querySelector(`[name="accroche_cta_label"]`).value);
+            formData.append('accroche_cta_label', document.querySelector(`[name="accroche_cta_label"]`).value);
             formData.append('accroche_cta_url', document.querySelector(`[name="accroche_cta_url"]`).value);
-            formData.append('accroche_page_key', '{{ $page_key ?? "solutions" }}');
+            formData.append('accroche_page_key', '{{ $page_key ?? "secteur_expertise" }}');
             formData.append('accroche_id', document.querySelector(`[name="accroche_id"]`)?.value ?? null);
 
             // SEO
             formData.append('seo_title', document.querySelector(`[name="seo_title"]`).value);
             formData.append('seo_description', document.querySelector(`[name="seo_description"]`).value);
             formData.append('seo_keywords', document.querySelector(`[name="seo_keywords"]`).value);
-            formData.append('seo_page_key', '{{ $page_key ?? "solutions" }}');
+            formData.append('seo_page_key', '{{ $page_key ?? "secteur_expertise" }}');
             formData.append('seo_id', document.querySelector(`[name="seo_id"]`)?.value ?? null);
 
-            
             // Chiffres clés
             document.querySelectorAll('[data-chiffre]').forEach((item, index) => {
                 const i = index + 1;
@@ -628,6 +431,8 @@
                     formData.append(`chiffres[${index}][id]`, idInput.value);
                 }
             });
+            
+            
 
             const btn = document.querySelector('button[onclick="saveAll()"]');
             const originalContent = btn.innerHTML;
@@ -643,7 +448,7 @@
             formData.append('_method', 'PUT');
 
             // Envoyer les données au serveur
-            fetch('{{ route("solutions.update", $solution->id) }}', {
+            fetch('{{ route("secteur-expertise.update", $secteurExpertise->id) }}', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',
@@ -659,18 +464,18 @@
                 
                 const successMessage = document.querySelector('#toast .success-message');
                 const successDescription = document.querySelector('#toast .success-description');
-                
+
                 if (data.success === true) {
-                    showToast();
-                    successMessage.textContent =  'Succès';
-                    successDescription.textContent = data.message ?? 'Les données ont été enregistrées avec succès.';
+                    successMessage.textContent = 'Succès';
+                    successDescription.textContent = 'Les données ont été enregistrées avec succès.';
+                     showToast();
                     setTimeout(() => {
                         btn.innerHTML = originalContent;
                         btn.disabled = false;
                         btn.classList.remove('opacity-75', 'cursor-not-allowed');
                         statusBadge.classList.add('hidden');
 
-                        window.location.href = '{{ route("solutions.index") }}';
+                        // window.location.href = '{{ route("secteur-expertise.index") }}';
                         // window.location.reload();
                     }, 1200);
                 } else {
@@ -681,9 +486,6 @@
 
                     const errorsDiv = document.getElementById('form-errors');
                     const errorMsg = document.querySelector('#toastError .error-message')
-                    
-                    errorMsg.textContent = data.message ?? 'Une erreur est survenue.';
-                    
                     if (errorsDiv) {
                         errorsDiv.innerHTML = '';
                         if (data.errors) {
@@ -697,7 +499,7 @@
 
                         }
                     }
-                    // showToastError();
+                    showToastError();
                 }
             
             })
@@ -715,8 +517,6 @@
                 btn.classList.remove('opacity-75', 'cursor-not-allowed');
             });
         }
-
-        
 
     </script>
 @endsection

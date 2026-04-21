@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('secteur_expertise_sections', function (Blueprint $table) {
+        Schema::create('secteur_expertise_seos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('secteur_expertise_id');
             $table->foreign('secteur_expertise_id')->references('id')->on('secteur_expertises')->onDelete('cascade');
-            $table->string('title');
-            $table->string('subtitle')->nullable();
-            $table->text('content')->nullable();
+            $table->string('meta_title')->nullable();
+            $table->text('meta_description')->nullable();
+            $table->string('meta_keywords')->nullable();
             $table->string('section_key')->nullable();
-            $table->string('page_key')->nullable();            
+            $table->string('page_key')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('secteur_expertise_sections');
+        Schema::dropIfExists('secteur_expertise_seos');
     }
 };

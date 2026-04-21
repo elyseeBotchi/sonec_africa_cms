@@ -41,7 +41,7 @@ Route::middleware('auth')->prefix('/admin')->group(function () {
     Route::resource('/tags', App\Http\Controllers\Admin\TagController::class);
     Route::resource('/articles', App\Http\Controllers\Admin\ArticleController::class);
     Route::resource('/solutions', App\Http\Controllers\Admin\SolutionController::class);
-
+    Route::resource('/secteur-expertise', App\Http\Controllers\Admin\SecteurExpertiseController::class);
 
 
     Route::resource('/offres-emploi', App\Http\Controllers\Admin\OffreEmploiController::class);

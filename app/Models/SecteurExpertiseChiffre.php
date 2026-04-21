@@ -4,15 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SecteurExpertisePartenaire extends Model
+class SecteurExpertiseChiffre extends Model
 {
     //
-
     protected $fillable = [
+        'label',
+        'value',
+        'description',
+        'icon',
+        'icon_url',
         'secteur_expertise_id',
-        'name',
-        'logo',
-        'website',
         'section_key',
         'page_key',
     ];
@@ -22,4 +23,3 @@ class SecteurExpertisePartenaire extends Model
         return $this->belongsTo(SecteurExpertise::class);
     }
 }
-

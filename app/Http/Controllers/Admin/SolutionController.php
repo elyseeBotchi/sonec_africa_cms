@@ -93,7 +93,7 @@ class SolutionController extends Controller
                     'icon_url' => $validatedData['infos_icon_url'] ?? null,
                     'disponibilite' => $validatedData['infos_disponibilite_solution'] ?? null,
                     'mis_avant' => $validatedData['infos_mis_avant_solution'] == 1 ? true : false,
-                    'section_key' => $validatedData['infos_section_key'] ?? null,
+                    'section_key' => $validatedData['infos_section_key'] ?? 'infos',
                     'image_url' => $validatedData['infos_image_url_solution'] ?? null,
                     'image' => $imageCouverturePath ?? null,
                 
@@ -112,7 +112,7 @@ class SolutionController extends Controller
                         'description' => $chiffreData['description'] ?? null,
                         'icon' => $chiffreData['icon'] ?? null,
                         'icon_url' => $chiffreData['icon_url'] ?? null,
-                        'section_key' => $chiffreData['section_key'] ?? null,
+                        'section_key' => $chiffreData['section_key'] ?? 'chiffres',
                         'page_key' => $validatedData['page_key'] ?? 'solutions',
                     ]);
                 }
@@ -127,7 +127,7 @@ class SolutionController extends Controller
                         'description' => $fonctionnaliteData['description'] ?? null,
                         'icon' => $fonctionnaliteData['icon'] ?? null,
                         'icon_url' => $fonctionnaliteData['icon_url'] ?? null,
-                        'section_key' => $fonctionnaliteData['section_key'] ?? null,
+                        'section_key' => $fonctionnaliteData['section_key'] ?? 'fonctionnalites',
                         'page_key' => $validatedData['page_key'] ?? 'solutions',
                     ]);
                 }
@@ -145,7 +145,7 @@ class SolutionController extends Controller
                         'name' => $partenaireData['name'] ?? null,
                         'logo' => $logoPath ?? null,
                         'logo_url' => $partenaireData['logo_url'] ?? null,
-                        'section_key' => $partenaireData['section_key'] ?? null,
+                        'section_key' => $partenaireData['section_key'] ?? 'partenaires',
                         'page_key' => $validatedData['page_key'] ?? 'solutions',
                     ]);
                 }
@@ -205,7 +205,7 @@ class SolutionController extends Controller
                         'content' => $temoignageData['content'] ?? null,
                         'author_photo' => $temoignageImagePath ?? null,
                         'author_photo_url' => $temoignageData['image_url'] ?? null,
-                        'section_key' => $temoignageData['section_key'] ?? null,
+                        'section_key' => $temoignageData['section_key'] ?? 'temoignages',
                         'page_key' => $validatedData['page_key'] ?? 'solutions',
                     ]);
                 }
@@ -224,6 +224,8 @@ class SolutionController extends Controller
                     'twitter_title' => $validatedData['seo_title'] ?? null,
                     'twitter_description' => $validatedData['seo_description'] ?? null,
                     'twitter_image_url' => $validatedData['seo_twitter_image_url'] ?? null,
+                    'page_key' => $validatedData['seo_page_key'] ?? 'solutions',
+                    'section_key' => 'seo',
                 ]);
             }
             
@@ -322,20 +324,20 @@ class SolutionController extends Controller
 
             // Chiffres de la solution
             if (isset($validatedData['chiffres']) && is_array($validatedData['chiffres'])) {
-                
+
                 $submittedIds = collect($validatedData['chiffres'])
-                                ->pluck('id')
-                                ->filter() 
-                                ->values();
+                    ->pluck('id')
+                    ->filter()
+                    ->values();
 
                 SolutionChiffre::where('solution_id', $solution->id)
-                                ->whereNotIn('id', $submittedIds)
-                                ->delete();
+                    ->whereNotIn('id', $submittedIds)
+                    ->delete();
 
-            
                 foreach ($validatedData['chiffres'] as $chiffre) {
                     $chiffreData = [
-                        'page_key'    => $validatedData['page_key'],
+                        'solution_id' => $solution->id, // manquait dans le create()
+                        'page_key'    => $validatedData['page_key'] ?? 'solutions',
                         'section_key' => 'chiffres',
                         'label'       => $chiffre['label']       ?? null,
                         'value'       => $chiffre['value']       ?? null,
