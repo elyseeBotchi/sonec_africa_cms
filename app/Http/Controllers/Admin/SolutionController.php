@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreSolutionPageRequest;
 use App\Http\Requests\StoreSolutionRequest;
 use App\Http\Requests\UpdateSolutionRequest;
 use App\Models\Accroche;
@@ -625,4 +626,161 @@ class SolutionController extends Controller
             ], 500);
         }
     }
+
+
+    // Configuration de la page solution
+    public function configuration()
+    {
+        $page_key = 'solutions';
+        $accroche = \App\Models\Accroche::where('page_key', $page_key)->first();
+        $seo = \App\Models\Seo::where('page_key', $page_key)->first();
+        $banniere = \App\Models\BanniereHero::where('page_key', $page_key)->first();
+        $sectionItems = \App\Models\SectionItem::where('page_key', $page_key)->get();
+        
+        return view('admin.pages.gestion-solutions.config-page', compact('accroche', 'seo', 'banniere', 'sectionItems', 'page_key'));
+    }
+
+    public function saveConfiguration(StoreSolutionPageRequest $request)
+    {
+        $page_key = 'solutions';
+
+        try {
+            $validatedData = $request->validated();
+            // Sauvegarde de l'accroche
+            if (isset($validatedData['accroche_title']) || isset($validatedData['accroche_description']) || isset($validatedData['accroche_cta_label'])) {
+                $accrocheData = [
+                    'page_key' => $page_key,
+                    'section_key' => 'accroche',
+                    'title' => $validatedData['accroche_title'] ?? null,
+                    'subtitle' => $validatedData['accroche_subtitle'] ?? null,
+                    'description' => $validatedData['accroche_description'] ?? null,
+                    'cta_label' => $validatedData['accroche_cta_label'] ?? null,
+                    'cta_url' => $validatedData['accroche_cta_url'] ?? null,
+                ];
+                if (isset($accrocheData['accroche_id'])) {
+                    \App\Models\Accroche::updateOrCreate(
+                        ['id' => $request->accroche_id, 'page_key' => $page_key, 'section_key' => 'accroche'],
+                        $accrocheData
+                    );
+                } else {
+
+                    \App\Models\Accroche::updateOrCreate(
+                        ['page_key' => $page_key],
+                        $accrocheData
+                    );
+                }
+            }
+
+            // Sauvegarde du SEO
+            if (isset($validatedData['seo_title']) || isset($validatedData['seo_description']) || isset($validatedData['seo_keywords'])) {
+                $seoData = [
+                    'page_key' => $page_key,
+                    // 'section_key' => 'seo',
+                    'title' => $validatedData['seo_title'] ?? null,
+                    'description' => $validatedData['seo_description'] ?? null,
+                    'keywords' => $validatedData['seo_keywords'] ?? null,
+                ];
+                if (isset($validatedData['seo_id'])) {
+                    \App\Models\Seo::updateOrCreate(
+                        ['id' => $validatedData['seo_id'], 'page_key' => $page_key],
+                        $seoData
+                    );
+                } else {
+                    \App\Models\Seo::updateOrCreate(
+                        ['page_key' => $page_key],
+                        $seoData
+                    );
+                }
+            }
+
+            // Sauvegarde de la bannière hero
+            if ($request->hasFile('banniere_image') && $request->file('banniere_image')->isValid()) {
+                $existing = \App\Models\BanniereHero::where('page_key', $page_key)->first();
+                if ($existing && $existing->image && \Storage::exists('public/' . $existing->image)) {
+                    \Storage::delete('public/' . $existing->image);
+                }   
+                     
+                $imagePath = $request->file('banniere_image')->store('hero_images', 'public');  
+            }
+            $banniereData = [
+                'page_key' => $page_key,
+                'section_key' => 'hero',
+                'title' => $validatedData['banniere_title'] ?? null,
+                'subtitle' => $validatedData['banniere_subtitle'] ?? null,
+                'description' => $validatedData['banniere_description'] ?? null,    
+                'cta_label' => $validatedData['banniere_cta_label'] ?? null,
+                'cta_url' => $validatedData['banniere_cta_url'] ?? null,
+                'image' => $imagePath ?? null,
+                'image_url' => $validatedData['banniere_image_url'] ?? null,
+                'icon' => $validatedData['banniere_icon'] ?? null,
+                'icon_url' => $validatedData['banniere_icon_url'] ?? null,
+            ];
+
+            if (isset($validatedData['banniere_id'])) {
+                \App\Models\BanniereHero::updateOrCreate(
+                    ['id' => $validatedData['banniere_id'], 'page_key' => $page_key, 'section_key' => 'hero'],
+                    $banniereData
+                );
+            } else {
+                \App\Models\BanniereHero::create(
+                    $banniereData
+                );
+            } 
+
+            // Avantages
+            if (isset($validatedData['avantages']) && is_array($validatedData['avantages'])) {
+                $submittedIds = collect($validatedData['avantages'])
+                                ->pluck('id')
+                                ->filter() 
+                                ->values();
+
+                \App\Models\SectionItem::where('page_key', $page_key)
+                                        ->where('section_key', 'avantages')
+                                        ->whereNotIn('id', $submittedIds)
+                                        ->delete();
+
+                foreach ($validatedData['avantages'] as $avantageData) {
+                    $record = [
+                        'page_key' => $page_key,
+                        'section_key' => 'avantages',
+                        'label' => $avantageData['title'] ?? null,
+                        'description' => $avantageData['description'] ?? null,
+                        'icon' => $avantageData['icon'] ?? null,
+                        'icon_url' => $avantageData['icon_url'] ?? null,
+                    ];
+
+                    if (isset($avantageData['id'])) {
+                        \App\Models\SectionItem::updateOrCreate(
+                            ['id' => $avantageData['id'], 'page_key' => $page_key, 'section_key' => 'avantages'],
+                            $record
+                        );
+                    } else {
+                        \App\Models\SectionItem::create($record);
+                    }
+                }
+            }
+
+
+             return response()->json([
+                'success' => true, 
+                'data' => [
+                    'accroche' => \App\Models\Accroche::where('page_key', $page_key)->first(),
+                    'seo' => \App\Models\Seo::where('page_key', $page_key)->first(),
+                    'banniere' => \App\Models\BanniereHero::where('page_key', $page_key)->first(),
+                    'avantages' => \App\Models\SectionItem::where('page_key', $page_key)->where('section_key', 'avantages')->get(),
+                ],
+                'message' => 'Page solutions configurée avec succès.'
+            ]); 
+        } catch (\Throwable $th) {
+            //throw $th;
+            $data = [
+                'success' => false,
+                'message' => 'Une erreur est survenue lors de la sauvegarde de la configuration.',
+                'error' => $th->getMessage(),
+            ];
+            return response()->json($data, 500);
+        }
+
+    }
+
 }

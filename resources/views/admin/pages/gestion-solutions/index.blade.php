@@ -201,6 +201,9 @@
             });
         }
         
+        function openSolutionModule() {
+            window.location.href = "{{ route('admin.solution-page.config') }}";
+        }
 
     </script>
 @endsection

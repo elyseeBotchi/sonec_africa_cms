@@ -22,9 +22,9 @@
                 <h3 class="font-bold text-sonec-dark">Liste des Secteurs d'Expertise</h3>
 
                 <div class="flex items-center gap-4">
-                    <button onclick="openSecteurExpertiseModule()" class="bg-sonec-dark hover:bg-sonec-green text-white px-4 py-2 rounded-md font-bold text-sm transition-all flex items-center gap-2 shadow-lg shadow-sonec-green/20">
+                    {{-- <button onclick="openSecteurExpertiseModule()" class="bg-sonec-dark hover:bg-sonec-green text-white px-4 py-2 rounded-md font-bold text-sm transition-all flex items-center gap-2 shadow-lg shadow-sonec-green/20">
                         <i class="fas fa-grip-lines"></i> Configurer la page secteurs d'expertise
-                    </button>
+                    </button> --}}
 
                     <button onclick="addSecteurExpertise()" class="bg-sonec-green hover:bg-sonec-dark text-white px-4 py-2 rounded-md font-bold text-sm transition-all flex items-center gap-2 shadow-lg shadow-sonec-green/20">
                         <i class="fas fa-plus"></i> Ajouter un secteur d'expertise

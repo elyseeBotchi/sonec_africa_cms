@@ -42,7 +42,9 @@ Route::middleware('auth')->prefix('/admin')->group(function () {
     Route::resource('/articles', App\Http\Controllers\Admin\ArticleController::class);
     Route::resource('/solutions', App\Http\Controllers\Admin\SolutionController::class);
     Route::resource('/secteur-expertise', App\Http\Controllers\Admin\SecteurExpertiseController::class);
-
+    // Route vers page configuration solution
+    Route::get('config/solution', [App\Http\Controllers\Admin\SolutionController::class, 'configuration'])->name('admin.solution-page.config');
+    Route::post('config/solution', [App\Http\Controllers\Admin\SolutionController::class, 'saveConfiguration'])->name('admin.solution-page.config.save');
 
     Route::resource('/offres-emploi', App\Http\Controllers\Admin\OffreEmploiController::class);
     
