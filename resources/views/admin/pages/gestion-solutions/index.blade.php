@@ -36,7 +36,7 @@
                 <table class="w-full text-left">
                     <thead>
                         <tr class="bg-slate-50">
-                            <th></th>
+                            {{-- <th></th> --}}
                             <th class="px-6 py-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Image</th>
                             <th class="px-6 py-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Nom</th>
                             <th class="px-6 py-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Description</th>
@@ -59,9 +59,10 @@
                                     
                                 </td>
                                 <td class="px-6 py-4">{{ $solution->title }}</td>
-                                <td class="px-6 py-4">{{ $solution->resume }}</td>
+                                <td class="px-6 py-4">{{ $solution->subtitle }}</td>
                                 <td class="px-6 py-4">{{ $solution->slug }}</td>
-                                <td class="px-6 py-4">{{ $solution->contact_email ?? '' }} {{$solution->contact_phone ?? ''}}</td>
+                                <td class="px-6 py-4">{{ $solution->contact_email ?? '' }} <br> {{$solution->contact_phone ?? ''}}</td>
+                                {{-- <td class="px-6 py-4">{{ $solution->resume }}</td> --}}
                                 <td class="px-6 py-4">
                                     {{-- Disponibilité est un json qu'on doit extraire --}}
                                     @if($solution->disponibilite)
@@ -76,7 +77,6 @@
                                     @endif
 
                                 </td>
-                                <td class="px-6 py-4 text-sm">{{ $solution->type}}</td>
                                 
                                 
                                 <td class="px-6 py-4">
@@ -86,14 +86,35 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <button class="bg-transparent text-blue-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="editSolution({{ $solution->id }})">
+                                    <a href="{{ route('solutions.edit',['solution' => $solution->id]) }}" class="bg-transparent text-blue-500 px-3 py-1 text-sm transition-all flex items-center gap-1">
                                         <i class="fas fa-pencil"></i>
-                                    </button>
+                                    </a>
                                     <button class="bg-transparent text-red-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="deleteSolution({{ $solution->id }})" data-id="{{ $solution->id }}" data-label="{{ $solution->title }}" data-toggle="tooltip" data-title="Supprimer {{ $solution->title }}">
                                         <i class="fas fa-trash"></i> 
                                     </button>
                                 </td>
                             </tr>
+
+                            <div id="delete-solution-modal-{{ $solution->id }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity z-50 " >
+                                <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative " >
+                                    
+                                    <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 focus:outline-none" onclick="closeDeleteSolutionModal({{ $solution->id }})">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <h2 class="text-xl font-bold text-sonec-dark mb-4">Confirmer la suppression</h2>
+                                    
+                                    <p class="mb-6 text-slate-700">Êtes-vous sûr de vouloir supprimer la solution <span class="font-bold">{{ $solution->title }}</span> ? Cette action est irréversible.</p>
+
+                                    <div class="flex justify-end gap-4">
+                                        <button onclick="closeDeleteSolutionModal({{ $solution->id }})" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md font-bold text-sm transition-all">
+                                            Annuler
+                                        </button>
+                                        <button onclick="deleteSolution({{ $solution->id }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-bold text-sm transition-all flex items-center gap-2">
+                                            <i class="fas fa-trash"></i> Supprimer
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                            
                            
                         @endforeach
@@ -135,6 +156,49 @@
             //     window.location.href = "{{ route('solutions.destroy', "+id+") }}/" ;
             // }
             toggleDeleteSolutionModal(id);
+
+            const confirmBtn = document.querySelector(`#delete-solution-modal-${id} button.bg-red-500`);
+            confirmBtn.addEventListener('click', function() {
+                fetch(`/admin/solutions/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                        'Accept': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success===true) {
+                        const successMessage = document.querySelector('#toast .success-message');
+                        const successDescription = document.querySelector('#toast .success-description');
+                        successMessage.textContent = data.message || 'Suppression effectuée !';
+                        successDescription.textContent = data.description || 'La solution a été supprimée avec succès.';
+
+                        showToast();
+                        setTimeout(() => {
+                            closeDeleteSolutionModal(id);
+                            toggleDeleteSolutionModal(id);
+                        }, 1200);
+                        window.location.reload();
+                    } else {
+                        const errorMessage = document.querySelector('#toastError .error-message');
+                        const errorDescription = document.querySelector('#toastError .error-description');
+                        errorMessage.textContent = data.message || 'Erreur lors de la suppression de la solution';
+                        errorDescription.textContent = data.error || '. Veuillez réessayer.';
+                        showToastError();
+
+                        closeDeleteSolutionModal(id);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    const errorMessage = document.querySelector('#toastError .error-message');
+                    const errorDescription = document.querySelector('#toastError .error-description');
+                    errorMessage.textContent = 'Erreur lors de la suppression de la solution';
+                    errorDescription.textContent = 'Une erreur est survenue lors de la suppression de la solution. Veuillez réessayer.';
+                    showToastError();
+                });
+            });
         }
         
 

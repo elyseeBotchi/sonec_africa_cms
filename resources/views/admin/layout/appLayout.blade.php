@@ -6,16 +6,16 @@
     <title>SONEC Africa - Admin Console</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}" >
-    <script src="https://cdn.tailwindcss.com"></script>
     {{-- Charger TinyMCE --}}
     {{-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> --}}
     {{-- <script src="{{ asset('assets/js/tinymce/tinymce.min.js') }}"></script> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Place the first <script> tag in your HTML's <head> -->
-<script src="https://cdn.tiny.cloud/1/w96o6s9z16xn8z6mtipqsil6ns77luq64hg670qndl5z91ir/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
-
-
+        <script src="https://cdn.tiny.cloud/1/w96o6s9z16xn8z6mtipqsil6ns77luq64hg670qndl5z91ir/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
+        {{-- Importer tailwind.min.js depuis assets/js --}}
+        <script src="{{ asset('assets/js/tailwindcss/tailwind.min.js') }}"></script>
+        {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 
     
     <script>

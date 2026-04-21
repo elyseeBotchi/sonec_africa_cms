@@ -48,10 +48,10 @@
                             {{ $solution->title }}
                         </a>                        
                     @endforeach
-                    {{-- <a href="#" onclick="switchPage('ecoleweb')" class="px-6 py-2 hover:bg-slate-50">
-                        ECOLEWEB
+                    <a href="{{ route('solutions.index') }}" class="px-6 py-2 hover:bg-slate-50">
+                        Toutes les solutions
                     </a>
-                    <a href="#" onclick="switchPage('solution-sante')" class="px-6 py-2 hover:bg-slate-50">
+                    {{-- <a href="#" onclick="switchPage('solution-sante')" class="px-6 py-2 hover:bg-slate-50">
                         GDEC
                     </a>
                     <a href="#" onclick="switchPage('solution-agriculture')" class="px-6 py-2 hover:bg-slate-50">
