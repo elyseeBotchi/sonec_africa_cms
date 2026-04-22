@@ -53,17 +53,17 @@
                     <tbody>
                         @foreach($menus as $menu)
                             {{-- possibilite de drag and drop pour changer la position des elements --}}
-                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-move" data-id="{{ $menu->id }}">
-                                <input type="hidden" class="menu-id" value="{{ $menu->id }}">
+                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-move" data-id="{{ $menu->id ?? '' }}">
+                                <input type="hidden" class="menu-id" value="{{ $menu->id ?? '' }}">
                                 <td class="px-6 py-4">
                                     <i class="fas fa-grip-vertical text-slate-400 cursor-move px-3"></i>
                                 </td>
-                                <td class="px-6 py-4">{{ $menu->position }}</td>
-                                <td class="px-6 py-4">{{ $menu->label }}</td>
-                                <td class="px-6 py-4">{{ $menu->url }}</td>
-                                <td class="px-6 py-4">{{ $menu->slug }}</td>
+                                <td class="px-6 py-4">{{ $menu->position ?? '' }}</td>
+                                <td class="px-6 py-4">{{ $menu->label ?? '' }}</td>
+                                <td class="px-6 py-4">{{ $menu->url ?? '' }}</td>
+                                <td class="px-6 py-4">{{ $menu->slug ?? '' }}</td>
                                 <td class="px-6 py-4">{{ $menu->parent ? $menu->parent->label : 'Menu Principal' }}</td>
-                                <td class="px-6 py-4 text-sm">{{ $menu->type}}</td>
+                                <td class="px-6 py-4 text-sm">{{ $menu->type ?? '' }}</td>
                                 <td class="px-6 py-4">
                                     @if($menu->icon && str_starts_with($menu->icon, 'fa'))
                                         <i class="{{ $menu->icon }} text-md rounded-full bg-green-600 text-white p-4"></i>
@@ -74,7 +74,7 @@
                                         <img src="{{ $menu->img_src }}" alt="Menu Image" class="w-8 h-8 object-cover rounded">
                                     @else
                                         {{-- Ca peut être un svg --}}
-                                       <span class="text-md {{ $menu->icon ? 'rounded-full bg-green-600 text-white p-4' : '' }}">{{ $menu->icon }}</span>
+                                       <span class="text-md {{ $menu->icon ? 'rounded-full bg-green-600 text-white p-4' : '' }}">{{ $menu->icon ?? '' }}</span>
                                     @endif
                                 </td>
                                 
@@ -90,20 +90,20 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 flex gap-2">
-                                    <button class="bg-transparent text-blue-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="editMenuItem({{ $menu->id }})">
+                                    <button class="bg-transparent text-blue-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="editMenuItem({{ $menu->id ?? '' }})">
                                         <i class="fas fa-pencil"></i>
                                     </button>
-                                    <button class="bg-transparent text-red-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="deleteMenuItem({{ $menu->id }})" data-id="{{ $menu->id }}" data-label="{{ $menu->label }}" data-toggle="tooltip" data-title="Supprimer {{ $menu->label }}">
+                                    <button class="bg-transparent text-red-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="deleteMenuItem({{ $menu->id ?? '' }})" data-id="{{ $menu->id ?? '' }}" data-label="{{ $menu->label ?? '' }}" data-toggle="tooltip" data-title="Supprimer {{ $menu->label ?? '' }}">
                                         <i class="fas fa-trash"></i> 
                                     </button>
                                 </td>
                             </tr>
 
                             {{-- Formulaire de modification d'un élément --}}
-                            <div id="edit-menu-modal-{{ $menu->id }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity z-50 ">
+                            <div id="edit-menu-modal-{{ $menu->id ?? '' }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity z-50 ">
                                 <div class=" bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative overflow-y-auto max-h-[70vh]" >
                                     
-                                    <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 focus:outline-none" onclick="closeEditMenuModal({{ $menu->id }})">
+                                    <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 focus:outline-none" onclick="closeEditMenuModal({{ $menu->id ?? '' }})">
                                         <i class="fas fa-times"></i>
                                     </button>
                                     <h2 class="text-xl font-bold text-sonec-dark mb-4">Modifier un élément de menu</h2>
@@ -111,24 +111,24 @@
                                     
                                     <div id="form-errors" class="bg-red-100 text-red-500 mb-4 hidden"></div>
 
-                                    <form id="edit-sidebar-form-{{ $menu->id }}" data-menu-id="{{ $menu->id }}" class="space-y-4 overflow-y-auto custom-scrollbar max-h-[70vh]" enctype="multipart/form-data">
+                                    <form id="edit-sidebar-form-{{ $menu->id ?? '' }}" data-menu-id="{{ $menu->id ?? '' }}" class="space-y-4 overflow-y-auto custom-scrollbar max-h-[70vh]" enctype="multipart/form-data">
                                         
                                         <div>
-                                            <label for="editLabel-{{ $menu->id }}" class="block text-sm font-medium text-slate-700">Libellé <span class="text-red-500">*</span></label>
-                                            <input type="text" id="editLabel-{{ $menu->id }}" name="label" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $menu->label }}" required>
+                                            <label for="editLabel-{{ $menu->id ?? '' }}" class="block text-sm font-medium text-slate-700">Libellé <span class="text-red-500">*</span></label>
+                                            <input type="text" id="editLabel-{{ $menu->id ?? '' }}" name="label" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $menu->label ?? '' }}" required>
                                         </div>
                                         <div>
-                                            <label for="editUrl-{{ $menu->id }}" class="block text-sm font-medium text-slate-700">URL <span class="text-red-500">*</span></label>
-                                            <input type="text" id="editUrl-{{ $menu->id }}" name="url" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $menu->url }}" required>
+                                            <label for="editUrl-{{ $menu->id ?? '' }}" class="block text-sm font-medium text-slate-700">URL <span class="text-red-500">*</span></label>
+                                            <input type="hidden" id="editUrl-{{ $menu->id ?? '' }}" name="url" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $menu->url ?? '' }}" required>
                                         </div>
                                         <div class="hidden">
-                                            <label for="editSlug-{{ $menu->id }}" class="block text-sm font-medium text-slate-700">Slug (formaté automatiquement)</label>
-                                            <input type="text" readonly id="editSlug-{{ $menu->id }}" name="slug" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $menu->slug }}">
+                                            <label for="editSlug-{{ $menu->id ?? '' }}" class="block text-sm font-medium text-slate-700">Slug (formaté automatiquement)</label>
+                                            <input type="hidden" readonly id="editSlug-{{ $menu->id ?? '' }}" name="slug" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $menu->slug ?? '' }}">
                                         </div>
                                         <div>
-                                            <label for="editIcon-{{ $menu->id }}" class="block text-sm font-medium text-slate-700">Icone</label>
+                                            <label for="editIcon-{{ $menu->id ?? '' }}" class="block text-sm font-medium text-slate-700">Icone</label>
                                             <small class="text-slate-400"> (ex: "fas fa-home" ou "far fa-heart" ou une icône svg)</small>
-                                            <input type="text" id="editIcon-{{ $menu->id }}" name="icon" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $menu->icon }}">
+                                            <input type="text" id="editIcon-{{ $menu->id ?? '' }}" name="icon" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $menu->icon ?? '' }}">
                                         </div>
                                         
                                         {{-- Ajouter un message d'information --}}
@@ -140,21 +140,21 @@
 
                                         {{-- renseigner l'URL de l'image --}}
                                         <div>
-                                            <label for="editImgSrc-{{ $menu->id }}" class="block text-sm font-medium text-slate-700">URL de l'image</label>
-                                            <input type="text" id="editImgSrc-{{ $menu->id }}" name="img_src" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $menu->img_src }}">
+                                            <label for="editImgSrc-{{ $menu->id ?? '' }}" class="block text-sm font-medium text-slate-700">URL de l'image</label>
+                                            <input type="text" id="editImgSrc-{{ $menu->id ?? '' }}" name="img_src" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $menu->img_src ?? '' }}">
                                         </div>
 
                                         {{-- image à uploader avec preview --}}
                                         <div>
-                                            <label for="editImage-{{ $menu->id }}" class="block text-sm font-medium text-slate-700">Image (optionnel)</label>
-                                            <input type="file" id="editImage-{{ $menu->id }}" name="image" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
+                                            <label for="editImage-{{ $menu->id ?? '' }}" class="block text-sm font-medium text-slate-700">Image (optionnel)</label>
+                                            <input type="file" id="editImage-{{ $menu->id ?? '' }}" name="image" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
                                             
                                             <img id="image-preview" src="#" alt="Image Preview" class="mt-2 w-20 h-20 object-cover rounded hidden">
                                         </div>
 
                                         <div>
-                                            <label for="editType-{{ $menu->id }}" class="block text-sm font-medium text-slate-700">Type <span class="text-red-500">*</span></label>
-                                            <select id="editType-{{ $menu->id }}" name="type" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
+                                            <label for="editType-{{ $menu->id ?? '' }}" class="block text-sm font-medium text-slate-700">Type <span class="text-red-500">*</span></label>
+                                            <select id="editType-{{ $menu->id ?? '' }}" name="type" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
                                                 <option {{ $menu->type == 'link' ? 'selected' : '' }} value="link">Lien</option>
                                                 <option {{ $menu->type == 'dropdown' ? 'selected' : '' }} value="dropdown">Menu déroulant</option>
                                                 <option {{ $menu->type == 'megamenu' ? 'selected' : '' }} value="megamenu">Mega Menu</option>
@@ -162,8 +162,8 @@
                                             {{-- <input type="text" id="type" name="type" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none"> --}}
                                         </div>
                                         <div>
-                                            <label for="editPosition-{{ $menu->id }}" class="block text-sm font-medium text-slate-700">Position</label>
-                                            <select id="editPosition-{{ $menu->id }}" name="position" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
+                                            <label for="editPosition-{{ $menu->id ?? '' }}" class="block text-sm font-medium text-slate-700">Position</label>
+                                            <select id="editPosition-{{ $menu->id ?? '' }}" name="position" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
                                                 <option {{ $menu->position == 0 ? 'selected' : '' }} value="0">0</option>
                                                 <option {{ $menu->position == 1 ? 'selected' : '' }} value="1">1</option>
                                                 <option {{ $menu->position == 2 ? 'selected' : '' }} value="2">2</option>
@@ -176,8 +176,8 @@
                                             {{-- <input type="text" id="type" name="type" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none"> --}}
                                         </div>
                                         <div>
-                                            <label for="editParentId-{{ $menu->id }}" class="block text-sm font-medium text-slate-700">Menu Parent</label>
-                                            <select id="editParentId-{{ $menu->id }}" name="parent_id" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
+                                            <label for="editParentId-{{ $menu->id ?? '' }}" class="block text-sm font-medium text-slate-700">Menu Parent</label>
+                                            <select id="editParentId-{{ $menu->id ?? '' }}" name="parent_id" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
                                                 <option value="">Aucun</option>
                                                 @foreach($menus as $item)
                                                     <option {{ $menu->parent_id == $item->id ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->label }}</option>
@@ -185,8 +185,8 @@
                                             </select>
                                         </div>
                                         <div>
-                                            <label for="editDescription-{{ $menu->id }}" class="block text-sm font-medium text-slate-700">Description</label>
-                                            <textarea id="editDescription-{{ $menu->id }}" name="description" rows="3" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
+                                            <label for="editDescription-{{ $menu->id ?? '' }}" class="block text-sm font-medium text-slate-700">Description</label>
+                                            <textarea id="editDescription-{{ $menu->id ?? '' }}" name="description" rows="3" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
                                                 {!!  $menu->description  !!}
                                             </textarea>
                                         </div>
@@ -197,8 +197,8 @@
                                                 {{-- <input type="checkbox" {{ $menu->is_active ? 'checked' : '' }} id="editIsActive" name="is_active" class="toggle-checkbox hidden">
                                                 <label for="editIsActive" class="toggle-label block w-10 h-5 bg-gray-300 rounded-full cursor-pointer relative"></label> --}}
 
-                                                <input type="checkbox" {{ $menu->is_active ? 'checked' : '' }} id="editIsActive-{{ $menu->id }}" name="is_active" class="toggle-checkbox hidden">
-                                                <label for="editIsActive-{{ $menu->id }}" class="toggle-label block w-10 h-5 bg-gray-300 rounded-full cursor-pointer relative"></label>
+                                                <input type="checkbox" {{ $menu->is_active ? 'checked' : '' }} id="editIsActive-{{ $menu->id ?? '' }}" name="is_active" class="toggle-checkbox hidden">
+                                                <label for="editIsActive-{{ $menu->id ?? '' }}" class="toggle-label block w-10 h-5 bg-gray-300 rounded-full cursor-pointer relative"></label>
                                                 <span class="text-sm text-slate-700">Visible </span>
                                             </div>
 
@@ -206,8 +206,8 @@
                                                 {{-- <input type="checkbox" {{ $menu->is_external ? 'checked' : '' }} id="editIsExternal" name="is_external" class="toggle-checkbox hidden">
                                                 <label for="editIsExternal" class="toggle-label block w-10 h-5 bg-gray-300 rounded-full cursor-pointer relative"></label>
                                                 --}}
-                                                <input type="checkbox" {{ $menu->is_external ? 'checked' : '' }} id="editIsExternal-{{ $menu->id }}" name="is_external" class="toggle-checkbox hidden">
-                                                <label for="editIsExternal-{{ $menu->id }}" class="toggle-label block w-10 h-5 bg-gray-300 rounded-full cursor-pointer relative"></label>
+                                                <input type="checkbox" {{ $menu->is_external ? 'checked' : '' }} id="editIsExternal-{{ $menu->id ?? '' }}" name="is_external" class="toggle-checkbox hidden">
+                                                <label for="editIsExternal-{{ $menu->id ?? '' }}" class="toggle-label block w-10 h-5 bg-gray-300 rounded-full cursor-pointer relative"></label>
                                                 <span class="text-sm text-slate-700">Lien Externe</span>
                                              {{-- <small>Si vous souhaitez que cet élément de menu soit un lien vers une page externe, assurez-vous de cocher "Lien externe" et de fournir l'URL complète (y compris http:// ou https://). Sinon, pour les liens internes, vous pouvez simplement fournir le chemin relatif (ex: /contact).</small>     --}}
                                                 
@@ -229,10 +229,10 @@
                             </div>
 
                             {{-- Modal de confirmation de suppression   --}}
-                            <div id="delete-menu-modal-{{ $menu->id }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity z-50 ">
+                            <div id="delete-menu-modal-{{ $menu->id ?? '' }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity z-50 ">
                                 <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative " >
                                     
-                                    <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 focus:outline-none" onclick="closeDeleteMenuModal({{ $menu->id }})">
+                                    <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 focus:outline-none" onclick="closeDeleteMenuModal({{ $menu->id ?? '' }})">
                                         <i class="fas fa-times"></i>
                                     </button>
                                     <h2 class="text-xl font-bold text-sonec-dark mb-4">Confirmer la suppression</h2>
@@ -240,10 +240,10 @@
                                     <p class="mb-6 text-slate-700">Êtes-vous sûr de vouloir supprimer le menu <span class="font-bold">{{ $menu->label }}</span> ? Cette action est irréversible.</p>
 
                                     <div class="flex justify-end gap-4">
-                                        <button onclick="closeDeleteMenuModal({{ $menu->id }})" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md font-bold text-sm transition-all">
+                                        <button onclick="closeDeleteMenuModal({{ $menu->id ?? '' }})" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md font-bold text-sm transition-all">
                                             Annuler
                                         </button>
-                                        <button onclick="confirmDeleteMenu({{ $menu->id }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-bold text-sm transition-all flex items-center gap-2">
+                                        <button onclick="confirmDeleteMenu({{ $menu->id ?? '' }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-bold text-sm transition-all flex items-center gap-2">
                                             <i class="fas fa-trash"></i> Supprimer
                                         </button>
                                     </div>
@@ -271,13 +271,14 @@
                             <label for="label" class="block text-sm font-medium text-slate-700">Libellé <span class="text-red-500">*</span></label>
                             <input type="text" id="label" name="label" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" required>
                         </div>
-                        <div>
+                        <div class="hidden">
                             <label for="url" class="block text-sm font-medium text-slate-700">URL <span class="text-red-500">*</span></label>
-                            <input type="text" id="url" name="url" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" required>
+                            <input type="hidden" id="url" name="url" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" required>
                         </div>
+
                         <div class="hidden">
                             <label for="slug" class="block text-sm font-medium text-slate-700">Slug (formaté automatiquement)</label>
-                            <input type="text" readonly id="slug" name="slug" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
+                            <input type="hidden" readonly id="slug" name="slug" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
                         </div>
                         <div>
                             <label for="icon" class="block text-sm font-medium text-slate-700">Icone</label>
@@ -292,8 +293,8 @@
                         </div>
                         {{-- renseigner l'URL de l'image --}}
                         <div>
-                            <label for="editImgSrc-{{ $menu->id }}" class="block text-sm font-medium text-slate-700">URL de l'image</label>
-                            <input type="text" id="editImgSrc-{{ $menu->id }}" name="img_src" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $menu->img_src }}">
+                            <label for="editImgSrc-{{ $menu->id ?? '' }}" class="block text-sm font-medium text-slate-700">URL de l'image</label>
+                            <input type="text" id="editImgSrc-{{ $menu->id ?? '' }}" name="img_src" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $menu->img_src ?? '' }}">
                         </div>
 
                         {{-- image à uploader avec preview --}}
@@ -407,69 +408,69 @@
                     <tbody>
                         @foreach($sidebarMenus as $sidebarMenu)
                             {{-- possibilite de drag and drop pour changer la position des elements --}}
-                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-move" data-sidebar-menu-id="{{ $sidebarMenu->menu->id }}">
-                                <input type="hidden" class="menu-id" value="{{ $sidebarMenu->menu->id }}">
+                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-move" data-sidebar-menu-id="{{ $sidebarMenu->menu->id ?? '' }}">
+                                <input type="hidden" class="menu-id" value="{{ $sidebarMenu->menu->id ?? '' }}">
                                 
-                                <td class="px-6 py-4">{{ $sidebarMenu->menu->label }}</td>
-                                <td class="px-6 py-4">{{ $sidebarMenu->title }}</td>
-                                <td class="px-6 py-4">{{ $sidebarMenu->cta_url }}</td>
-                                <td class="px-6 py-4">{{ $sidebarMenu->cta_label }}</td>
+                                <td class="px-6 py-4">{{ $sidebarMenu->menu->label ?? '' }}</td>
+                                <td class="px-6 py-4">{{ $sidebarMenu->title ?? '' }}</td>
+                                <td class="px-6 py-4">{{ $sidebarMenu->cta_url ?? '' }}</td>
+                                <td class="px-6 py-4">{{ $sidebarMenu->cta_label ?? '' }}</td>
                                 <td class="px-6 py-4">
                                     @if($sidebarMenu->image && file_exists(storage_path('app/public/' . $sidebarMenu->image)))
-                                        <img src="{{ asset('storage/' . $sidebarMenu->image) }}" alt="{{ $sidebarMenu->title }}" class="w-16 h-16 object-cover rounded">
+                                        <img src="{{ asset('storage/' . $sidebarMenu->image) }}" alt="{{ $sidebarMenu->title ?? '' }}" class="w-16 h-16 object-cover rounded">
                                     @elseif($sidebarMenu->img_url)
-                                        <img src="{{ $sidebarMenu->img_url }}" alt="{{ $sidebarMenu->title }}" class="w-16 h-16 object-cover rounded">
+                                        <img src="{{ $sidebarMenu->img_url }}" alt="{{ $sidebarMenu->title ?? '' }}" class="w-16 h-16 object-cover rounded">
                                     @else
                                         Aucune image
                                     @endif
                                 </td>
 
-                                <td class="px-6 py-4">{{ $sidebarMenu->description }}</td>
+                                <td class="px-6 py-4">{{ $sidebarMenu->description ?? '' }}</td>
                                 
                                
                                 <td class="px-6 py-4 flex gap-2">
-                                    <button class="bg-transparent text-blue-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="editSidebarMenu({{ $sidebarMenu->id }})">
+                                    <button class="bg-transparent text-blue-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="editSidebarMenu({{ $sidebarMenu->id ?? '' }})">
                                         <i class="fas fa-pencil"></i>
                                     </button>
-                                    <button class="bg-transparent text-red-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="deleteSidebarMenu({{ $sidebarMenu->id }})" data-id="{{ $sidebarMenu->id }}" data-label="{{ $sidebarMenu->title }}" data-toggle="tooltip" data-title="Supprimer {{ $sidebarMenu->title }}">
+                                    <button class="bg-transparent text-red-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="deleteSidebarMenu({{ $sidebarMenu->id ?? '' }})" data-id="{{ $sidebarMenu->id ?? '' }}" data-label="{{ $sidebarMenu->title ?? '' }}" data-toggle="tooltip" data-title="Supprimer {{ $sidebarMenu->title ?? '' }}">
                                         <i class="fas fa-trash"></i> 
                                     </button>
                                 </td>
                             </tr>
 
                             {{-- Formulaire de modification d'un élément --}}
-                            <div id="edit-sidebar-modal-{{ $sidebarMenu->id }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity z-50 ">
+                            <div id="edit-sidebar-modal-{{ $sidebarMenu->id ?? '' }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity z-50 ">
                                 <div class=" bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative overflow-y-auto max-h-[70vh]" >
                                     
-                                    <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 focus:outline-none" onclick="closeEditSidebarMenuModal({{ $sidebarMenu->id }})">
+                                    <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 focus:outline-none" onclick="closeEditSidebarMenuModal({{ $sidebarMenu->id ?? '' }})">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                    <h2 class="text-xl font-bold text-sonec-dark mb-4">Modifier {{ $sidebarMenu->title }}</h2>
+                                    <h2 class="text-xl font-bold text-sonec-dark mb-4">Modifier {{ $sidebarMenu->title ?? '' }}</h2>
                                     
                                     
                                     <div id="form-errors" class="bg-red-100 text-red-500 mb-4 hidden"></div>
 
-                                    <form id="edit-sidebar-form-{{ $sidebarMenu->id }}" data-sidebar-id="{{ $sidebarMenu->id }}" class="space-y-4 overflow-y-auto custom-scrollbar max-h-[70vh]" enctype="multipart/form-data">
+                                    <form id="edit-sidebar-form-{{ $sidebarMenu->id ?? '' }}" data-sidebar-id="{{ $sidebarMenu->id ?? '' }}" class="space-y-4 overflow-y-auto custom-scrollbar max-h-[70vh]" enctype="multipart/form-data">
                                         
                                         <div>
-                                            <label for="title-{{ $sidebarMenu->id }}" class="block text-sm font-medium text-slate-700">Libellé <span class="text-red-500">*</span></label>
-                                            <input type="text" id="title-{{ $sidebarMenu->id }}" name="title" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $sidebarMenu->title }}" required>
+                                            <label for="title-{{ $sidebarMenu->id ?? '' }}" class="block text-sm font-medium text-slate-700">Libellé <span class="text-red-500">*</span></label>
+                                            <input type="text" id="title-{{ $sidebarMenu->id ?? '' }}" name="title" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $sidebarMenu->title ?? '' }}" required>
                                         </div>
                                         <div>
-                                            <label for="cta_url-{{ $sidebarMenu->id }}" class="block text-sm font-medium text-slate-700">CTA URL <span class="text-red-500">*</span></label>
-                                            <input type="text" id="cta_url-{{ $sidebarMenu->id }}" name="cta_url" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $sidebarMenu->url }}" >
+                                            <label for="cta_url-{{ $sidebarMenu->id ?? '' }}" class="block text-sm font-medium text-slate-700">CTA URL <span class="text-red-500">*</span></label>
+                                            <input type="text" id="cta_url-{{ $sidebarMenu->id ?? '' }}" name="cta_url" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $sidebarMenu->cta_url ?? '' }}" >
                                         </div>
                                         <div>
-                                            <label for="cta_label-{{ $sidebarMenu->id }}" class="block text-sm font-medium text-slate-700">CTA Label <span class="text-red-500">*</span></label>
-                                            <input type="text" id="cta_label-{{ $sidebarMenu->id }}" name="cta_label" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $sidebarMenu->cta_label }}" >
+                                            <label for="cta_label-{{ $sidebarMenu->id ?? '' }}" class="block text-sm font-medium text-slate-700">CTA Label <span class="text-red-500">*</span></label>
+                                            <input type="text" id="cta_label-{{ $sidebarMenu->id ?? '' }}" name="cta_label" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $sidebarMenu->cta_label ?? '' }}" >
                                         </div>
                                         <div>
-                                            <label for="img_url-{{ $sidebarMenu->id }}" class="block text-sm font-medium text-slate-700">URL de l'image</label>
-                                            <input type="text" id="img_url-{{ $sidebarMenu->id }}" name="img_url" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $sidebarMenu->img_url }}">
+                                            <label for="img_url-{{ $sidebarMenu->id ?? '' }}" class="block text-sm font-medium text-slate-700">URL de l'image</label>
+                                            <input type="text" id="img_url-{{ $sidebarMenu->id ?? '' }}" name="img_url" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $sidebarMenu->img_url ?? '' }}">
                                         </div>
                                         <div>
-                                            <label for="menu_id-{{ $sidebarMenu->id }}" class="block text-sm font-medium text-slate-700">Menu déroulant concerné</label>
-                                            <select id="menu_id-{{ $sidebarMenu->id }}" name="menu_id" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
+                                            <label for="menu_id-{{ $sidebarMenu->id ?? '' }}" class="block text-sm font-medium text-slate-700">Menu déroulant concerné</label>
+                                            <select id="menu_id-{{ $sidebarMenu->id ?? '' }}" name="menu_id" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
                                                 <option value="">Aucun</option>
                                                 @foreach($menusPrincipaux as $item)
                                                     <option {{ $item->id == $sidebarMenu->menu_id ? 'selected' : '' }} value="{{ $item->id }}">{{ $item->label }}</option>
@@ -477,9 +478,9 @@
                                             </select>
                                         </div>
                                         <div>
-                                            <label for="editDescription-{{ $sidebarMenu->id }}" class="block text-sm font-medium text-slate-700">Description</label>
-                                            <textarea id="editDescription-{{ $sidebarMenu->id }}" name="description" rows="3" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
-                                                {!!  $sidebarMenu->description  !!}
+                                            <label for="editSidebarDescription-{{ $sidebarMenu->id ?? '' }}" class="block text-sm font-medium text-slate-700">Description</label>
+                                            <textarea id="editSidebarDescription-{{ $sidebarMenu->id ?? '' }}" name="description" rows="3" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
+                                                {!!  $sidebarMenu->description ?? ''  !!}
                                             </textarea>
                                         </div>
                                         
@@ -491,21 +492,21 @@
                             </div>
 
                             {{-- Modal de confirmation de suppression   --}}
-                            <div id="delete-menu-modal-{{ $menu->id }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity z-50 ">
+                            <div id="delete-menu-modal-{{ $menu->id ?? '' }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity z-50 ">
                                 <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative " >
                                     
-                                    <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 focus:outline-none" onclick="closeDeleteMenuModal({{ $menu->id }})">
+                                    <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 focus:outline-none" onclick="closeDeleteMenuModal({{ $menu->id ?? '' }})">
                                         <i class="fas fa-times"></i>
                                     </button>
                                     <h2 class="text-xl font-bold text-sonec-dark mb-4">Confirmer la suppression</h2>
                                     
-                                    <p class="mb-6 text-slate-700">Êtes-vous sûr de vouloir supprimer le menu <span class="font-bold">{{ $menu->label }}</span> ? Cette action est irréversible.</p>
+                                    <p class="mb-6 text-slate-700">Êtes-vous sûr de vouloir supprimer le menu <span class="font-bold">{{ $menu->label ?? '' }}</span> ? Cette action est irréversible.</p>
 
                                     <div class="flex justify-end gap-4">
-                                        <button onclick="closeDeleteMenuModal({{ $menu->id }})" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md font-bold text-sm transition-all">
+                                        <button onclick="closeDeleteMenuModal({{ $menu->id ?? '' }})" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md font-bold text-sm transition-all">
                                             Annuler
                                         </button>
-                                        <button onclick="confirmDeleteMenu({{ $menu->id }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-bold text-sm transition-all flex items-center gap-2">
+                                        <button onclick="confirmDeleteMenu({{ $menu->id ?? '' }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-bold text-sm transition-all flex items-center gap-2">
                                             <i class="fas fa-trash"></i> Supprimer
                                         </button>
                                     </div>
@@ -557,8 +558,8 @@
                             </select>
                         </div>
                         <div>
-                            <label for="editDescription" class="block text-sm font-medium text-slate-700">Description</label>
-                            <textarea id="editDescription" name="description" rows="3" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
+                            <label for="description" class="block text-sm font-medium text-slate-700">Description</label>
+                            <textarea id="description" name="description" rows="3" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
                                
                             </textarea>
                         </div>
@@ -696,6 +697,8 @@
             e.preventDefault();
             const formData = new FormData(this);
 
+            tinymce.triggerSave(); 
+
             const btn = this.querySelector('button[type="submit"]');
             const originalContent = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enregistrement...';
@@ -815,13 +818,16 @@
             modal.classList.add('pointer-events-none');
         }
 
-        // Enregistrer les modifications d'un élément de menu
+        // Enregistrer les modifications d'un élément de menu principal
         document.querySelectorAll('[id^="edit-menu-form-"]').forEach(form => {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
 
                 const menuId = this.getAttribute('data-menu-id');
                 const formData = new FormData(this);
+
+                tinymce.triggerSave(); 
+
 
                 const btn = document.querySelector(`#edit-menu-modal-${menuId} button[type="submit"]`);
                 const originalContent = btn.innerHTML;
@@ -949,14 +955,24 @@
         function addSidebarMenuItem() {
             toggleSidebarMenuModal();
         }
+
+        // Enregistrer le formulaire d'un élément de menu de la sidebar
         document.getElementById('sidebar-menu-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            const formData = new FormData(this);
+            const formData = new FormData(this);           
+
+            if (typeof tinymce !== 'undefined') {
+                tinymce.triggerSave();
+            } 
+
+            formData.set('description', tinymce.get('description') ? tinymce.get("description").getContent() : document.getElementById('description').value);
+            
 
             const btn = this.querySelector('#sidebar-menu-form button[type="submit"]');
             const originalContent = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enregistrement...';
             btn.disabled = true;
+
 
             fetch("{{ route('sidebar-menus.store') }}", {
                 method: 'POST',
@@ -989,7 +1005,7 @@
                     successDescription.textContent = data.description || 'Enregistrement effectué avec succès.';
 
                     statusBadge.classList.add('hidden');
-                    window.location.reload();
+                    // window.location.reload();
 
                 } else {
                     showToastError();
@@ -1055,6 +1071,13 @@
                 const sidebarMenuId = this.getAttribute('data-sidebar-id');
                 const formData = new FormData(this);
 
+                if (typeof tinymce !== 'undefined') {
+                    tinymce.triggerSave();
+                } 
+
+                formData.set('editSidebarDescription', tinymce.get('editSidebarDescription') ? tinymce.get("editSidebarDescription").getContent() : document.getElementById('editSidebarDescription').value);
+                                
+
                 const btn = document.querySelector(`#edit-sidebar-modal-${sidebarMenuId} button[type="submit"]`);
                 const originalContent = btn.innerHTML;
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enregistrement en cours...';
@@ -1086,7 +1109,7 @@
                             btn.classList.remove('opacity-75', 'cursor-not-allowed');
                         }, 1200);
                         closeEditSidebarMenuModal(sidebarMenuId);
-                        window.location.reload();
+                        // window.location.reload();
                     } else {
                         showToastError();
                         btn.innerHTML = originalContent;
@@ -1115,6 +1138,7 @@
                 });
             });
         });
+        
 
     </script>
 

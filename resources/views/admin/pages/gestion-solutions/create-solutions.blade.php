@@ -66,6 +66,16 @@
             document.getElementById('tab-content-' + tab).classList.remove('hidden');
         }
 
+        document.getElementById('infos_title').addEventListener('input', function() {
+            // Doire pourvoir gérer les accents et les caractères spéciaux comme "é" ou "ç" et les convertir en "e" et "c"
+            const slug = this.value.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '') 
+                .replace(/[^a-z0-9]+/g, '-') 
+                .replace(/^-+|-+$/g, '');
+            document.getElementById('infos_slug_solution').value = slug;
+            // document.getElementById('url').value = '/' + slug;
+        });
+
         document.getElementById('image_couverture_solution').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {

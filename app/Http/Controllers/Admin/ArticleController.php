@@ -55,6 +55,9 @@ class ArticleController extends Controller
                 $validated['image_article'] = $request->file('image_article')->store('articles', 'public');
             }
 
+            // slug
+            $validated['slug'] = \Str::slug($validated['slug'] ?? $validated['titre'], '-');
+
 
 
             if (!\Storage::disk('public')->exists('auteur_articles')) {

@@ -457,6 +457,8 @@
             const formData = new FormData();            
             const val = (id) => document.getElementById(id)?.value ?? '';
 
+            tinymce.triggerSave(); 
+
             formData.append('accroche_title', val('accroche_title'));
             formData.append('accroche_subtitle', val('accroche_subtitle'));
             formData.append('accroche_description', val('accroche_description'));
@@ -586,7 +588,7 @@
                         statusBadge.classList.add('hidden');
 
 
-                        window.location.reload();
+                        // window.location.reload();
                     }, 1200);
                     
 

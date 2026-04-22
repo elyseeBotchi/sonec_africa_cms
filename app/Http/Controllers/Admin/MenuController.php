@@ -65,6 +65,10 @@ class MenuController extends Controller
                 $validated['image'] = $request->file('image')->store('menus', 'public');
             }
 
+            // mettre à jour le slug en fonction du titre et si un sous-menu est créé, le slug doit être formé du slug du parent suivi du slug du menu enfant
+            $validated['slug'] = \Str::slug($validated['slug'] ?? $validated['label'], '-');
+            
+
             Menu::create($validated);
 
             $data = [   
@@ -87,11 +91,11 @@ class MenuController extends Controller
         try {
             $menu = Menu::findOrFail($id);
 
-        $position = Menu::where('parent_id', $request->parent_id)->max('position');
-        $menu->position = $position + 1;
+            $position = Menu::where('parent_id', $request->parent_id)->max('position');
+            $menu->position = $position + 1;
 
-        $menu->position = $request->position;
-        $menu->save();
+            $menu->position = $request->position;
+            $menu->save();
         return response()->json(['message' => 'Position mise à jour avec succès', 'success' => true], 200);
         } catch (\Throwable $th) {
             //throw $th;
@@ -140,6 +144,9 @@ class MenuController extends Controller
                 }
                 $validated['image'] = $request->file('image')->store('menus', 'public');
             }
+
+            // mettre à jour le slug en fonction du titre et si un sous-menu est créé, le slug doit être formé du slug du parent suivi du slug du menu enfant
+            $validated['slug'] = $menu->slug ?? \Str::slug($validated['slug'] ?? $validated['label'], '-');
 
             $menu->update($validated);
 

@@ -3,11 +3,13 @@
         <div class="flex justify-between items-center py-4">
             <div id="logo-container" class="flex items-center">
                 <div class="w-32 h-10 {{ get_general_settings()->site_logo ? : 'bg-sonec-dark' }} rounded flex items-center justify-center">
-                    @if(get_general_settings()->site_logo)
-                        <img src="{{ asset('/storage/' . get_general_settings()->site_logo) }}" alt="Logo du header" class="max-h-full max-w-full">   
-                    @else
-                        <span class="text-white font-bold text-xl">SONEC</span>
-                    @endif
+                    <a href="{{ route('web.home') }}" class="block w-full h-full">
+                        @if(get_general_settings()->site_logo)
+                            <img src="{{ asset('/storage/' . get_general_settings()->site_logo) }}" alt="Logo du header" class="max-h-full max-w-full">   
+                        @else
+                            <span class="text-white font-bold text-xl">SONEC</span>
+                        @endif
+                    </a>
                     {{-- <span class="text-white font-bold text-xl">SONEC</span> --}}
                 </div>
             </div>
@@ -36,38 +38,42 @@
 
                                         {{-- Colonne principale : enfants --}}
                                         <div class="col-span-3">
-                                            <div class="grid grid-cols-3 {{ 'gap-' . $menu->espacement->espacement }}">
+                                            <div class="grid grid-cols-3 {{ 'gap-' . ($menu->espacement->espacement ?? '4') }}">
                                                 @foreach ($menu->children as $child)
+
+                                                    @php                                                        
+                                                        $childUrl = resolve_menu_child_url($child);
+                                                    @endphp
 
                                                     {{-- Enfant avec image --}}
                                                     @if(!empty($child->image) || !empty($child->img_src))
                                                         
-                                                        <a href="{{ $child->url ?? '#' }}" 
+                                                        <a href="{{$childUrl ?? '#' }}" 
                                                         class="text-center bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow block">
                                                             <div class="h-32 bg-gray-100 rounded-lg mb-3 overflow-hidden">
                                                                 <img class="w-full h-full object-cover"
                                                                     src="{{ !empty($child->img_src) ? $child->img_src : asset('storage/' . $child->image) }}"
-                                                                    alt="{{ $child->description }}">
+                                                                    alt="{!! $child->description !!}">
                                                             </div>
                                                             <h4 class="font-bold text-sonec-dark text-sm mb-1">{{ $child->label }}</h4>
-                                                            <p class="text-xs text-gray-600">{{ $child->description }}</p>
+                                                            <p class="text-xs text-gray-600">{!! $child->description !!}</p>
                                                         </a>
 
                                                     {{-- Enfant avec icône FontAwesome --}}
                                                     @elseif(!empty($child->icon))
-                                                        @if($menu->espacement->alignement === 'vertical')
-                                                            <a href="{{ $child->url ?? '#' }}" class="bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow block">
+                                                        @if(isset($menu->espacement) && isset($menu->espacement->alignement) && $menu->espacement->alignement === 'vertical')
+                                                            <a href="{{$childUrl ?? '#' }}" class="bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow block">
                                                                     
                                                                     <div class="w-12 h-12 {{ $menu->espacement->couleur_fond_icon == 1 ? 'bg-sonec-green' : 'transparent' }} rounded-lg flex items-center justify-center mb-4">
                                                                         <i class="{{ $child->icon }} text-white text-xl"></i>
                                                                     </div>
                                                                     <h3 class="font-bold text-sonec-dark mb-2">{{ $child->label }}</h3>
-                                                                    <p class="text-sm text-gray-600">{{ $child->description }}</p>
+                                                                    <p class="text-sm text-gray-600">{!! $child->description !!}</p>
                                                             </a>
                                                             
                                                         @else
 
-                                                            <a href="#" class="flex items-center gap-3 p-4 rounded hover:bg-gray-50 bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow">
+                                                            <a href="{{ $childUrl ?? '#' }}" class="flex items-center gap-3 p-4 rounded hover:bg-gray-50 bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow">
                                                                 <i class="{{ $child->icon }} text-sonec-green text-xl"></i>
                                                                 <span class="text-sonec-dark font-medium">{{ $child->label }}</span>
                                                             
@@ -79,7 +85,7 @@
 
                                                     {{-- Enfant sans icône ni image (lien simple) --}}
                                                     @else
-                                                        <a href="{{ $child->url ?? '#' }}" 
+                                                        <a href="{{ $childUrl ?? '#' }}" 
                                                         class="flex items-center gap-3 p-4 bg-gray-50 rounded-lg hover:shadow-md transition-shadow">
                                                             <span class="text-sonec-dark font-medium">{{ $child->label }}</span>
                                                         </a>
@@ -113,7 +119,7 @@
                                                         @endif
                                                     </div>
                                                     <h4 class="font-bold text-sonec-dark text-sm mb-1">{{ $menu->sidebar->title }}</h4>
-                                                    <p class="text-xs text-gray-600">{{ $menu->sidebar->description }}</p>
+                                                    <p class="text-xs text-gray-600">{!! $menu->sidebar->description !!}</p>
                                                 </div>
                                             @else
                                                 <div class="bg-gray-50 p-8 rounded-lg">
@@ -131,7 +137,7 @@
                                                     </h3>
 
                                                     @if($menu->sidebar->description)
-                                                        <p class="text-gray-700 mb-6">{{ $menu->sidebar->description }}</p>
+                                                        <p class="text-gray-700 mb-6">{!! $menu->sidebar->description !!}</p>
                                                     @endif
 
                                                     @if($menu->sidebar->cta_url)

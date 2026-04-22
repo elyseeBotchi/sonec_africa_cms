@@ -48,7 +48,7 @@
     </div>  
     <div class="mt-6">
         <label for="secteur_expertise_slug" class="block text-xs font-bold text-slate-400 uppercase mb-1">Slug du secteur d'expertise (doit être unique)</label>
-        <input type="text" id="secteur_expertise_slug" name="secteur_expertise_slug" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="slug-du-secteur-d-expertise">   
+        <input type="text" readonly id="secteur_expertise_slug" name="secteur_expertise_slug" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="slug-du-secteur-d-expertise">   
     </div>
     <div class="grid grid-cols-2 gap-6 mt-6">
             

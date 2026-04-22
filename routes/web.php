@@ -54,5 +54,41 @@ Route::middleware('auth')->prefix('/admin')->group(function () {
 });
 
 
-// Route pour la page d'accueil du site web
+// Accueil
 Route::get('/', [App\Http\Controllers\Web\HomeController::class, 'index'])->name('web.home');
+
+// Accueil
+Route::get('/', [App\Http\Controllers\Web\HomeController::class, 'index'])->name('web.home');
+
+// Actualités
+Route::get('/actualites', [App\Http\Controllers\Web\ActualiteController::class, 'index'])->name('web.actualites');
+Route::get('/actualites/{slug}', [App\Http\Controllers\Web\ActualiteController::class, 'show'])->name('web.actualites.show');
+
+// Carrières
+Route::get('/carrieres', [App\Http\Controllers\Web\CarriereController::class, 'index'])->name('web.carrieres');
+Route::get('/carrieres/{slug}', [App\Http\Controllers\Web\CarriereController::class, 'show'])->name('web.carrieres.show');
+
+// Solutions — /{slug} directement (slugs: ecoleweb, gdec, sonecpay)
+Route::get('/solutions', [App\Http\Controllers\Web\SolutionController::class, 'index'])->name('web.solutions.index');
+Route::get('/solutions/{slug}', [App\Http\Controllers\Web\SolutionController::class, 'show'])->name('web.solutions.show');
+
+// Industries — /{slug} directement (slugs: banques-et-assurances, telecoms...)
+Route::get('/industries', [App\Http\Controllers\Web\SecteurExpertiseController::class, 'index'])->name('web.secteurs.index');
+Route::get('/industries/{slug}', [App\Http\Controllers\Web\SecteurExpertiseController::class, 'show'])->name('web.secteurs.show');
+
+// Qui sommes-nous
+Route::get('/qui-sommes-nous', [App\Http\Controllers\Web\PagesController::class, 'quiSommesNous'])->name('web.qui-sommes-nous');
+Route::get('/decouvrir-sonec-africa', [App\Http\Controllers\Web\PagesController::class, 'decouvrir'])->name('web.decouvrir-sonec-africa');
+Route::get('/notre-histoire', [App\Http\Controllers\Web\PagesController::class, 'histoire'])->name('web.notre-histoire');
+Route::get('/equipe-de-direction', [App\Http\Controllers\Web\PagesController::class, 'equipe'])->name('web.equipe-de-direction');
+
+// Contact
+Route::get('/contact', [App\Http\Controllers\Web\ContactController::class, 'index'])->name('web.contact');
+Route::post('/contact', [App\Http\Controllers\Web\ContactController::class, 'send'])->name('web.contact.send');
+
+// Route générique — EN DERNIER
+Route::get('/{slug}', [App\Http\Controllers\Web\PagesController::class, 'index'])->name('web.pages');
+
+
+
+// Route::get('/{slug}', [App\Http\Controllers\Web\PagesController::class, 'index'])->name('web.pages');

@@ -77,22 +77,22 @@
         {{-- CTA 1 et 2 --}}
         <div>
             <label for="secteur_expertise_cta_1_label" class="block text-xs font-bold text-slate-400 uppercase mb-1">Label du premier bouton d'appel à l'action</label>
-            <input type="text" id="secteur_expertise_cta_1_label" name="secteur_expertise_cta_1_label" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="Label du premier bouton d'appel à l'action (ex: En savoir plus, Contactez-nous, etc.)" value="{{ $secteurExpertise->cta_1_label ?? '' }}">
+            <input type="text" id="secteur_expertise_cta_1_label" name="secteur_expertise_cta_1_label" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="Label du premier bouton d'appel à l'action (ex: En savoir plus, Contactez-nous, etc.)" value="{{ $secteurExpertise->cta_label_1 ?? '' }}">
         </div>
 
         {{-- CTA URL --}}
         <div>
             <label for="secteur_expertise_cta_1_url" class="block text-xs font-bold text-slate-400 uppercase mb-1">URL du premier bouton d'appel à l'action</label>
-            <input type="text" id="secteur_expertise_cta_1_url" name="secteur_expertise_cta_1_url" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm font-mono text-blue-500" placeholder="URL du premier bouton d'appel à l'action (ex: https://www.exemple.com/contact)" value="{{ $secteurExpertise->cta_1_url ?? '' }}">
+            <input type="text" id="secteur_expertise_cta_1_url" name="secteur_expertise_cta_1_url" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm font-mono text-blue-500" placeholder="URL du premier bouton d'appel à l'action (ex: https://www.exemple.com/contact)" value="{{ $secteurExpertise->cta_url_1 ?? '' }}">
         </div>
         <div>
             <label for="secteur_expertise_cta_2_label" class="block text-xs font-bold text-slate-400 uppercase mb-1">Label du deuxième bouton d'appel à l'action</label>
-            <input type="text" id="secteur_expertise_cta_2_label" name="secteur_expertise_cta_2_label" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="Label du deuxième bouton d'appel à l'action (ex: En savoir plus, Contactez-nous, etc.)" value="{{ $secteurExpertise->cta_2_label ?? '' }}">   
+            <input type="text" id="secteur_expertise_cta_2_label" name="secteur_expertise_cta_2_label" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="Label du deuxième bouton d'appel à l'action (ex: En savoir plus, Contactez-nous, etc.)" value="{{ $secteurExpertise->cta_label_2 ?? '' }}">   
         </div>
         {{-- CTA URL --}}
         <div>
             <label for="secteur_expertise_cta_2_url" class="block text-xs font-bold text-slate-400 uppercase mb-1">URL du deuxième bouton d'appel à l'action</label>
-            <input type="text" id="secteur_expertise_cta_2_url" name="secteur_expertise_cta_2_url" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm font-mono text-blue-500" placeholder="URL du deuxième bouton d'appel à l'action (ex: https://www.exemple.com/contact)" value="{{ $secteurExpertise->cta_2_url ?? '' }}">  
+            <input type="text" id="secteur_expertise_cta_2_url" name="secteur_expertise_cta_2_url" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm font-mono text-blue-500" placeholder="URL du deuxième bouton d'appel à l'action (ex: https://www.exemple.com/contact)" value="{{ $secteurExpertise->cta_url_2 ?? '' }}">  
         </div>
 
 
@@ -210,6 +210,11 @@
         <i class="fas fa-plus"></i> Ajouter un chiffre clé
     </button>
 </div>
+
+{{-- note temoignage a implementer --}}
+
+{{-- Section transfomation reussite à implementer --}}
+
 
 {{-- Section Accroche --}}
 <div class="bg-white p-8 mt-8 rounded-3xl shadow-sm border border-slate-100">

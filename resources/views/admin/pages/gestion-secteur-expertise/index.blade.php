@@ -43,7 +43,7 @@
                             {{-- <th class="px-6 py-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Slug</th> --}}
                             <th class="px-6 py-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Contact</th>
                             {{-- <th class="px-6 py-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Disponibilité</th> --}}
-                            {{-- <th class="px-6 py-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Icon/Image</th> --}}
+                            <th class="px-6 py-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Icone</th>
                             <th class="px-6 py-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Mise en avant</th>
                             {{-- <th class="px-6 py-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Affiché</th>                             --}}
                             <th class="px-6 py-3 text-xs font-bold text-slate-400 uppercase tracking-wider">Actions</th>
@@ -63,7 +63,13 @@
                                 {{-- <td class="px-6 py-4">{{ $secteur->slug }}</td> --}}
                                 <td class="px-6 py-4">{{ $secteur->contact_email ?? '' }} <br> {{$secteur->contact_phone ?? ''}}</td>
                                 {{-- <td class="px-6 py-4">{{ $secteur->resume }}</td> --}}
-                               
+                                <td class="px-6 py-4">
+                                    @if($secteur->icon && str_starts_with($secteur->icon, 'fa'))
+                                        <i class="{{ $secteur->icon }} bg-green-100 text-green-800 p-2 rounded-full text-2xl"></i>
+                                    @else
+                                        {{ $secteur->icon }}
+                                    @endif
+                                </td>
                                 
                                 
                                 <td class="px-6 py-4">

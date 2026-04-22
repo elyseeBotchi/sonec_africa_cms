@@ -150,7 +150,7 @@
                 .normalize('NFD').replace(/[\u0300-\u036f]/g, '') 
                 .replace(/[^a-z0-9]+/g, '-') 
                 .replace(/^-+|-+$/g, '');
-            document.getElementById('slug').value = 'article/'+slug;
+            document.getElementById('slug').value = +slug;
         });
         
         // Si un tag est coché, ajouter la classe "bg-sonec-green" et "text-white", sinon les retirer

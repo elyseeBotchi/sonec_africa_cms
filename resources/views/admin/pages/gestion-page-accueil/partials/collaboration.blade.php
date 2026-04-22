@@ -171,7 +171,7 @@
                     </div>
                     <div class="mt-4">
                         <label for="temoignage_message-{{ $index }}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Description Longue</label>
-                        <textarea id="temoignage_message-{{ $index }}" name="temoignage_message-{{ $index }}" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm h-32" rows="4">{!! $temoignage->message ?? '' !!}</textarea>
+                        <textarea id="temoignage_message-{{ $index }}" name="temoignage_message[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm h-32" rows="4">{!! $temoignage->message ?? '' !!}</textarea>
                     </div>
                     <div class="preview bg-slate-50 rounded-xl p-4 flex items-center justify-center border border-slate-200 border-dashed mt-6">
                         <div class="text-center">

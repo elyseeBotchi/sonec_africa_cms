@@ -54,11 +54,9 @@ class SecteurExpertiseController extends Controller
                     $imagePath = $request->file('secteur_expertise_image_couverture')->store('hero_images', 'public');
                 }
 
-                $slug = \Str::slug($validatedData['secteur_expertise_slug'] ?? $validatedData['secteur_expertise_title_hero'], '-');
-                $slugCount = SecteurExpertise::where('slug', 'LIKE', $slug . '%')->count();
-                if ($slugCount > 0) {
-                    $slug .= '-' . ($slugCount + 1);
-                }
+                $slug = \Str::slug($validatedData['secteur_expertise_slug'] ?? $validatedData['secteur_expertise_name'], '-');
+                // $slugCount = SecteurExpertise::where('slug', 'LIKE', $slug . '%')->count();
+                
 
                 $infosData = [
                     'page_key' => $validatedData['page_key'] ?? 'secteur_expertise',
@@ -244,20 +242,20 @@ class SecteurExpertiseController extends Controller
                     $imagePath = $request->file('secteur_expertise_image_couverture')->store('hero_images', 'public');
                 }
 
-                $slug = \Str::slug($validatedData['secteur_expertise_slug'] ?? $validatedData['secteur_expertise_name'], '-');
+                // $slug = \Str::slug($validatedData['secteur_expertise_slug'] ?? $validatedData['secteur_expertise_name'], '-');
 
                  // Vérifier l'unicité du slug
-                $slugCount = SecteurExpertise::where('slug', $slug)->count();
-                if ($slugCount > 0) {
-                    $slug .= '-' . ($slugCount + 1);
-                }
+                // $slugCount = SecteurExpertise::where('slug', $slug)->count();
+                // if ($slugCount > 0) {
+                //     $slug .= '-' . ($slugCount + 1);
+                // }
 
                 $infosData = [
                     'page_key' => $validatedData['page_key'] ?? 'secteur_expertise',
                     'name' => $validatedData['secteur_expertise_name'],
                     'title_hero' => $validatedData['secteur_expertise_title_hero'] ?? null,
                     'subtitle' => $validatedData['secteur_expertise_subtitle'] ?? null,
-                    'slug' => $slug,
+                    // 'slug' => $slug,
                     'contact_email' => $validatedData['secteur_expertise_contact_email'] ?? null,
                     'contact_phone' => $validatedData['secteur_expertise_contact_phone'] ?? null,
                     'cible' => $validatedData['secteur_expertise_cible'] ?? null,

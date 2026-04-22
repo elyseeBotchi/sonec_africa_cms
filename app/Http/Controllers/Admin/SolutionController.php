@@ -71,10 +71,10 @@ class SolutionController extends Controller
                 $slug = \Str::slug($validatedData['infos_slug_solution'] ?? $validatedData['infos_title'], '-');
 
                  // Vérifier l'unicité du slug
-                $slugCount = Solution::where('slug', $slug)->count();
-                if ($slugCount > 0) {
-                    $slug .= '-' . ($slugCount + 1);
-                }
+                // $slugCount = Solution::where('slug', $slug)->count();
+                // if ($slugCount > 0) {
+                //     $slug .= '-' . ($slugCount + 1);
+                // }
 
                 $infosData = [
                     'page_key' => $validatedData['page_key'] ?? 'solutions',
@@ -288,19 +288,19 @@ class SolutionController extends Controller
                     $imagePath = $request->file('infos_image_couverture_solution')->store('hero_images', 'public');
                 }
 
-                $slug = \Str::slug($validatedData['infos_slug_solution'] ?? $validatedData['infos_title'], '-');
+                // $slug = \Str::slug($validatedData['infos_slug_solution'] ?? $validatedData['infos_title'], '-');
 
                  // Vérifier l'unicité du slug
-                $slugCount = Solution::where('slug', $slug)->count();
-                if ($slugCount > 0) {
-                    $slug .= '-' . ($slugCount + 1);
-                }
+                // $slugCount = Solution::where('slug', $slug)->count();
+                // if ($slugCount > 0) {
+                //     $slug .= '-' . ($slugCount + 1);
+                // }
 
                 $infosData = [
                     'page_key' => $validatedData['page_key'] ?? 'solutions',
                     'title' => $validatedData['infos_title'] ?? null,
                     'subtitle' => $validatedData['infos_subtitle'] ?? null,
-                    'slug' => $slug,
+                    // 'slug' => $slug,
                     'contact_email' => $validatedData['infos_contact_email_solution'] ?? null,
                     'contact_phone' => $validatedData['infos_contact_phone_solution'] ?? null,
                     'cible' => $validatedData['infos_cible_solution'] ?? null,
@@ -613,6 +613,14 @@ class SolutionController extends Controller
     {
         //
         try {
+            // Supprimer les données associées
+            $solution->chiffres()->delete();
+            $solution->fonctionnalites()->delete();
+            $solution->partenaires()->delete();
+            $solution->accroche()->delete();
+            $solution->sections()->delete();
+            $solution->temoignages()->delete();
+            $solution->seo()->delete();
             $solution->delete();
             return response()->json([
                     'success' => true, 

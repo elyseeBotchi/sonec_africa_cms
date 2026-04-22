@@ -15,7 +15,7 @@
                         <div class="container mx-auto px-6">
                             <div class="max-w-2xl">
                                 <h1 class="text-4xl lg:text-6xl font-bold text-white mb-6">{{ $carousel->title }}</h1>
-                                <p class="text-xl text-gray-200 mb-8">{{ $carousel->description }}</p>
+                                <p class="text-xl text-gray-200 mb-8">{!! $carousel->description !!}</p>
                                 @if ($carousel->cta_label && $carousel->cta_url)
                                     <a href="{{ $carousel->cta_url }}" class="inline-block bg-sonec-green text-white px-8 py-4 rounded-lg font-semibold hover:bg-sonec-lime hover:text-sonec-dark transition-colors">
                                         {{ $carousel->cta_label }}
@@ -124,116 +124,60 @@
                 </div>
             </section>
         @endif
+        
+        @if(isset(get_accueil_content()['solutions']) && get_accueil_content()['solutions']->isNotEmpty())
 
-        <section id="solutions-section" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-4">Nos solutions phares</h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">Des produits innovants conçus pour répondre aux défis spécifiques de chaque secteur</p>
-                </div>
-
-                <div class="grid lg:grid-cols-3 gap-8">
-                    <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow">
-                        <div class="h-56 overflow-hidden">
-                            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/3c5693e84e-391694b11c586ba6057d.png" alt="students using tablets in modern african classroom digital education technology">
-                        </div>
-                        <div class="p-8">
-                            <div class="w-14 h-14 bg-sonec-green rounded-xl flex items-center justify-center mb-4">
-                                <i class="fas fa-graduation-cap text-white text-2xl"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-sonec-dark mb-3">EcoleWeb</h3>
-                            <p class="text-gray-700 mb-6">Plateforme éducative complète qui digitalise l'ensemble de l'écosystème scolaire : gestion administrative, apprentissage en ligne, suivi pédagogique et communication parents-enseignants.</p>
-                            <ul class="space-y-2 mb-6">
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-sonec-green mt-1"></i>
-                                    <span class="text-gray-700">Gestion administrative automatisée</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-sonec-green mt-1"></i>
-                                    <span class="text-gray-700">Cours en ligne interactifs</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-sonec-green mt-1"></i>
-                                    <span class="text-gray-700">Suivi en temps réel</span>
-                                </li>
-                            </ul>
-                            <a href="#" class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
-                                En savoir plus
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
+            <section id="solutions-section" class="py-20 bg-white">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-4">Nos solutions phares</h2>
+                        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Des produits innovants conçus pour répondre aux défis spécifiques de chaque secteur</p>
                     </div>
 
-                    <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow">
-                        <div class="h-56 overflow-hidden">
-                            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/22e6189fbd-581b304e58fa556f0225.png" alt="business analytics dashboard on computer screen modern office professional">
-                        </div>
-                        <div class="p-8">
-                            <div class="w-14 h-14 bg-sonec-green rounded-xl flex items-center justify-center mb-4">
-                                <i class="fas fa-chart-line text-white text-2xl"></i>
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        @foreach(get_accueil_content()['solutions'] as $solution)
+                        <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow">
+                            <div class="h-56 overflow-hidden">
+                                <img class="w-full h-full object-cover" src="{{ $solution->image ? asset('storage/'.$solution->image) : $solution->image_url }}" alt="{{ $solution->title }}">
                             </div>
-                            <h3 class="text-2xl font-bold text-sonec-dark mb-3">GDEC</h3>
-                            <p class="text-gray-700 mb-6">Solution intégrée de gestion d'entreprise qui optimise vos processus opérationnels : comptabilité, ressources humaines, gestion de stock, CRM et reporting avancé.</p>
-                            <ul class="space-y-2 mb-6">
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-sonec-green mt-1"></i>
-                                    <span class="text-gray-700">ERP complet et modulaire</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-sonec-green mt-1"></i>
-                                    <span class="text-gray-700">Tableaux de bord personnalisés</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-sonec-green mt-1"></i>
-                                    <span class="text-gray-700">Automatisation des workflows</span>
-                                </li>
-                            </ul>
-                            <a href="#" class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
-                                En savoir plus
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
+                            <div class="p-8">
+                                <div class="w-14 h-14 bg-sonec-green rounded-xl flex items-center justify-center mb-4">
+                                    <i class="{{ $solution->icon }} text-white text-2xl"></i>
+                                    @if($solution->icon && str_starts_with($solution->icon, 'fa'))
+                                    @else
+                                        {{ $solution->icon }}
+                                    @endif
+                                    {{-- <i class="fas fa-graduation-cap text-white text-2xl"></i> --}}
+                                </div>
+                                <h3 class="text-2xl font-bold text-sonec-dark mb-3">{{ $solution->title }}</h3>
+                                <p class="text-gray-700 mb-6">{!! $solution->resume !!}</p>
+                                <ul class="space-y-2 mb-6">
+                                    @foreach($solution->fonctionnalites as $fonctionnalite)
+                                        <li class="flex items-start gap-3">
+                                            <i class="fas fa-check text-sonec-green mt-1"></i>
+                                            <span class="text-gray-700">{!! $fonctionnalite->description !!}</span>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                <a href="#" class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
+                                    En savoir plus
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
+
+
+                        @endforeach
                     </div>
 
-                    <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-2xl transition-shadow">
-                        <div class="h-56 overflow-hidden">
-                            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/8c790e2c64-3ae483694b69e49bd0cc.png" alt="contactless payment mobile phone transaction modern fintech africa">
-                        </div>
-                        <div class="p-8">
-                            <div class="w-14 h-14 bg-sonec-green rounded-xl flex items-center justify-center mb-4">
-                                <i class="fas fa-credit-card text-white text-2xl"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-sonec-dark mb-3">SonecPay</h3>
-                            <p class="text-gray-700 mb-6">Plateforme de paiement sécurisée et innovante qui facilite les transactions financières : paiements mobiles, transferts, gestion de portefeuille et intégration e-commerce.</p>
-                            <ul class="space-y-2 mb-6">
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-sonec-green mt-1"></i>
-                                    <span class="text-gray-700">Transactions sécurisées 24/7</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-sonec-green mt-1"></i>
-                                    <span class="text-gray-700">Multi-devises et multi-canaux</span>
-                                </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fas fa-check text-sonec-green mt-1"></i>
-                                    <span class="text-gray-700">API d'intégration simple</span>
-                                </li>
-                            </ul>
-                            <a href="#" class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
-                                En savoir plus
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
+                    <div class="text-center mt-12">
+                        <a href="#" class="inline-block bg-sonec-green text-white px-8 py-4 rounded-lg font-semibold hover:bg-sonec-dark transition-colors">
+                            Voir toutes nos solutions
+                        </a>
                     </div>
                 </div>
-
-                <div class="text-center mt-12">
-                    <a href="#" class="inline-block bg-sonec-green text-white px-8 py-4 rounded-lg font-semibold hover:bg-sonec-dark transition-colors">
-                        Voir toutes nos solutions
-                    </a>
-                </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
         @if(isset(get_accueil_content()['clients']) && get_accueil_content()['clients']->isNotEmpty())
             <section id="trust-section" class="py-20 bg-gray-50">
@@ -258,65 +202,43 @@
                 </div>
             </section>
         @endif
-
-        <section id="industries-section" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-4">Nos secteurs d'expertise</h2>
-                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">Une connaissance approfondie des enjeux spécifiques à chaque industrie</p>
-                </div>
-
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow border border-gray-100">
-                        <div class="w-16 h-16 bg-sonec-green/10 rounded-xl flex items-center justify-center mb-4">
-                            <i class="fas fa-university text-sonec-green text-3xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-sonec-dark mb-3">Banques &amp; Assurances</h3>
-                        <p class="text-gray-700">Solutions fintech sécurisées et conformes aux régulations bancaires africaines</p>
+        
+        @if(isset(get_accueil_content()['secteurs_expertise']) && get_accueil_content()['secteurs_expertise']->isNotEmpty())
+        
+            <section id="industries-section" class="py-20 bg-white">
+                <div class="container mx-auto px-6">
+                    <div class="text-center mb-16">
+                        <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-4">Nos secteurs d'expertise</h2>
+                        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Une connaissance approfondie des enjeux spécifiques à chaque industrie</p>
                     </div>
 
-                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow border border-gray-100">
-                        <div class="w-16 h-16 bg-sonec-green/10 rounded-xl flex items-center justify-center mb-4">
-                            <i class="fas fa-signal text-sonec-green text-3xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-sonec-dark mb-3">Télécommunications</h3>
-                        <p class="text-gray-700">Plateformes de gestion d'abonnés et services à valeur ajoutée</p>
-                    </div>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {{-- <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow border border-gray-100">
+                            <div class="w-16 h-16 bg-sonec-green/10 rounded-xl flex items-center justify-center mb-4">
+                                <i class="fas fa-university text-sonec-green text-3xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-sonec-dark mb-3">Banques &amp; Assurances</h3>
+                            <p class="text-gray-700">Solutions fintech sécurisées et conformes aux régulations bancaires africaines</p>
+                        </div> --}}
 
-                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow border border-gray-100">
-                        <div class="w-16 h-16 bg-sonec-green/10 rounded-xl flex items-center justify-center mb-4">
-                            <i class="fas fa-school text-sonec-green text-3xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-sonec-dark mb-3">Éducation</h3>
-                        <p class="text-gray-700">Digitalisation complète des établissements scolaires et universitaires</p>
-                    </div>
-
-                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow border border-gray-100">
-                        <div class="w-16 h-16 bg-sonec-green/10 rounded-xl flex items-center justify-center mb-4">
-                            <i class="fas fa-heartbeat text-sonec-green text-3xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-sonec-dark mb-3">Santé</h3>
-                        <p class="text-gray-700">Systèmes d'information hospitaliers et télémédecine</p>
-                    </div>
-
-                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow border border-gray-100">
-                        <div class="w-16 h-16 bg-sonec-green/10 rounded-xl flex items-center justify-center mb-4">
-                            <i class="fas fa-landmark text-sonec-green text-3xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-sonec-dark mb-3">Institutions Publiques</h3>
-                        <p class="text-gray-700">E-gouvernement et services administratifs digitaux</p>
-                    </div>
-
-                    <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow border border-gray-100">
-                        <div class="w-16 h-16 bg-sonec-green/10 rounded-xl flex items-center justify-center mb-4">
-                            <i class="fas fa-industry text-sonec-green text-3xl"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-sonec-dark mb-3">Industrie &amp; Énergie</h3>
-                        <p class="text-gray-700">Solutions IoT et optimisation des processus industriels</p>
+                        @foreach (get_accueil_content()['secteurs_expertise'] as $secteur)
+                            <div class="bg-gray-50 p-8 rounded-xl hover:shadow-lg transition-shadow border border-gray-100">
+                                <div class="w-16 h-16 bg-sonec-green/10 rounded-xl flex items-center justify-center mb-4">
+                                    @if($secteur->icon && str_starts_with($secteur->icon, 'fa'))
+                                        <i class="{{ $secteur->icon }} text-sonec-green text-3xl"></i>
+                                    @else
+                                        {{ $secteur->icon }}
+                                    @endif
+                                </div>
+                                <h3 class="text-xl font-bold text-sonec-dark mb-3">{{ $secteur->name }}</h3>
+                                <p class="text-gray-700">{{ $secteur->description }}</p>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+        @endif
 
         @if(isset(get_accueil_content()['partenaires']) && get_accueil_content()['partenaires']->isNotEmpty())
 
@@ -344,85 +266,49 @@
             </section>
         @endif
         
-        <section id="news-section" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-16">
-                    <div>
-                        <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-4">Actualités &amp; Insights</h2>
-                        <p class="text-xl text-gray-600">Restez informés de nos dernières innovations</p>
+        @if(isset(get_accueil_content()['articles']) && get_accueil_content()['articles']->isNotEmpty())
+            
+            <section id="news-section" class="py-20 bg-white">
+                <div class="container mx-auto px-6">
+                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-16">
+                        <div>
+                            <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-4">Actualités &amp; Insights</h2>
+                            <p class="text-xl text-gray-600">Restez informés de nos dernières innovations</p>
+                        </div>
+                        <a href="#" class="mt-6 lg:mt-0 inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
+                            Voir toutes les actualités
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
                     </div>
-                    <a href="#" class="mt-6 lg:mt-0 inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
-                        Voir toutes les actualités
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
+
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        @foreach (get_accueil_content()['articles'] as $article)
+                            <article class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
+                                <div class="h-56 overflow-hidden">
+                                    <img class="w-full h-full object-cover" src="{{ $article->image_url ?? asset('storage/'.$article->image_article) }}" alt="{{ $article->title }}">
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                                        <span class="flex items-center gap-1">
+                                            <i class="far fa-calendar"></i>
+                                            {{-- convertir la date au format 15 Janvier 2024 --}}
+                                            {{ $article->published_at->format('d F Y') }}
+                                        </span>
+                                        <span class="px-3 py-1 bg-sonec-lime/20 text-sonec-dark rounded-full text-xs font-semibold">{{ $article->category->label }}</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-sonec-dark mb-3">{{ $article->title }}</h3>
+                                    <p class="text-gray-700 mb-4">{!! $article->description_courte !!}</p>
+                                    <a href="#" class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
+                                        Lire la suite
+                                        <i class="fas fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
                 </div>
-
-                <div class="grid lg:grid-cols-3 gap-8">
-                    <article class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
-                        <div class="h-56 overflow-hidden">
-                            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/1f7b182d18-81c45f3a57399ca8d5fb.png" alt="african tech conference innovation digital transformation">
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-calendar"></i>
-                                    15 Janvier 2024
-                                </span>
-                                <span class="px-3 py-1 bg-sonec-lime/20 text-sonec-dark rounded-full text-xs font-semibold">Innovation</span>
-                            </div>
-                            <h3 class="text-xl font-bold text-sonec-dark mb-3">SONEC Africa lance sa nouvelle solution d'IA pour l'éducation</h3>
-                            <p class="text-gray-700 mb-4">Notre plateforme EcoleWeb intègre désormais des fonctionnalités d'intelligence artificielle pour personnaliser l'apprentissage...</p>
-                            <a href="#" class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
-                                Lire la suite
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </article>
-
-                    <article class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
-                        <div class="h-56 overflow-hidden">
-                            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/f9677547db-823822a5f363ba49d483.png" alt="business partnership handshake african executives modern office">
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-calendar"></i>
-                                    10 Janvier 2024
-                                </span>
-                                <span class="px-3 py-1 bg-sonec-lime/20 text-sonec-dark rounded-full text-xs font-semibold">Partenariat</span>
-                            </div>
-                            <h3 class="text-xl font-bold text-sonec-dark mb-3">Nouveau partenariat stratégique avec une grande banque africaine</h3>
-                            <p class="text-gray-700 mb-4">SONEC Africa et la Banque Continentale signent un accord pour digitaliser l'ensemble des agences...</p>
-                            <a href="#" class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
-                                Lire la suite
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </article>
-
-                    <article class="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-shadow">
-                        <div class="h-56 overflow-hidden">
-                            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/a427ead029-75c3227315b625bd3535.png" alt="award ceremony business excellence trophy african entrepreneur">
-                        </div>
-                        <div class="p-6">
-                            <div class="flex items-center gap-4 text-sm text-gray-500 mb-3">
-                                <span class="flex items-center gap-1">
-                                    <i class="far fa-calendar"></i>
-                                    5 Janvier 2024
-                                </span>
-                                <span class="px-3 py-1 bg-sonec-lime/20 text-sonec-dark rounded-full text-xs font-semibold">Récompense</span>
-                            </div>
-                            <h3 class="text-xl font-bold text-sonec-dark mb-3">SONEC Africa élu "Meilleure Entreprise Tech de l'année"</h3>
-                            <p class="text-gray-700 mb-4">Nous sommes fiers d'annoncer que SONEC Africa a reçu le prestigieux prix de l'innovation technologique...</p>
-                            <a href="#" class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
-                                Lire la suite
-                                <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
+            </section>
+        @endif
 
         @if(isset(get_accueil_content()['temoignages']) && get_accueil_content()['temoignages']->isNotEmpty())
             <section id="testimonials-section" class="py-20 bg-gray-50">
@@ -440,7 +326,7 @@
                                         <i class="fas fa-star"></i>
                                     @endfor
                                 </div>
-                                <p class="text-gray-700 mb-6 italic">"{{ $temoignage->message }}"</p>
+                                <p class="text-gray-700 mb-6 italic">{!! $temoignage->message !!}</p>
                                 <div class="flex items-center gap-4">
                                     <img src="{{ $temoignage->photo_url ?? asset('storage/'.$temoignage->photo) }}" alt="{{ $temoignage->name }}" class="w-12 h-12 rounded-full object-cover">
                                     <div>

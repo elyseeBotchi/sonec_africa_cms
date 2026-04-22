@@ -44,7 +44,7 @@
     </div>  
     <div class="mt-6">
         <label for="infos_slug_solution" class="block text-xs font-bold text-slate-400 uppercase mb-1">Slug de la solution (doit être unique)</label>
-        <input type="text" id="infos_slug_solution" name="infos_slug_solution" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="slug-de-la-solution">   
+        <input type="readonly" id="infos_slug_solution" name="infos_slug_solution" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="slug-de-la-solution">   
     </div>
     <div class="grid grid-cols-2 gap-6 mt-6">
             

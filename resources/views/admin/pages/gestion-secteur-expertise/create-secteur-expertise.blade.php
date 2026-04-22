@@ -66,6 +66,16 @@
             document.getElementById('tab-content-' + tab).classList.remove('hidden');
         }
 
+        document.getElementById('secteur_expertise_name').addEventListener('input', function() {
+            // Doire pourvoir gérer les accents et les caractères spéciaux comme "é" ou "ç" et les convertir en "e" et "c"
+            const slug = this.value.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '') 
+                .replace(/[^a-z0-9]+/g, '-') 
+                .replace(/^-+|-+$/g, '');
+            document.getElementById('secteur_expertise_slug').value = slug;
+            // document.getElementById('url').value = '/' + slug;
+        });
+
         document.getElementById('image_couverture_secteur_expertise').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -396,7 +406,7 @@
                         btn.classList.remove('opacity-75', 'cursor-not-allowed');
                         statusBadge.classList.add('hidden');
 
-                        // window.location.href = '{{ route("secteur-expertise.index") }}';
+                        window.location.href = '{{ route("secteur-expertise.index") }}';
                         // window.location.reload();
                     }, 1200);
                 } else {
