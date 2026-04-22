@@ -99,6 +99,52 @@ if (!function_exists('get_solutions_page_content')) {
     }
 }
 
+// Fonction pour recuperer le contenu de la page découvrir sonec africa
+if (!function_exists('get_decouvrir_sonec_africa_content')) {
+    function get_decouvrir_sonec_africa_content()
+    {
+        // $presentationEntreprise = \App\Models\PresentationEntreprise::where('page_key', 'decouvrir-sonec-africa')->first();
+        $page_key = 'decouvrir-sonec-africa';
+        // $section = $page_key;
+        $banniere = \App\Models\BanniereHero::where('page_key', $page_key)->first();
+
+        $seo = \App\Models\Seo::where('page_key', $page_key)->first();
+
+        // $section_page=SectionPage::where('page_key', $page_key)->first();
+        $accroche = \App\Models\Accroche::where('page_key', $page_key)->first();
+
+        $certifications =\App\Models\Certfication::where('page_key', $page_key)->where('section_key', 'certifications')->get();
+
+        $approches =\App\Models\SectionPage::where('page_key', $page_key)->where('section_key', 'approches')->get();
+
+        // Piliers
+        $piliers =\App\Models\SectionPage::where('page_key', $page_key)->where('section_key', 'piliers')->get();
+
+        // chiffres
+        $chiffres = \App\Models\Chiffre::where('page_key', $page_key)->get();
+
+        // Section items
+        $engagements = \App\Models\SectionItem::where('page_key', $page_key)->where('section_key', 'engagement_item')->get();
+        $vision = \App\Models\SectionPage::where('page_key', $page_key)->where('section_key', 'vision')->first();
+
+        $engagement = \App\Models\SectionPage::where('page_key', $page_key)->where('section_key', 'engagement')->first();
+        return [
+            // 'presentationEntreprise' => $presentationEntreprise,
+            'seo' => $seo,
+            'accroche' => $accroche,
+            'chiffres' => $chiffres,
+            // 'partenaires' => $partenaires,
+            'banniere' => $banniere,
+            'certifications' => $certifications,
+            'approches' => $approches,  
+            'piliers' => $piliers,
+            'engagements' => $engagements,
+            'vision' => $vision,
+            'engagement' => $engagement,
+        ];
+    }
+}
+
 // Fonction pour faire corresponde les slugs des menus avec les slugs des pages et articles
 if (!function_exists('resolve_menu_child_url')) {
     function resolve_menu_child_url(\App\Models\Menu $child): string

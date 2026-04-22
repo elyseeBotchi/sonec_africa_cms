@@ -226,7 +226,7 @@ class QuiSommesNousController extends Controller
                         $engagementData = [
                             'page_key' => $validatedData['page_key'],
                             'section_key' => 'engagement_item',
-                            'label' => $engagement['title'] ?? null,
+                            'label' => $engagement['label'] ?? null,
                             'description' => $engagement['description'] ?? null,
                             'icon' => $engagement['icon'] ?? null,
                         ];
@@ -277,9 +277,10 @@ class QuiSommesNousController extends Controller
                                     ->filter()
                                     ->values();
 
-                    SectionItem::where('page_key', $validatedData['page_key'])->where('section_key', 'certifications')
-                                    ->whereNotIn('id', $submittedIds)
-                                    ->delete();
+                    Certfication::where('page_key', $validatedData['page_key'])
+                                ->where('section_key', 'certifications')
+                                ->whereNotIn('id', $submittedIds)
+                                ->delete();
 
                     foreach ($validatedData['certifications'] as $index => $certification) {
                         $certificationData = [

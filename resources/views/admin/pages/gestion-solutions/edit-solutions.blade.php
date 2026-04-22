@@ -496,7 +496,7 @@
             formData.append('infos_image_url_solution', document.getElementById('infos_image_couverture_solution_url').value);
             formData.append('infos_cta_label', document.getElementById('infos_cta_label').value);
             formData.append('infos_cta_url', document.getElementById('infos_cta_url').value);
-            formData.append('infos_icon_solution', document.getElementById('infos_icon_solution').value);
+            formData.append('infos_icon', document.getElementById('infos_icon_solution').value);
 
 
             // Fonctionnalités

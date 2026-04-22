@@ -61,28 +61,29 @@
                     <button onclick="removeCertifications({{ $index }})" class="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors">
                         <i class="fas fa-trash text-xs"></i>
                     </button>
-                    <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2"><i class="fas fa-star text-purple-500"></i> Parténaire {{ $index + 1 }}</h3>
-                    <input type="hidden" name="id[]" value="{{ $certification->id }}">
-                    <input type="hidden" name="certifications_page_key" value="decouvrir-sonec-africa">
-                    <input type="hidden" name="certifications_section_key[]" value="certifications">
+                    <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2"><i class="fas fa-star text-purple-500"></i> Certification {{ $index + 1 }}</h3>
+                    {{-- <input type="hidden" name="id[]" value="{{ $certification->id }}"> --}}
+                    <input type="hidden" name="certification_page_key" value="decouvrir-sonec-africa">
+                    <input type="hidden" name="certification_section_key[]" value="certifications">
                     {{-- <input type="hidden" name="existing_certifications_logo[]" value="{{ $certification->logo }}"> --}}
+                    <input type="hidden" name="certification_id[]" value="{{ $certification->id }}">
                     <div class="space-y-4">
                         <div>
                             <label for="certifications_label-{{ $index }}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Titre</label>
-                            <input type="text" id="certifications_label-{{ $index }}" name="certifications_label[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $certification->label }}">
+                            <input type="text" id="certifications_label-{{ $index }}" name="certification_label[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $certification->label }}">
                         </div>
-
-                        <div>
-                            <label for="certifications_description-{{ $index }}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Description</label>
-                            <input type="text" id="certifications_description-{{ $index }}" name="certifications_description[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none" value="{{ $certification->description }}">
-                        </div>
-                    
                         <div class="flex gap-4">                            
                             <div class="flex-1">
                                 <label for="certifications_icon-{{ $index }}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Icon</label>
-                                <input type="text" id="certifications_icon-{{ $index }}" name="certifications_icon[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" value="{{ $certification->icon }}">
+                                <input type="text" id="certifications_icon-{{ $index }}" name="certification_icon[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" value="{{ $certification->icon }}">
                             </div>                            
                         </div>
+                        <div>
+                            <label for="certifications_description-{{ $index }}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Description</label>
+                            <textarea id="certifications_description-{{ $index }}" name="certification_description[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-lg text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">{{ $certification->description }}</textarea>
+                        </div>
+                    
+                        
                     </div>                    
                 </div>
             @endforeach

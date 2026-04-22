@@ -388,9 +388,7 @@
             formData.append('accroche_cta_label', val('accroche_cta_label'));
             formData.append('accroche_cta_url', val('accroche_cta_url'));
             formData.append('accroche_page_key', '{{ $page_key }}');
-            formData.append('accroche_section_key', 'accroche');
-
-            
+            formData.append('accroche_section_key', 'accroche');      
 
 
             // vision
@@ -439,7 +437,7 @@
                 }
 
                 formData.append(`engagements[${index}][icon]`, engagementItem.querySelector('input[name="engagement_item_icon[]"]')?.value ?? '');
-                formData.append(`engagements[${index}][title]`, engagementItem.querySelector('input[name="engagement_item_title[]"]')?.value ?? '');
+                formData.append(`engagements[${index}][label]`, engagementItem.querySelector('input[name="engagement_item_title[]"]')?.value ?? '');
                 formData.append(`engagements[${index}][description]`, engagementItem.querySelector('textarea[name="engagement_item_description[]"]')?.value ?? '');
                 formData.append(`engagements[${index}][section_key]`, engagementItem.querySelector('input[name="engagement_item_section_key[]"]')?.value ?? '');
             });
@@ -482,7 +480,11 @@
 
             // Certifications
             document.querySelectorAll('#certifications-container [data-certifications]').forEach((certification, index) => {
-                const idInput = certification.querySelector('input[name="id[]"]');
+                // const idInput = certification.querySelector('input[name="id[]"]');
+                // if (idInput && idInput.value.trim() !== '') {
+                //     formData.append(`certifications[${index}][id]`, idInput.value);
+                // }
+                const idInput = certification.querySelector('input[name="certification_id[]"]');
                 if (idInput && idInput.value.trim() !== '') {
                     formData.append(`certifications[${index}][id]`, idInput.value);
                 }

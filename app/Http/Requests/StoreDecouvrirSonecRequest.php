@@ -114,7 +114,7 @@ class StoreDecouvrirSonecRequest extends FormRequest
             // 'certifications.*.image_url' => 'nullable|string|max:255',
             // 'certifications.*.image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'certifications.*.section_key' => 'nullable|string|max:255',
-            // 'certifications.*.icon' => 'nullable|string|max:255',
+            'certifications.*.icon' => 'nullable|string|max:255',
         ];
     }
 
