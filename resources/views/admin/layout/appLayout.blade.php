@@ -82,7 +82,7 @@
             <p class="text-xs text-white/70 error-description"></p>
         </div>
     </div>
-
+      @yield('script')
     <script>
         // State management
         const pages = {
@@ -192,5 +192,7 @@
             ...tinyMCEConfig
         });
     </script>
+
+  
 </body>
 </html>

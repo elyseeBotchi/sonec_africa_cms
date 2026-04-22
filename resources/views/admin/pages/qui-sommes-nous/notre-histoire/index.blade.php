@@ -3,7 +3,7 @@
 @section('content')
     <header class="h-16 bg-white border-b border-slate-200 flex justify-between items-center px-8 z-10">
         <div class="flex items-center gap-4">
-            <h2 id="header-title" class="text-xl font-bold text-sonec-dark">Découvrir Sonec Africa</h2>
+            <h2 id="header-title" class="text-xl font-bold text-sonec-dark">Notre histoire</h2>
             <span id="status-badge" class="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-md border border-green-200 hidden">Modifications en cours ...</span>
         </div>
         <div class="flex items-center gap-4">
@@ -329,7 +329,7 @@
                     formData.append(`historiques[${index}][id]`, idInput.value);
                 }
                 formData.append(`historiques[${index}][title]`, historique.querySelector('input[name="historique_title[]"]')?.value ?? '');
-                formData.append(`historiques[${index}][date]`, historique.querySelector('input[name="historique_date[]"]')?.value ?? '');
+                formData.append(`historiques[${index}][annee]`, historique.querySelector('input[name="historique_date[]"]')?.value ?? '');
                 formData.append(`historiques[${index}][description]`, historique.querySelector('textarea[name="historique_description[]"]')?.value ?? '');
                 formData.append(`historiques[${index}][image_url]`, historique.querySelector('input[name="historique_image_url[]"]')?.value ?? '');
                 const imageInput = historique.querySelector('input[type="file"][name="historique_image[]"]');

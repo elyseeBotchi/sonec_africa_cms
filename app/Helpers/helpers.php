@@ -192,4 +192,31 @@ if (!function_exists('resolve_menu_child_url')) {
     }
 }
 
+// Fonction pour recuperer le contenu de la page notre histoire
+if (!function_exists('get_histoire_content')) {
+    function get_histoire_content()
+    {
+        $page_key = 'notre-histoire';
+        $historiques = \App\Models\Historique::where('page_key', $page_key)->where('section_key', 'historiques')->get();
+        $accroche = \App\Models\Accroche::where('page_key', $page_key)->first();
+        $banniere = \App\Models\BanniereHero::where('page_key', 'notre-histoire')->first();
+        $seo = \App\Models\Seo::where('page_key', $page_key)->first();
+        $valeurs = \App\Models\SectionPage::where('page_key', $page_key)->where('section_key', 'valeurs')->get();
+        $section_premiere = \App\Models\SectionPage::where('page_key', $page_key)->where('section_key', 'section_premiere')->first();
+        
+        $chiffres = \App\Models\Chiffre::where('page_key', $page_key)->get();
+
+        return [
+            'banniere' => $banniere,
+            'seo' => $seo,
+            'accroche' => $accroche,
+            // 'sections' => $sections,
+            'historiques' => $historiques,
+            'valeurs' => $valeurs,
+            'section_premiere' => $section_premiere,
+            'chiffres' => $chiffres,
+        ];
+    }
+}
+
 
