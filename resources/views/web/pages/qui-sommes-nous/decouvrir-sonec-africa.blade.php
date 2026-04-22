@@ -189,29 +189,31 @@
                                     <i class="{{ $certification->icon }} text-sonec-green text-3xl"></i>
                                 </div>
                                 <h3 class="text-xl font-bold text-sonec-dark mb-3">{{ $certification->label }}</h3>
-                                <p class="text-gray-600">{{ $certification->description }}</p>
+                                <p class="text-gray-600">{!! $certification->description !!}</p>
                             </div>
                         @endforeach
                     </div>
                 </div>
             </section>
         @endif
-
-        <section id="cta-section" class="py-24 bg-sonec-dark">
-            <div class="container mx-auto px-6">
-                <div class="max-w-4xl mx-auto text-center">
-                    <h2 class="text-5xl font-bold text-white mb-8">Rejoignez Notre Aventure</h2>
-                    <p class="text-2xl text-gray-300 mb-12 leading-relaxed">Ensemble, construisons l'Afrique digitale de demain. Découvrez comment SONEC AFRICA peut transformer votre organisation et propulser votre croissance.</p>
-                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
-                        <a href="#" class="inline-block bg-sonec-green text-white px-10 py-5 rounded-xl font-bold text-lg hover:bg-sonec-lime hover:text-sonec-dark transition-colors">
-                            Découvrir nos solutions
-                        </a>
-                        <a href="#" class="inline-block bg-white text-sonec-dark px-10 py-5 rounded-xl font-bold text-lg hover:bg-gray-100 transition-colors">
-                            Contactez-nous
-                        </a>
+        
+        @if(isset(get_decouvrir_sonec_africa_content()['accroche']))
+            <section id="cta-section" class="py-24 bg-sonec-dark">
+                <div class="container mx-auto px-6">
+                    <div class="max-w-4xl mx-auto text-center">
+                        <h2 class="text-5xl font-bold text-white mb-8">{{ get_decouvrir_sonec_africa_content()['accroche']->title ?? '' }}</h2>
+                        <p class="text-2xl text-gray-300 mb-12 leading-relaxed">{!! get_decouvrir_sonec_africa_content()['accroche']->description ?? '' !!}</p>
+                        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                            <a href="{{ get_decouvrir_sonec_africa_content()['accroche']->cta_url ?? '#' }}" class="inline-block bg-sonec-green text-white px-10 py-5 rounded-xl font-bold text-lg hover:bg-sonec-lime hover:text-sonec-dark transition-colors">
+                                {{ get_decouvrir_sonec_africa_content()['accroche']->cta_label ?? 'Découvrir nos solutions' }}
+                            </a>
+                            <a href="#" class="inline-block bg-white text-sonec-dark px-10 py-5 rounded-xl font-bold text-lg hover:bg-gray-100 transition-colors">
+                                Contactez-nous
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        @endif
     </main>
 @endsection
