@@ -166,54 +166,93 @@
             }
         }
 
-        function addChiffreVision() {
-            const container = document.getElementById('chiffres-vision-container');
-            const count = Date.now(); 
+        // function addChiffreVision() {
+        //     const container = document.getElementById('chiffres-vision-container');
+        //     const count = Date.now(); 
 
-            const index = Date.now(); 
+        //     const index = Date.now(); 
+
+        //     const div = document.createElement('div');
+        //     div.setAttribute('data-chiffre-vision', '');
+        //     div.className = 'bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden';
+        //     div.innerHTML = `
+        //         <div class="absolute top-0 left-0 w-2 h-full bg-purple-500"></div>
+        //             <button type="button" onclick="removeChiffreVision(this)" class="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors">
+        //                 <i class="fas fa-trash text-xs"></i>
+        //             </button>
+        //             <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2">
+        //                 <i class="fas fa-star text-purple-500"></i> Chiffre ${count}
+        //             </h3>
+        //             <input type="hidden" id="chiffre_vision_section_key-${index}" name="chiffre_vision_section_key[]" value="vision">
+                    
+        //             <label for="chiffre_vision_label-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1 mt-4">Libellé</label>
+        //             <input type="text" name="chiffre_vision_label[]" id="chiffre_vision_label-${index}"
+        //                 class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-sonec-dark focus:ring-2 focus:ring-green-500 outline-none" 
+        //                     >
+        //             <label for="chiffre_vision_value-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1 mt-4">Valeur</label>
+        //             <input type="text" name="chiffre_vision_value[]" id="chiffre_vision_value-${index}"
+        //                 class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-sonec-dark focus:ring-2 focus:ring-green-500 outline-none" 
+        //                     >
+        //             <label for="chiffre_vision_icon-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Icône (classe FontAwesome)</label>
+        //             <input type="text" name="chiffre_vision_icon[]" id="chiffre_vision_icon-${index}"
+        //                 class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-mono text-blue-500" 
+                        
+        //                 placeholder="fas fa-cog"> 
+        //             <label for="chiffre_vision_description-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1 mt-4">Description</label>
+        //             <textarea name="chiffre_vision_description[]" id="chiffre_vision_description-${index}"
+        //                 class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-green-500 outline-none" 
+        //                 rows="4"></textarea>
+        //         </div>
+
+        //     `;
+        //     container.appendChild(div);
+        // }
+        function addChiffreVision() {
+            const grid = document.getElementById('chiffres-vision-grid');
+            const index = Date.now();
 
             const div = document.createElement('div');
             div.setAttribute('data-chiffre-vision', '');
-            div.className = 'bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden';
+            div.className = 'bg-white border border-slate-200 rounded-xl p-4 relative';
             div.innerHTML = `
-                <div class="absolute top-0 left-0 w-2 h-full bg-purple-500"></div>
-                    <button type="button" onclick="removeChiffreVision(this)" class="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors">
-                        <i class="fas fa-trash text-xs"></i>
-                    </button>
-                    <h3 class="text-lg font-bold text-sonec-dark mb-6 flex items-center gap-2">
-                        <i class="fas fa-star text-purple-500"></i> Chiffre ${count}
-                    </h3>
-                    <input type="hidden" id="chiffre_vision_section_key-${index}" name="chiffre_vision_section_key[]" value="vision">
-                    
-                    <label for="chiffre_vision_label-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1 mt-4">Libellé</label>
-                    <input type="text" name="chiffre_vision_label[]" id="chiffre_vision_label-${index}"
-                        class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-sonec-dark focus:ring-2 focus:ring-green-500 outline-none" 
-                            >
-                    <label for="chiffre_vision_value-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1 mt-4">Valeur</label>
-                    <input type="text" name="chiffre_vision_value[]" id="chiffre_vision_value-${index}"
-                        class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-sonec-dark focus:ring-2 focus:ring-green-500 outline-none" 
-                            >
-                    <label for="chiffre_vision_icon-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Icône (classe FontAwesome)</label>
-                    <input type="text" name="chiffre_vision_icon[]" id="chiffre_vision_icon-${index}"
-                        class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-mono text-blue-500" 
-                        
-                        placeholder="fas fa-cog"> 
-                    <label for="chiffre_vision_description-${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1 mt-4">Description</label>
-                    <textarea name="chiffre_vision_description[]" id="chiffre_vision_description-${index}"
-                        class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-green-500 outline-none" 
-                        rows="4"></textarea>
-                </div>
+                <button type="button" onclick="removeChiffreVision(this)" 
+                    class="absolute top-5 right-3 text-red-500 p-1.5 rounded-full hover:text-red-600 transition-colors">
+                    <i class="fa fa-trash text-xs"></i>
+                </button>
 
+                <input type="hidden" name="chiffre_vision_section_key[]" value="vision">
+
+                <label class="block text-xs font-bold text-slate-400 uppercase mb-1 mt-4">Libellé</label>
+                <input type="text" name="chiffre_vision_label[]"
+                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-sonec-dark focus:ring-2 focus:ring-green-500 outline-none">
+
+                <label class="block text-xs font-bold text-slate-400 uppercase mb-1 mt-4">Valeur</label>
+                <input type="text" name="chiffre_vision_value[]"
+                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-sonec-dark focus:ring-2 focus:ring-green-500 outline-none">
+
+                <label class="block text-xs font-bold text-slate-400 uppercase mb-1 mt-2">Icône (classe FontAwesome)</label>
+                <input type="text" name="chiffre_vision_icon[]"
+                    class="w-full p-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-mono text-blue-500"
+                    placeholder="fas fa-cog">
+
+                <label class="block text-xs font-bold text-slate-400 uppercase mb-1 mt-4">Description</label>
+                <textarea name="chiffre_vision_description[]"
+                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-green-500 outline-none"
+                    rows="4"></textarea>
             `;
-            container.appendChild(div);
+            grid.appendChild(div);
         }
 
-        function removeChiffreVision(button) {
-            const chiffreDiv = button.closest('[data-chiffre-vision]');
-            if (chiffreDiv) {
-                chiffreDiv.remove();
-            }
+        function removeChiffreVision(btn) {
+            btn.closest('[data-chiffre-vision]').remove();
         }
+
+        // function removeChiffreVision(button) {
+        //     const chiffreDiv = button.closest('[data-chiffre-vision]');
+        //     if (chiffreDiv) {
+        //         chiffreDiv.remove();
+        //     }
+        // }
 
         function addGouvernance() {
             const container = document.getElementById('gouvernances-container');
@@ -449,18 +488,30 @@
             formData.append('vision_section_key', val('section_vision_section_key'));
 
             // Chiffres vision
-            document.querySelectorAll('#chiffres_vision-container [data-chiffre]').forEach((chiffre, index) => {
-                const idInput = chiffre.querySelector('input[name="id[]"]');
-                // if (idInput) formData.append(`chiffres_vision[${index}][id]`, idInput.value);
+            const chiffresVisionContainer = document.getElementById('chiffres-vision-container');
+            chiffresVisionContainer.querySelectorAll('[data-chiffre-vision]').forEach((chiffre, index) => {
+                const idInput = chiffre.querySelector('input[name="chiffre_vision_id[]"]');
                 if (idInput && idInput.value.trim() !== '') {
                     formData.append(`chiffres_vision[${index}][id]`, idInput.value);
                 }
-                formData.append(`chiffres_vision[${index}][label]`, chiffre.querySelector('input[name="chiffre_label[]"]')?.value ?? '');
-                formData.append(`chiffres_vision[${index}][value]`, chiffre.querySelector('input[name="chiffre_value[]"]')?.value ?? '');
-                formData.append(`chiffres_vision[${index}][icon]`, chiffre.querySelector('input[name="chiffre_icon[]"]')?.value ?? '');
-                formData.append(`chiffres_vision[${index}][description]`, chiffre.querySelector('textarea[name="chiffre_description[]"]')?.value ?? '');
-                formData.append(`chiffres_vision[${index}][section_key]`, chiffre.querySelector('input[name="chiffre_section_key[]"]')?.value ?? '');
-            }); 
+                formData.append(`chiffres_vision[${index}][label]`, chiffre.querySelector('input[name="chiffre_vision_label[]"]')?.value ?? '');
+                formData.append(`chiffres_vision[${index}][value]`, chiffre.querySelector('input[name="chiffre_vision_value[]"]')?.value ?? '');
+                formData.append(`chiffres_vision[${index}][icon]`, chiffre.querySelector('input[name="chiffre_vision_icon[]"]')?.value ?? '');
+                formData.append(`chiffres_vision[${index}][description]`, chiffre.querySelector('textarea[name="chiffre_vision_description[]"]')?.value ?? '');
+                formData.append(`chiffres_vision[${index}][section_key]`, 'vision');
+            });
+            // document.querySelectorAll('#chiffres_vision-container [data-chiffre]').forEach((chiffre, index) => {
+            //     const idInput = chiffre.querySelector('input[name="id[]"]');
+            //     // if (idInput) formData.append(`chiffres_vision[${index}][id]`, idInput.value);
+            //     if (idInput && idInput.value.trim() !== '') {
+            //         formData.append(`chiffres_vision[${index}][id]`, idInput.value);
+            //     }
+            //     formData.append(`chiffres_vision[${index}][label]`, chiffre.querySelector('input[name="chiffre_label[]"]')?.value ?? '');
+            //     formData.append(`chiffres_vision[${index}][value]`, chiffre.querySelector('input[name="chiffre_value[]"]')?.value ?? '');
+            //     formData.append(`chiffres_vision[${index}][icon]`, chiffre.querySelector('input[name="chiffre_icon[]"]')?.value ?? '');
+            //     formData.append(`chiffres_vision[${index}][description]`, chiffre.querySelector('textarea[name="chiffre_description[]"]')?.value ?? '');
+            //     formData.append(`chiffres_vision[${index}][section_key]`, chiffre.querySelector('input[name="chiffre_section_key[]"]')?.value ?? '');
+            // }); 
 
             // gouvernances
             document.querySelectorAll('#gouvernances-container [data-gouvernance]').forEach((gouvernance, index) => {

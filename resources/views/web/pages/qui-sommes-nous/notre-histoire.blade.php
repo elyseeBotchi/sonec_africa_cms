@@ -317,7 +317,6 @@
         
         
         @if(isset(get_histoire_content()['valeurs']) && get_histoire_content()['valeurs']->isNotEmpty())
-        
             <section id="values-section" class="py-20 bg-gray-50">
                 <div class="container mx-auto px-6">
                     <div class="text-center mb-16">
@@ -339,21 +338,12 @@
                                     <p class="text-gray-700">{!! $valeur->description !!}</p>
                                 </div>
                         @endforeach
-                        {{-- <div class="bg-white p-8 rounded-2xl shadow-md hover:shadow-xl transition-shadow">
-                            <div class="w-16 h-16 bg-sonec-green rounded-xl flex items-center justify-center mb-6">
-                                <i class="fas fa-lightbulb text-white text-3xl"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-sonec-dark mb-4">Innovation</h3>
-                            <p class="text-gray-700">Nous repoussons constamment les limites technologiques pour offrir des solutions avant-gardistes adaptées au contexte africain.</p>
-                        </div> --}}
-
                         
                     </div>
                 </div>
             </section>
         @endif
-        @if(isset(get_histoire_content()['accroche']))
-        
+        @if(isset(get_histoire_content()['accroche']))        
             <section id="cta-history" class="py-20 bg-sonec-dark">
                 <div class="container mx-auto px-6">
                     <div class="max-w-4xl mx-auto text-center">
@@ -372,9 +362,7 @@
                     </div>
                 </div>
             </section>
-        @endif
-
-        
+        @endif        
     </main>
      
 @endsection

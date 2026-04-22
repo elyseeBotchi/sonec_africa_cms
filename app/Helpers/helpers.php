@@ -219,4 +219,40 @@ if (!function_exists('get_histoire_content')) {
     }
 }
 
+// Fonction pour recuperer le contenu de la page notre équipe
+if (!function_exists('get_equipe_content')) {
+    function get_equipe_content()
+    {
+        $page_key = 'notre-equipe';
+        $banniere = \App\Models\BanniereHero::where('page_key', $page_key)->first();
+        $seo = \App\Models\Seo::where('page_key', $page_key)->first();
+        $accroche = \App\Models\Accroche::where('page_key', $page_key)->first();
+        $equipes = \App\Models\Equipe::where('page_key', $page_key)->where('section_key', 'equipe')->get();
+        $valeurs = \App\Models\SectionPage::where('page_key', $page_key)->where('section_key', 'valeurs')->get();
+        $section_presentation = \App\Models\SectionPage::where('page_key', $page_key)->where('section_key', 'presentation')->first();
+        $chiffres_presentation = \App\Models\Chiffre::where('page_key', $page_key)->where('section_key', 'chiffres')->get();
+        $chiffres_vision = \App\Models\Chiffre::where('page_key', $page_key)->where('section_key', 'vision')->get();
+        $section_vision = \App\Models\SectionPage::where('page_key', $page_key)->where('section_key', 'vision')->first();
+        $section_gouvernances = \App\Models\SectionPage::where('page_key', $page_key)->where('section_key', 'gouvernance')->get();    
+        $section_premiere = \App\Models\SectionPage::where('page_key', $page_key)->where('section_key', 'section_premiere')->first(); 
+        
+        // dd($chiffres_vision);
+
+
+        return [
+            'seo' => $seo,
+            'banniere' => $banniere,
+            'accroche' => $accroche,
+            'equipes' => $equipes,
+            'valeurs' => $valeurs,
+            'section_presentation' => $section_presentation,
+            'chiffres_presentation' => $chiffres_presentation,
+            'chiffres_vision' => $chiffres_vision,
+            'section_vision' => $section_vision,
+            'section_gouvernances' => $section_gouvernances,
+            'section_premiere' => $section_premiere,
+        ];
+    }
+}
+
 
