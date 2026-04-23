@@ -3,24 +3,33 @@
     <div class="p-6 border-b border-slate-100 flex items-center gap-3">
         <div class="w-10 h-10 bg-sonec-dark rounded-lg flex items-center justify-center text-white font-bold text-xl">S</div>
         <div>
-            <h1 class="font-extrabold text-sonec-dark text-lg tracking-tight">SONEC <span class="text-sonec-green">CMS</span></h1>
+            @if(get_general_settings()->site_logo)
+                <img src="{{ asset('/storage/' . get_general_settings()->site_logo) }}" alt="Logo" class="w-24 h-24 object-contain">
+            @else
+                <img src="{{ asset('assets/images/LOGO-Sonec-Header.png') }}" alt="Logo" class="w-24 h-24 object-contain">
+            @endif
+
+            {{-- <h1 class="font-extrabold text-sonec-dark text-lg tracking-tight">SONEC <span class="text-sonec-green">CMS</span></h1>
             <p class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Version 2.4.0</p>
+             --}}
         </div>
     </div>
 
     <!-- Menu -->
     <nav class="flex-1 overflow-y-auto custom-scrollbar py-6 space-y-1">
         <p class="px-6 text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Tableau de bord</p>
-        <a href="#" onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-item active flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
+        <a href="{{ route('admin.dashboard') }}"  id="nav-dashboard" class="nav-item active flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
             <i class="fas fa-th-large w-5"></i> Vue d'ensemble
         </a>
-        <a href="#" class="nav-item flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
-            <i class="fas fa-inbox w-5"></i> Messages <span class="ml-auto bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">3</span>
+        <a href="{{ route('messages.index') }}" class="nav-item flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">
+            <i class="fas fa-inbox w-5"></i> Messages <span class="ml-auto bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                @php
+                    $count_messages = \App\Models\ContactMessage::whereNull('read_at')->count();
+                @endphp
+                {{ $count_messages ?? 0 }}
+            </span>
         </a>
-        {{-- <p class="px-6 text-xs font-bold text-slate-400 uppercase tracking-widest mt-8 mb-2">Gestion des Pages</p> --}}
-
-
-
+       
         <p class="px-6 text-xs font-bold text-slate-400 uppercase tracking-widest mt-8 mb-2">Gestion des Pages</p>
         
         <a href="{{ route('admin.accueil') }}" id="nav-page-home" class="nav-item flex items-center gap-3 px-6 py-3 hover:bg-slate-50 transition-colors">

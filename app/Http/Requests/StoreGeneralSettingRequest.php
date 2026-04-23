@@ -36,6 +36,10 @@ class StoreGeneralSettingRequest extends FormRequest
             'site_favicon' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,ico|max:1024',
             'logo_footer' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'footer_text' => 'nullable|string|max:255',
+            'facebook_url' => 'nullable|string|max:255',
+            'twitter_url' => 'nullable|string|max:255',
+            'linkedin_url' => 'nullable|string|max:255',
+            'instagram_url' => 'nullable|string|max:255',
         ];
     }
 

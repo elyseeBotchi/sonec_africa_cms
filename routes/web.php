@@ -49,7 +49,10 @@ Route::middleware('auth')->prefix('/admin')->group(function () {
     Route::resource('/offres-emploi', App\Http\Controllers\Admin\OffreEmploiController::class);
     
     Route::resource('/candidatures', App\Http\Controllers\Admin\CandidatureController::class);
+    // Route::post('/candidatures/{id}/update-status', [App\Http\Controllers\Admin\CandidatureController::class, 'updateStatus'])->name('candidatures.updateStatus');
 
+     // Gestion des messages de contact
+     Route::resource('/messages', App\Http\Controllers\Admin\MessageController::class);
     // Deconnexion
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('admin.logout');
 });
@@ -58,8 +61,6 @@ Route::middleware('auth')->prefix('/admin')->group(function () {
 // Accueil
 Route::get('/', [App\Http\Controllers\Web\HomeController::class, 'index'])->name('web.home');
 
-// Accueil
-Route::get('/', [App\Http\Controllers\Web\HomeController::class, 'index'])->name('web.home');
 
 // Actualités
 Route::get('/actualites', [App\Http\Controllers\Web\ActualiteController::class, 'index'])->name('web.actualites');
@@ -86,6 +87,7 @@ Route::get('/qui-sommes-nous', [App\Http\Controllers\Web\PagesController::class,
 Route::get('/decouvrir-sonec-africa', [App\Http\Controllers\Web\PagesController::class, 'decouvrir'])->name('web.decouvrir-sonec-africa');
 Route::get('/notre-histoire', [App\Http\Controllers\Web\PagesController::class, 'histoire'])->name('web.notre-histoire');
 Route::get('/equipe-de-direction', [App\Http\Controllers\Web\PagesController::class, 'equipe'])->name('web.equipe-de-direction');
+Route::get('/implantations', [App\Http\Controllers\Web\PagesController::class, 'implantations'])->name('web.implantations');
 
 // Contact
 Route::get('/contact', [App\Http\Controllers\Web\ContactController::class, 'index'])->name('web.contact');

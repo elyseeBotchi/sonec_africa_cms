@@ -139,7 +139,14 @@
         formData.append('meta_title', document.getElementById('meta_title').value);
         formData.append('meta_keywords', document.getElementById('meta_keywords').value);
         formData.append('meta_description', document.getElementById('meta_description').value);
-        formData.append('footer_text', document.getElementById('footer_text').value);
+        // formData.append('footer_text', document.getElementById('footer_text').value);
+        formData.append('facebook_url', document.getElementById('facebook_url').value);
+        formData.append('twitter_url', document.getElementById('twitter_url').value);
+        formData.append('linkedin_url', document.getElementById('linkedin_url').value);
+        formData.append('instagram_url', document.getElementById('instagram_url').value);
+        
+        
+        
         const siteLogoInput = document.getElementById('site_logo');
         if (siteLogoInput.files[0]) {
             formData.append('site_logo', siteLogoInput.files[0]);
@@ -156,7 +163,8 @@
         fetch("{{ route('general-settings.store') }}", {
             method: 'POST',
             headers: {
-                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
             }, 
             body: formData
         })

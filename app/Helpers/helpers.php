@@ -255,4 +255,225 @@ if (!function_exists('get_equipe_content')) {
     }
 }
 
+// Function pour recuperer le contenu de la page implantation
+if (!function_exists('get_implantation_content')) {
+    function get_implantation_content()
+    {
+        $page_key = 'implantation';
+        $bureaux = \App\Models\BureauPays::where('page_key', $page_key)->get();
+        $banniere = \App\Models\BanniereHero::where('page_key', $page_key)->first();
+        $seo = \App\Models\Seo::where('page_key', $page_key)->first();
+        $accroche = \App\Models\Accroche::where('page_key', $page_key)->first();
+        $chiffres = \App\Models\Chiffre::where('page_key', $page_key)->where('section_key', 'chiffres')->get();
+        $about = \App\Models\SectionPage::where('page_key', $page_key)->where('section_key', 'about')->first();
+        $section_premiere = \App\Models\SectionPage::where('page_key', $page_key)->where('section_key', 'section_premiere')->first();
+        
+        return [
+            'banniere' => $banniere,
+            'seo' => $seo,
+            'accroche' => $accroche,
+            'section_premiere' => $section_premiere,
+            'chiffres' => $chiffres,
+            'about' => $about,  
+            'bureaux' => $bureaux,
+        ];
+    }
+    
+}
+
+// Fonction pour avoir le code iso pays à partir du nom du pays
+if (!function_exists('get_country_flag')) {
+    function get_country_flag(string $countryOrCode): array
+    {
+        $countries = [
+            'CI' => [
+                'name'     => "Côte d'Ivoire",
+                'iso'      => 'CI',
+                'emoji'    => '🇨🇮',
+                'gradient' => 'bg-gradient-to-r from-orange-500 via-white to-green-600',
+                'colors'   => ['bg-orange-500', 'bg-white', 'bg-green-600'],
+                'text'     => 'text-orange-500',
+                'border'   => 'border-orange-500',
+            ],
+            'SN' => [
+                'name'     => 'Sénégal',
+                'iso'      => 'SN',
+                'emoji'    => '🇸🇳',
+                'gradient' => 'bg-gradient-to-r from-green-600 via-yellow-400 to-red-600',
+                'colors'   => ['bg-green-600', 'bg-yellow-400', 'bg-red-600'],
+                'text'     => 'text-green-600',
+                'border'   => 'border-green-600',
+            ],
+            'ML' => [
+                'name'     => 'Mali',
+                'iso'      => 'ML',
+                'emoji'    => '🇲🇱',
+                'gradient' => 'bg-gradient-to-r from-green-600 via-yellow-400 to-red-600',
+                'colors'   => ['bg-green-600', 'bg-yellow-400', 'bg-red-600'],
+                'text'     => 'text-green-700',
+                'border'   => 'border-green-700',
+            ],
+            'BF' => [
+                'name'     => 'Burkina Faso',
+                'iso'      => 'BF',
+                'emoji'    => '🇧🇫',
+                'gradient' => 'bg-gradient-to-b from-red-600 to-green-600',
+                'colors'   => ['bg-red-600', 'bg-green-600'],
+                'text'     => 'text-red-600',
+                'border'   => 'border-red-600',
+            ],
+            'GN' => [
+                'name'     => 'Guinée',
+                'iso'      => 'GN',
+                'emoji'    => '🇬🇳',
+                'gradient' => 'bg-gradient-to-r from-red-600 via-yellow-400 to-green-600',
+                'colors'   => ['bg-red-600', 'bg-yellow-400', 'bg-green-600'],
+                'text'     => 'text-red-600',
+                'border'   => 'border-red-600',
+            ],
+            'TG' => [
+                'name'     => 'Togo',
+                'iso'      => 'TG',
+                'emoji'    => '🇹🇬',
+                'gradient' => 'bg-gradient-to-b from-green-600 via-yellow-400 to-red-500',
+                'colors'   => ['bg-green-600', 'bg-yellow-400', 'bg-red-500'],
+                'text'     => 'text-green-600',
+                'border'   => 'border-green-600',
+            ],
+            'BJ' => [
+                'name'     => 'Bénin',
+                'iso'      => 'BJ',
+                'emoji'    => '🇧🇯',
+                'gradient' => 'bg-gradient-to-b from-green-600 via-yellow-400 to-red-500',
+                'colors'   => ['bg-green-600', 'bg-yellow-400', 'bg-red-500'],
+                'text'     => 'text-green-700',
+                'border'   => 'border-green-700',
+            ],
+            'GH' => [
+                'name'     => 'Ghana',
+                'iso'      => 'GH',
+                'emoji'    => '🇬🇭',
+                'gradient' => 'bg-gradient-to-b from-red-600 via-yellow-400 to-green-700',
+                'colors'   => ['bg-red-600', 'bg-yellow-400', 'bg-green-700'],
+                'text'     => 'text-red-600',
+                'border'   => 'border-red-600',
+            ],
+            'CM' => [
+                'name'     => 'Cameroun',
+                'iso'      => 'CM',
+                'emoji'    => '🇨🇲',
+                'gradient' => 'bg-gradient-to-r from-green-600 via-red-600 to-yellow-400',
+                'colors'   => ['bg-green-600', 'bg-red-600', 'bg-yellow-400'],
+                'text'     => 'text-green-600',
+                'border'   => 'border-green-600',
+            ],
+            'GA' => [
+                'name'     => 'Gabon',
+                'iso'      => 'GA',
+                'emoji'    => '🇬🇦',
+                'gradient' => 'bg-gradient-to-b from-green-600 via-yellow-400 to-blue-600',
+                'colors'   => ['bg-green-600', 'bg-yellow-400', 'bg-blue-600'],
+                'text'     => 'text-green-600',
+                'border'   => 'border-green-600',
+            ],
+            'CG' => [
+                'name'     => 'Congo',
+                'iso'      => 'CG',
+                'emoji'    => '🇨🇬',
+                'gradient' => 'bg-gradient-to-r from-green-600 via-yellow-400 to-red-600',
+                'colors'   => ['bg-green-600', 'bg-yellow-400', 'bg-red-600'],
+                'text'     => 'text-green-600',
+                'border'   => 'border-green-600',
+            ],
+            'FR' => [
+                'name'     => 'France',
+                'iso'      => 'FR',
+                'emoji'    => '🇫🇷',
+                'gradient' => 'bg-gradient-to-r from-blue-700 via-white to-red-600',
+                'colors'   => ['bg-blue-700', 'bg-white', 'bg-red-600'],
+                'text'     => 'text-blue-700',
+                'border'   => 'border-blue-700',
+            ],
+            'MA' => [
+                'name'     => 'Maroc',
+                'iso'      => 'MA',
+                'emoji'    => '🇲🇦',
+                'gradient' => 'bg-gradient-to-b from-red-600 to-red-700',
+                'colors'   => ['bg-red-600', 'bg-red-700'],
+                'text'     => 'text-red-600',
+                'border'   => 'border-red-600',
+            ],
+            'MR' => [
+                'name'     => 'Mauritanie',
+                'iso'      => 'MR',
+                'emoji'    => '🇲🇷',
+                'gradient' => 'bg-gradient-to-b from-green-700 via-yellow-400 to-green-700',
+                'colors'   => ['bg-green-700', 'bg-yellow-400', 'bg-green-700'],
+                'text'     => 'text-green-700',
+                'border'   => 'border-green-700',
+            ],
+            'NE' => [
+                'name'     => 'Niger',
+                'iso'      => 'NE',
+                'emoji'    => '🇳🇪',
+                'gradient' => 'bg-gradient-to-b from-orange-500 via-white to-green-600',
+                'colors'   => ['bg-orange-500', 'bg-white', 'bg-green-600'],
+                'text'     => 'text-orange-500',
+                'border'   => 'border-orange-500',
+            ],
+            'NG' => [
+                'name'     => 'Nigéria',
+                'iso'      => 'NG',
+                'emoji'    => '🇳🇬',
+                'gradient' => 'bg-gradient-to-r from-green-600 via-white to-green-600',
+                'colors'   => ['bg-green-600', 'bg-white', 'bg-green-600'],
+                'text'     => 'text-green-600',
+                'border'   => 'border-green-600',
+            ],
+            // Tchad
+            'TD' => [
+                'name'     => 'Tchad',
+                'iso'      => 'TD',
+                'emoji'    => '🇹🇩',
+                'gradient' => 'bg-gradient-to-r from-blue-600 via-yellow-400 to-red-600',
+                'colors'   => ['bg-blue-600', 'bg-yellow-400', 'bg-red-600'],
+                'text'     => 'text-blue-600',
+                'border'   => 'border-blue-600',
+            ],
+            // congo RDC
+            'CD' => [
+                'name'     => 'Congo RDC',
+                'iso'      => 'CD',
+                'emoji'    => '🇨🇩',
+                'gradient' => 'bg-gradient-to-r from-blue-600 via-yellow-400 to-red-600',
+                'colors'   => ['bg-blue-600', 'bg-yellow-400', 'bg-red-600'],
+                'text'     => 'text-blue-600',
+                'border'   => 'border-blue-600',
+            ],
+        ];
+
+        $code = strtoupper(trim($countryOrCode));
+        if (isset($countries[$code])) {
+            return $countries[$code];
+        }
+
+        foreach ($countries as $iso => $data) {
+            if (mb_strtolower($data['name']) === mb_strtolower(trim($countryOrCode))) {
+                return $data;
+            }
+        }
+
+        // Fallback
+        return [
+            'name'     => $countryOrCode,
+            'iso'      => '??',
+            'emoji'    => '🌍',
+            'gradient' => 'bg-gradient-to-b from-gray-400 via-gray-200 to-gray-400',
+            'colors'   => ['bg-gray-400', 'bg-gray-200', 'bg-gray-400'],
+            'text'     => 'text-gray-500',
+            'border'   => 'border-gray-300',
+        ];
+    }
+}
+
 

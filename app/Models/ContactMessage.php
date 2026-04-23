@@ -13,5 +13,12 @@ class ContactMessage extends Model
         'email',
         'sujet',
         'message',
+        'read_at',
+    ];
+
+    protected $casts = [
+        'read_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 }

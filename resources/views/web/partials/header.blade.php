@@ -111,19 +111,22 @@
                                         @if($menu->sidebar)
                                             @if($menu->slug === 'qui-sommes-nous')
                                                 <div class="text-center bg-gray-50 p-6 rounded-lg hover:shadow-md transition-shadow">
-                                                    <div class="h-32 bg-gray-100 rounded-lg mb-3 overflow-hidden">
-                                                        @if($menu->sidebar->image)
-                                                            <img class="w-full h-full object-cover" src="{{ asset('storage/' . $menu->sidebar->image) }}" alt="{{ $menu->sidebar->title }}">
-                                                        @else
-                                                            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/2d3921e135-fd245e85b999673d3000.png" alt="africa map with location pins business expansion">
-                                                        @endif
-                                                    </div>
-                                                    <h4 class="font-bold text-sonec-dark text-sm mb-1">{{ $menu->sidebar->title }}</h4>
-                                                    <p class="text-xs text-gray-600">{!! $menu->sidebar->description !!}</p>
-                                                </div>
+                                                    <a href="{{ $menu->sidebar->cta_url ?? '#' }}" class="block">
+                                                        <div class="h-32 bg-gray-100 rounded-lg mb-3 overflow-hidden">
+                                                            @if($menu->sidebar->image)
+                                                                <img class="w-full h-full object-cover" src="{{ asset('storage/' . $menu->sidebar->image) }}" alt="{{ $menu->sidebar->title }}">
+                                                            @else
+                                                                <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/2d3921e135-fd245e85b999673d3000.png" alt="africa map with location pins business expansion">
+                                                            @endif
+                                                        </div>
+                                                        <h4 class="font-bold text-sonec-dark text-sm mb-1">{{ $menu->sidebar->title }}</h4>
+                                                        <p class="text-xs text-gray-600">{!! $menu->sidebar->description !!}</p>
+                                                    
+                                                    </a>
+                                            </div>
                                             @else
                                                 <div class="bg-gray-50 p-8 rounded-lg">
-                                                
+                                                    
                                                     @if($menu->sidebar->image)
                                                         <div class="h-32 bg-gray-100 rounded-lg mb-4 overflow-hidden">
                                                             <img class="w-full h-full object-cover" 
@@ -138,6 +141,14 @@
 
                                                     @if($menu->sidebar->description)
                                                         <p class="text-gray-700 mb-6">{!! $menu->sidebar->description !!}</p>
+                                                    @endif
+
+                                                    @if($menu->slug === 'solutions')
+                                                        <a href="{{ route('web.solutions.index') }}"
+                                                        class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
+                                                            Voir nos références
+                                                            <i class="fas fa-arrow-right"></i>
+                                                        </a>
                                                     @endif
 
                                                     @if($menu->sidebar->cta_url)

@@ -13,6 +13,7 @@
     {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <script>window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -101,6 +102,62 @@
         /* Améliore l'affichage du contenu */
         .mega-menu .grid {
             gap: 2rem;
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        .nav-item.active { 
+            background: linear-gradient(90deg, rgba(6, 182, 84, 0.1) 0%, transparent 100%);
+            border-left: 4px solid #06b654; 
+            color: #0d3136; 
+            font-weight: 700; 
+        }
+        .nav-item { border-left: 4px solid transparent; }
+
+        .editor-section { display: none; }
+        .editor-section.active { display: block; animation: slideIn 0.3s ease-out; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #06b654;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #06b654;
+        }
+
+        .timeline-line {
+            background: linear-gradient(to bottom, #06b654 0%, #06b654 100%);
+            width: 4px;
+            min-height: 100%;
+        }
+        .timeline-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .timeline-dot {
+            transition: all 0.3s ease;
+        }
+        .timeline-item:hover .timeline-dot {
+            transform: scale(1.3) translateX(-50%) translateY(-50%);
+            box-shadow: 0 0 0 8px rgba(6, 182, 84, 0.1);
+        }
+        .country-highlight {
+            fill: #06b654;
+            transition: fill 0.3s ease;
+        }
+        .country-base {
+            fill: #e5e7eb;
         }
     </style>
 </head>

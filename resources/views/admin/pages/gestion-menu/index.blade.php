@@ -478,8 +478,8 @@
                                             </select>
                                         </div>
                                         <div>
-                                            <label for="editSidebarDescription-{{ $sidebarMenu->id ?? '' }}" class="block text-sm font-medium text-slate-700">Description</label>
-                                            <textarea id="editSidebarDescription-{{ $sidebarMenu->id ?? '' }}" name="description" rows="3" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
+                                            <label for="description-{{ $sidebarMenu->id ?? '' }}" class="block text-sm font-medium text-slate-700">Description</label>
+                                            <textarea id="description-{{ $sidebarMenu->id ?? '' }}" name="description" rows="3" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-bold text-md text-sonec-dark focus:ring-2 focus:ring-purple-500 outline-none">
                                                 {!!  $sidebarMenu->description ?? ''  !!}
                                             </textarea>
                                         </div>
@@ -599,17 +599,7 @@
             document.getElementById('url').value = '/' + slug;
         });
 
-        // document.getElementById('editLabel').addEventListener('input', function() {
-        //     // Doire pourvoir gérer les accents et les caractères spéciaux comme "é" ou "ç" et les convertir en "e" et "c"
-        //    console.log("valeur de url :"+this.value);
-           
-        //     const editSlug = this.value.toLowerCase()
-        //         .normalize('NFD').replace(/[\u0300-\u036f]/g, '') 
-        //         .replace(/[^a-z0-9]+/g, '-') 
-        //         .replace(/^-+|-+$/g, '');
-        //     document.getElementById('editSlug').value = editSlug;
-        //     document.getElementById('editUrl').value = '/' + editSlug;
-        // });
+       
         document.querySelectorAll('[id^="editLabel-"]').forEach(input => {
             input.addEventListener('input', function() {
                 const id = this.id.split('-')[1];
@@ -945,7 +935,7 @@
             window.location.href = "{{ route('espacement-menus.index') }}";
         }
 
-        // Sidebar menu gestion
+        // Sidebar sidebarmenu gestion
         function toggleSidebarMenuModal() {
             const modal = document.getElementById('sidebar-menu-modal');
             modal.classList.toggle('opacity-0');
@@ -964,9 +954,10 @@
             if (typeof tinymce !== 'undefined') {
                 tinymce.triggerSave();
             } 
+            formData.set('description', tinymce.get('description') 
+            ? tinymce.get("description").getContent() 
+            : document.getElementById('description').value);
 
-            formData.set('description', tinymce.get('description') ? tinymce.get("description").getContent() : document.getElementById('description').value);
-            
 
             const btn = this.querySelector('#sidebar-menu-form button[type="submit"]');
             const originalContent = btn.innerHTML;
@@ -1005,7 +996,7 @@
                     successDescription.textContent = data.description || 'Enregistrement effectué avec succès.';
 
                     statusBadge.classList.add('hidden');
-                    // window.location.reload();
+                    window.location.reload();
 
                 } else {
                     showToastError();
@@ -1040,30 +1031,7 @@
             });
         });
 
-        function toggleEditMenuModal() {
-            // Recuperer l'id du menu à modifier à partir du dataset de la ligne cliquée
-            const sidebarMenuId = event.target.closest('tr').getAttribute('data-sidebar-menu-id');
-            const modal = document.getElementById('edit-sidebar-modal-' + sidebarMenuId);
-            modal.classList.toggle('opacity-0');
-            modal.classList.toggle('pointer-events-none');
-        }
-        function editSidebarMenu(sidebarMenuId) {            
-            // Fermer tous les modals ouverts d'abord
-            document.querySelectorAll('[id^="edit-sidebar-modal-"]').forEach(modal => {
-                modal.classList.add('opacity-0');
-                modal.classList.add('pointer-events-none');
-            });
-
-            const modal = document.getElementById('edit-sidebar-modal-' + sidebarMenuId);
-            modal.classList.remove('opacity-0');
-            modal.classList.remove('pointer-events-none');
-        }
-
-        function closeEditSidebarMenuModal(sidebarMenuId) {
-            const modal = document.getElementById('edit-sidebar-modal-' + sidebarMenuId);
-            modal.classList.add('opacity-0');
-            modal.classList.add('pointer-events-none');
-        }
+        // Enregistrer les modifications d'un élément de menu de la sidebar
         document.querySelectorAll('[id^="edit-sidebar-form-"]').forEach(form => {
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -1075,7 +1043,12 @@
                     tinymce.triggerSave();
                 } 
 
-                formData.set('editSidebarDescription', tinymce.get('editSidebarDescription') ? tinymce.get("editSidebarDescription").getContent() : document.getElementById('editSidebarDescription').value);
+                // Remplacez la ligne commentée par :
+                formData.set('description', tinymce.get(`description-${sidebarMenuId}`) 
+                    ? tinymce.get(`description-${sidebarMenuId}`).getContent() 
+                    : document.getElementById(`description-${sidebarMenuId}`).value);
+
+                // formData.set('editSidebarDescription', tinymce.get('editSidebarDescription') ? tinymce.get("editSidebarDescription").getContent() : document.getElementById('editSidebarDescription').value);
                                 
 
                 const btn = document.querySelector(`#edit-sidebar-modal-${sidebarMenuId} button[type="submit"]`);
@@ -1109,7 +1082,7 @@
                             btn.classList.remove('opacity-75', 'cursor-not-allowed');
                         }, 1200);
                         closeEditSidebarMenuModal(sidebarMenuId);
-                        // window.location.reload();
+                        window.location.reload();
                     } else {
                         showToastError();
                         btn.innerHTML = originalContent;
@@ -1138,6 +1111,33 @@
                 });
             });
         });
+
+        function toggleEditMenuModal() {
+            // Recuperer l'id du menu à modifier à partir du dataset de la ligne cliquée
+            const sidebarMenuId = event.target.closest('tr').getAttribute('data-sidebar-menu-id');
+            const modal = document.getElementById('edit-sidebar-modal-' + sidebarMenuId);
+            modal.classList.toggle('opacity-0');
+            modal.classList.toggle('pointer-events-none');
+        }
+        function editSidebarMenu(sidebarMenuId) {            
+            // Fermer tous les modals ouverts d'abord
+            document.querySelectorAll('[id^="edit-sidebar-modal-"]').forEach(modal => {
+                modal.classList.add('opacity-0');
+                modal.classList.add('pointer-events-none');
+            });
+
+            const modal = document.getElementById('edit-sidebar-modal-' + sidebarMenuId);
+            modal.classList.remove('opacity-0');
+            modal.classList.remove('pointer-events-none');
+        }
+
+        function closeEditSidebarMenuModal(sidebarMenuId) {
+            const modal = document.getElementById('edit-sidebar-modal-' + sidebarMenuId);
+            modal.classList.add('opacity-0');
+            modal.classList.add('pointer-events-none');
+        }
+
+        
         
 
     </script>
