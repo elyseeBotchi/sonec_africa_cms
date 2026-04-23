@@ -51,8 +51,12 @@ Route::middleware('auth')->prefix('/admin')->group(function () {
     Route::resource('/candidatures', App\Http\Controllers\Admin\CandidatureController::class);
     // Route::post('/candidatures/{id}/update-status', [App\Http\Controllers\Admin\CandidatureController::class, 'updateStatus'])->name('candidatures.updateStatus');
 
-     // Gestion des messages de contact
-     Route::resource('/messages', App\Http\Controllers\Admin\MessageController::class);
+    // Gestion des messages de contact
+    Route::resource('/messages', App\Http\Controllers\Admin\MessageController::class);
+
+    // Gestion des utilisateurs
+    Route::resource('/users', App\Http\Controllers\Admin\UserController::class);
+
     // Deconnexion
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('admin.logout');
 });

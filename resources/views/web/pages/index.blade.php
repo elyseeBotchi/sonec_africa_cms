@@ -275,7 +275,7 @@
                             <h2 class="text-4xl lg:text-5xl font-bold text-sonec-dark mb-4">Actualités &amp; Insights</h2>
                             <p class="text-xl text-gray-600">Restez informés de nos dernières innovations</p>
                         </div>
-                        <a href="#" class="mt-6 lg:mt-0 inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
+                        <a href="{{ route('web.actualites') }}" class="mt-6 lg:mt-0 inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
                             Voir toutes les actualités
                             <i class="fas fa-arrow-right"></i>
                         </a>

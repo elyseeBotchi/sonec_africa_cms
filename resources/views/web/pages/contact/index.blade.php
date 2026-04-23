@@ -27,22 +27,22 @@
                                 Vous avez des questions ?
                             </h2>
                             <p class="text-gray-600 mb-6 text-lg">
-                                Nous sommes toujours à la recherche de talents exceptionnels. Si vous êtes passionné par la technologie et l'Afrique, envoyez-nous votre candidature spontanée. Nous serons ravis d'étudier votre profil.
+                                Que vous soyez un client potentiel, un partenaire ou simplement curieux d'en savoir plus sur Sonec Africa, nous sommes là pour vous aider. N'hésitez pas à nous envoyer un message en utilisant le formulaire à droite, ou à nous contacter directement via les coordonnées ci-dessous. Nous avons hâte de vous entendre !
                             </p>
 
                             {{-- Points forts --}}
                             <div class="space-y-4 mb-8">
                                 <div class="flex items-start">
                                     <i class="fa-solid fa-circle-check text-sonec-green mt-1 mr-3"></i>
-                                    <p class="text-gray-700">Votre profil sera ajouté à notre vivier de talents pour les futures opportunités.</p>
+                                    <p class="text-gray-700">Disponibles 5j/7 pour répondre à vos questions.</p>
                                 </div>
                                 <div class="flex items-start">
                                     <i class="fa-solid fa-circle-check text-sonec-green mt-1 mr-3"></i>
-                                    <p class="text-gray-700">Nous vous contacterons dès qu'un poste correspondant à vos compétences se libère.</p>
+                                    <p class="text-gray-700">Réponses rapides et efficaces à toutes vos questions.</p>
                                 </div>
                                 <div class="flex items-start">
                                     <i class="fa-solid fa-circle-check text-sonec-green mt-1 mr-3"></i>
-                                    <p class="text-gray-700">Toutes les candidatures sont examinées avec soin par notre équipe RH.</p>
+                                    <p class="text-gray-700">Toutes les demandes sont traitées avec soin par notre équipe.</p>
                                 </div>
                             </div>
 

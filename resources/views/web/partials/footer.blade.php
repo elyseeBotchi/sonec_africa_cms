@@ -45,21 +45,29 @@
             <div>
                 <h3 class="font-bold text-lg mb-4">Solutions</h3>
                 <ul class="space-y-3">
-                    <li><a href="#" class="text-gray-300 hover:text-sonec-lime transition-colors">EcoleWeb</a></li>
+                    @php
+                        $solutions = \App\Models\Solution::where('mis_avant',true)->limit(3)->get();
+                    @endphp
+                    @foreach ($solutions as $solution)
+                        <li><a href="{{ route('web.solutions.show', $solution->slug) }}" class="text-gray-300 hover:text-sonec-lime transition-colors">{{ $solution->title }}</a></li>
+                    @endforeach
+                    {{-- <li><a href="#" class="text-gray-300 hover:text-sonec-lime transition-colors">EcoleWeb</a></li>
                     <li><a href="#" class="text-gray-300 hover:text-sonec-lime transition-colors">GDEC</a></li>
                     <li><a href="#" class="text-gray-300 hover:text-sonec-lime transition-colors">SonecPay</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-sonec-lime transition-colors">Toutes les solutions</a></li>
+                     --}}
+                    <li><a href="{{ route('web.solutions.index') }}" class="text-gray-300 hover:text-sonec-lime transition-colors">Toutes les solutions</a></li>
+                
                 </ul>
             </div>
 
             <div>
                 <h3 class="font-bold text-lg mb-4">Entreprise</h3>
                 <ul class="space-y-3">
-                    <li><a href="#" class="text-gray-300 hover:text-sonec-lime transition-colors">À propos</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-sonec-lime transition-colors">Notre histoire</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-sonec-lime transition-colors">Équipe</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-sonec-lime transition-colors">Carrières</a></li>
-                    <li><a href="#" class="text-gray-300 hover:text-sonec-lime transition-colors">Actualités</a></li>
+                    <li><a href="{{ route('web.decouvrir-sonec-africa') }}" class="text-gray-300 hover:text-sonec-lime transition-colors">À propos</a></li>
+                    <li><a href="{{ route('web.notre-histoire') }}" class="text-gray-300 hover:text-sonec-lime transition-colors">Notre histoire</a></li>
+                    <li><a href="{{ route('web.equipe-de-direction') }}" class="text-gray-300 hover:text-sonec-lime transition-colors">Équipe</a></li>
+                    <li><a href="{{ route('web.carrieres') }}" class="text-gray-300 hover:text-sonec-lime transition-colors">Carrières</a></li>
+                    <li><a href="{{ route('web.actualites') }}" class="text-gray-300 hover:text-sonec-lime transition-colors">Actualités</a></li>
                 </ul>
             </div>
 
