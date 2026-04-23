@@ -364,13 +364,11 @@
             </section>
         @endif        
     </main>
-     
-@endsection
-
-@section('script')
-   <script>
+    <script>
         // Animation de la timeline
         window.addEventListener('load', () => {
+            // alert('test');
+
             const timelineItems = document.querySelectorAll('.timeline-item');
 
             const observerOptions = {
@@ -391,4 +389,5 @@
             });
         });
     </script>
+     
 @endsection

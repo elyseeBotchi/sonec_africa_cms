@@ -61,6 +61,10 @@ class OffreEmploiController extends Controller
                 'domaine' => $validated['domaine'] ?? null,
             ]);
 
+            // creer le slug de l'offre d'emploi
+            $offreEmploi->slug = \Str::slug($offreEmploi->title);
+            $offreEmploi->save();
+
             $data = [
                 'success' => true,
                 'message' => 'Offre d\'emploi sauvegardée avec succès.',
@@ -104,7 +108,10 @@ class OffreEmploiController extends Controller
         try {
             $validated = $request->validated();
 
-            $validated['slug'] =  \Str::slug($validated['title']).'-'.uniqid() ?? $offres_emploi->slug;
+            // Si le slug est vide ou null, le générer à partir du titre
+            if (empty($validated['slug'])|| is_null($offres_emploi->slug)) {
+                $offres_emploi->slug = \Str::slug($validated['title']);
+            }
 
             $offres_emploi->update($validated);
 

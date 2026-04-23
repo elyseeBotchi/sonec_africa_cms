@@ -97,6 +97,7 @@ return [
             'retry_after' => 60,
         ],
 
+
     ],
 
     /*
@@ -111,8 +112,9 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'address' => env('MAIL_FROM_ADDRESS', 'rh@sonec-africa.com'),
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
+        'contact_address' => env('MAIL_CONTACT_ADDRESS', 'contact@sonec-africa.com'),
     ],
 
 ];

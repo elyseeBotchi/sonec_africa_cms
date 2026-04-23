@@ -4,6 +4,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    
     <title>Accueil</title>
     <script src="{{ asset('assets/js/tailwindcss/tailwind.min.js') }}"></script>
     {{-- favicon --}}
@@ -137,48 +139,7 @@
                 });
             });
 
-            const carouselSlides = document.querySelectorAll('.carousel-slide');
-            const carouselDots = document.querySelectorAll('.carousel-dot');
-            const prevBtn = document.getElementById('carousel-prev');
-            const nextBtn = document.getElementById('carousel-next');
-            let currentSlide = 0;
-
-            function showSlide(index) {
-                carouselSlides.forEach(function(slide, i) {
-                    slide.classList.remove('active');
-                    if (i === index) {
-                        slide.classList.add('active');
-                    }
-                });
-                carouselDots.forEach(function(dot, i) {
-                    dot.classList.remove('active');
-                    if (i === index) {
-                        dot.classList.add('active');
-                    }
-                });
-            }
-
-            function nextSlide() {
-                currentSlide = (currentSlide + 1) % carouselSlides.length;
-                showSlide(currentSlide);
-            }
-
-            function prevSlide() {
-                currentSlide = (currentSlide - 1 + carouselSlides.length) % carouselSlides.length;
-                showSlide(currentSlide);
-            }
-
-            nextBtn.addEventListener('click', nextSlide);
-            prevBtn.addEventListener('click', prevSlide);
-
-            carouselDots.forEach(function(dot, index) {
-                dot.addEventListener('click', function() {
-                    currentSlide = index;
-                    showSlide(currentSlide);
-                });
-            });
-
-            setInterval(nextSlide, 5000);
+            
         });
     </script>
 </body>

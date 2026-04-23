@@ -379,4 +379,44 @@
             </section>
         @endif
     </main>
+
+    <script>
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.opacity = i === index ? '1' : '0';
+                slide.style.visibility = i === index ? 'visible' : 'hidden';
+            });
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            currentIndex = index;
+        }
+
+        document.getElementById('carousel-prev').addEventListener('click', () => {
+            const newIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(newIndex);
+        });
+
+        document.getElementById('carousel-next').addEventListener('click', () => {
+            const newIndex = (currentIndex + 1) % slides.length;
+            showSlide(newIndex);
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // Auto-slide every 5 seconds
+        setInterval(() => {
+            const newIndex = (currentIndex + 1) % slides.length;
+            showSlide(newIndex);
+        }, 5000);
+    </script>
 @endsection
+

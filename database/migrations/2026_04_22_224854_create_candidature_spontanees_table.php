@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('contact_messages', function (Blueprint $table) {
+        Schema::create('candidature_spontanees', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('prenom');
+            $table->string('nom');
             $table->string('email');
-            $table->string('subject')->nullable();
-            $table->text('message');
+            $table->string('cv');
+            $table->text('lettre_motivation')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('contact_messages');
+        Schema::dropIfExists('candidature_spontanees');
     }
 };

@@ -48,6 +48,7 @@ Route::middleware('auth')->prefix('/admin')->group(function () {
 
     Route::resource('/offres-emploi', App\Http\Controllers\Admin\OffreEmploiController::class);
     
+    Route::resource('/candidatures', App\Http\Controllers\Admin\CandidatureController::class);
 
     // Deconnexion
     Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('admin.logout');
@@ -63,10 +64,14 @@ Route::get('/', [App\Http\Controllers\Web\HomeController::class, 'index'])->name
 // Actualités
 Route::get('/actualites', [App\Http\Controllers\Web\ActualiteController::class, 'index'])->name('web.actualites');
 Route::get('/actualites/{slug}', [App\Http\Controllers\Web\ActualiteController::class, 'show'])->name('web.actualites.show');
+Route::get('/tag/{slug}', [App\Http\Controllers\Web\ActualiteController::class, 'tags'])->name('web.tags');
 
 // Carrières
 Route::get('/carrieres', [App\Http\Controllers\Web\CarriereController::class, 'index'])->name('web.carrieres');
 Route::get('/carrieres/{slug}', [App\Http\Controllers\Web\CarriereController::class, 'show'])->name('web.carrieres.show');
+
+// Postuler candidature spontannée
+Route::post('/carrieres/candidature-spontanee', [App\Http\Controllers\Web\CarriereController::class, 'postulerCandidatureSpontanee'])->name('web.carrieres.candidature.store');
 
 // Solutions — /{slug} directement (slugs: ecoleweb, gdec, sonecpay)
 Route::get('/solutions', [App\Http\Controllers\Web\SolutionController::class, 'index'])->name('web.solutions.index');

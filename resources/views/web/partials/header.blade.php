@@ -162,7 +162,7 @@
             </nav>
 
             <div class="flex items-center gap-4">
-                <a href="#" class="hidden lg:inline-block bg-sonec-green text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-sonec-dark transition-colors">
+                <a href="{{ route('web.contact') }}" class="hidden lg:inline-block bg-sonec-green text-white px-6 py-2.5 rounded-lg font-semibold hover:bg-sonec-dark transition-colors">
                     Nous contacter
                 </a>
                 <button id="mobile-menu-btn" class="lg:hidden text-sonec-dark text-2xl">

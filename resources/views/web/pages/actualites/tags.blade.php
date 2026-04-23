@@ -5,7 +5,7 @@
         <section id="news-hero" class="bg-gradient-to-br from-sonec-dark to-sonec-dark/90 py-16 lg:py-24">
             <div class="container mx-auto px-6">
                 <div class="max-w-4xl mx-auto text-center">
-                    <h1 class="text-4xl lg:text-6xl font-bold text-white mb-6">Actualités & Insights</h1>
+                    <h1 class="text-4xl lg:text-6xl font-bold text-white mb-6">{{ $tag->label }}</h1>
                     <p class="text-xl text-gray-200">Découvrez nos dernières innovations, événements et actualités du secteur technologique africain</p>
                 </div>
             </div>
@@ -28,44 +28,12 @@
             </div>
         </section>
 
-        @if(isset($articles_a_la_une) && $articles_a_la_une->count() > 0)
-            <section id="featured-news" class="py-16 bg-gray-50">
-                <div class="container mx-auto px-6">
-                    <div id="featured-news-container" class="grid lg:grid-cols-2 gap-8 mb-12">
-                        @foreach ($articles_a_la_une as $article)
-                            <article class="news-card bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow" data-category="{{ $article->category->id }}">
-                                <div class="h-80 overflow-hidden">
-                                    <img class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" src="{{ $article->image_url ?? asset('storage/' . $article->image_article) }}" alt="{{ $article->title }}" />
-                                </div>
-                                <div class="p-8">
-                                    <div class="flex items-center gap-4 mb-4">
-                                        <span class="px-4 py-1.5 bg-sonec-green/10 text-sonec-green rounded-full text-sm font-semibold">{{ $article->category->label }}</span>
-                                        <span class="text-sm text-gray-500 flex items-center gap-2">
-                                            <i class="far fa-calendar"></i>
-                                            {{ $article->published_at->locale('fr')->isoFormat('LL') }}
-                                        </span>
-                                    </div>
-                                    <h2 class="text-3xl font-bold text-sonec-dark mb-4 hover:text-sonec-green transition-colors cursor-pointer">{{ $article->title }}</h2>
-                                    <p class="text-gray-700 mb-6 leading-relaxed">{!! $article->description_courte !!}</p>
-                                    <a href="{{ route('web.actualites.show', $article->slug) }}" class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:gap-4 transition-all">
-                                        Lire la suite
-                                        <i class="fas fa-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </article>
-                            
-                        @endforeach
-                    </div>
-                </div>
-            </section>
-        @endif
-
-        @if(isset($autres_articles) && $autres_articles->count() > 0)
+        @if(isset($articles) && $articles->count() > 0)
 
             <section id="news-grid" class="py-16 bg-white">
                 <div class="container mx-auto px-6">
                     <div id="news-grid-container" class="grid lg:grid-cols-3 gap-8">
-                        @foreach ($autres_articles as $article)
+                        @foreach ($articles as $article)
 
                             <article class="news-card bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-shadow" data-category="{{ $article->category->id }}">
                                 <div class="h-56 overflow-hidden">
