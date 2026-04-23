@@ -91,6 +91,9 @@ Route::get('/equipe-de-direction', [App\Http\Controllers\Web\PagesController::cl
 Route::get('/contact', [App\Http\Controllers\Web\ContactController::class, 'index'])->name('web.contact');
 Route::post('/contact', [App\Http\Controllers\Web\ContactController::class, 'send'])->name('web.contact.send');
 
+// Newsletter
+Route::post('/newsletter/subscribe', [App\Http\Controllers\Web\NewsletterController::class, 'store'])->name('web.newsletter.subscribe');
+
 // Route générique — EN DERNIER
 Route::get('/{slug}', [App\Http\Controllers\Web\PagesController::class, 'index'])->name('web.pages');
 

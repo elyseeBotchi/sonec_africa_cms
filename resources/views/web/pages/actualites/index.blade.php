@@ -176,8 +176,9 @@
                         <h2 class="text-3xl lg:text-4xl font-bold text-sonec-dark mb-4">Restez Informé</h2>
                         <p class="text-lg text-gray-600">Abonnez-vous à notre newsletter pour recevoir nos dernières actualités et insights directement dans votre boîte mail</p>
                     </div>
-                    <form class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
-                        <input type="email" placeholder="Votre adresse e-mail" class="flex-1 px-6 py-4 rounded-lg border border-gray-300 focus:outline-none focus:border-sonec-green focus:ring-2 focus:ring-sonec-green/20" />
+                    <form id="newsletter-form" class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto" method="POST" action="{{ route('web.newsletter.subscribe') }}">
+                        @csrf
+                        <input type="email" name="email" placeholder="Votre adresse e-mail" class="flex-1 px-6 py-4 rounded-lg border border-gray-300 focus:outline-none focus:border-sonec-green focus:ring-2 focus:ring-sonec-green/20" />
                         <button type="submit" class="px-8 py-4 bg-sonec-green text-white rounded-lg font-semibold hover:bg-sonec-dark transition-colors whitespace-nowrap">
                             S'abonner
                         </button>
@@ -206,7 +207,7 @@
     </main>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            alert('test');
+            // alert('test');
             const filterTabs = document.querySelectorAll('.filter-tab');
 
             filterTabs.forEach(tab => {
@@ -245,6 +246,95 @@
                     gridSection.style.display = hasVisible ? '' : 'none';
                 }
             }
+
+            
         });
+        
+        // Envoyer une requête AJAX pour s'abonner à la newsletter
+        document.getElementById('newsletter-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const btn = form.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+
+            clearErrors(form);
+            btn.disabled = true;
+            btn.textContent = 'Envoi en cours...';
+
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                    },
+                    body: new FormData(form),
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    showAlert('success', result.message);
+                    form.reset();
+                } else if (response.status === 422 && result.errors) {
+                    showFieldErrors(form, result.errors);
+                    showAlert('error', 'Veuillez corriger les erreurs ci-dessous.');
+                } else {
+                    showAlert('error', result.message || 'Une erreur est survenue. Veuillez réessayer.');
+                }
+
+            } catch (err) {
+                showAlert('error', 'Impossible de contacter le serveur. Vérifiez votre connexion.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        });
+
+        function showFieldErrors(form, errors) {
+            Object.entries(errors).forEach(([field, messages]) => {
+                const input = form.querySelector(`[name="${field}"]`);
+                if (!input) return;
+                input.classList.add('border-red-400');
+                const err = document.createElement('p');
+                err.className = 'field-error text-red-500 text-xs mt-1';
+                err.textContent = messages[0];
+                input.parentNode.appendChild(err);
+            });
+        }
+
+        function clearErrors(form) {
+            form.querySelectorAll('.field-error').forEach(el => el.remove());
+            form.querySelectorAll('.border-red-400').forEach(el => el.classList.remove('border-red-400'));
+            const existing = document.getElementById('form-alert');
+            if (existing) existing.remove();
+        }
+
+        function showAlert(type, message) {
+            const existing = document.getElementById('form-alert');
+            if (existing) existing.remove();
+
+            const colors = {
+                success: 'bg-green-50 border-green-200 text-green-800',
+                error:   'bg-red-50 border-red-200 text-red-800',
+            };
+            const icons = {
+                success: '&#10003;',
+                error:   '&#10007;',
+            };
+
+            const alert = document.createElement('div');
+            alert.id = 'form-alert';
+            alert.className = `flex items-start gap-3 p-4 rounded-lg border text-sm ${colors[type]}`;
+            alert.innerHTML = `<span class="font-bold text-base leading-none mt-0.5">${icons[type]}</span><span>${message}</span>`;
+
+            const form = document.getElementById('newsletter-form');
+            form.insertAdjacentElement('beforebegin', alert);
+            alert.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+
+
     </script>
 @endsection
