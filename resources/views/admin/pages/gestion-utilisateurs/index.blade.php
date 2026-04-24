@@ -46,11 +46,11 @@
                                         <i class="fas fa-pencil"></i>
                                     </button>
 
-                                    @if(auth()->user()->id !== $user->id && auth()->user()->role !== 'admin') {{-- Ne pas afficher le bouton de suppression pour l'utilisateur connecté --}}
-                                    <button class="bg-transparent text-red-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="deleteUser({{ $user->id }})" data-id="{{ $user->id }}" data-label="{{ $user->name }}" data-toggle="tooltip" data-title="Supprimer {{ $user->name }}">
+                                    {{-- @if(auth()->user()->id !== $user->id && auth()->user()->role !== 'admin') Ne pas afficher le bouton de suppression pour l'utilisateur connecté --}}
+                                    <button class="bg-transparent text-red-500 px-3 py-1 text-sm transition-all flex items-center gap-1" onclick="openDeleteUserModal({{ $user->id }})" data-id="{{ $user->id }}" data-label="{{ $user->name }}" data-toggle="tooltip" data-title="Supprimer {{ $user->name }}">
                                         <i class="fas fa-trash"></i> 
                                     </button>
-                                    @endif
+                                    {{-- @endif --}}
 
                                 </td>
                             </tr>
@@ -112,6 +112,27 @@
                                             <i class="fas fa-save"></i> Enregistrer
                                         </button>
                                     </form>
+                                </div>
+                            </div>
+
+                            <div id="delete-user-modal-{{ $user->id ?? '' }}" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity z-50 ">
+                                <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative " >
+                                    
+                                    <button class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 focus:outline-none" onclick="closeDeleteUserModal({{ $user->id ?? '' }})">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <h2 class="text-xl font-bold text-sonec-dark mb-4">Confirmer la suppression</h2>
+                                    
+                                    <p class="mb-6 text-slate-700">Êtes-vous sûr de vouloir supprimer l'utilisateur <span class="font-bold">{{ $user->name ?? '' }}</span> ? Cette action est irréversible.</p>
+
+                                    <div class="flex justify-end gap-4">
+                                        <button onclick="closeDeleteUserModal({{ $user->id ?? '' }})" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md font-bold text-sm transition-all">
+                                            Annuler
+                                        </button>
+                                        <button onclick="deleteUser({{ $user->id ?? '' }})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md font-bold text-sm transition-all flex items-center gap-2">
+                                            <i class="fas fa-trash"></i> Supprimer
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -191,13 +212,7 @@
                         </div>
                     </div>
                 </div>
-                {{-- texte d'infos pour signifier que pour ne pas modifier le mot de passe, laisser les champs vides --}}
-                <div class="bg-blue-100 text-blue-500 p-3 rounded mb-4 flex items-center gap-2">
-                    <i class="fas fa-info-circle"></i>
-                    <small >
-                        Laissez les champs vides si vous ne souhaitez pas modifier le mot de passe.
-                    </small>
-                </div>
+                
 
                 <!-- Autres champs comme icon, image, position, etc. -->
                 <button type="submit" class="w-full bg-sonec-green hover:bg-sonec-dark text-white py-2 px-4 rounded-md font-bold text-sm transition-all flex items-center gap-2 shadow-lg shadow-sonec-green/20">
@@ -299,7 +314,7 @@
                     successDescription.textContent = data.description || 'L\'utilisateur a été enregistré avec succès.';
 
                     statusBadge.classList.add('hidden');
-                    // window.location.reload();
+                    window.location.reload();
 
                 } else {
                     showToastError();
@@ -429,12 +444,10 @@
             });
         });
 
-        function toggleDeleteUserModal() {
-            // Recuperer l'id de l'utilisateur à supprimer à partir du dataset de la ligne cliquée
-            const userId = event.target.closest('tr').getAttribute('data-id');
+        function openDeleteUserModal(userId) {
             const modal = document.getElementById('delete-user-modal-' + userId);
-            modal.classList.toggle('opacity-0');
-            modal.classList.toggle('pointer-events-none');
+            modal.classList.remove('opacity-0');
+            modal.classList.remove('pointer-events-none');
         }
 
         function closeDeleteUserModal(userId) {
@@ -445,7 +458,7 @@
 
         function deleteUser(userId) {
             // Afficher le modal de confirmation de suppression
-            toggleDeleteUserModal();
+            // toggleDeleteUserModal();
 
             // Ajouter un écouteur d'événement au bouton de confirmation de suppression
             const confirmBtn = document.querySelector(`#delete-user-modal-${userId} button.bg-red-500`);
@@ -462,7 +475,7 @@
                     if (data.success===true) {
                         showToast();
                         setTimeout(() => {
-                            toggleDeleteUserModal();
+                            closeDeleteUserModal(userId);
                             window.location.reload();
                         }, 1200);
                     } else {

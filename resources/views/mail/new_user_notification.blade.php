@@ -24,7 +24,7 @@
             overflow: hidden;
         }
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #66ea75 0%, #4ba255 100%);
             color: #ffffff;
             padding: 40px 20px;
             text-align: center;
@@ -37,7 +37,7 @@
             padding: 40px;
         }
         .content h2 {
-            color: #667eea;
+            color: #4ba255;
             margin-bottom: 20px;
             font-size: 22px;
         }
@@ -48,14 +48,14 @@
         }
         .credentials {
             background-color: #f9f9f9;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #4ba255;
             padding: 20px;
             margin: 30px 0;
             border-radius: 4px;
         }
         .credentials-title {
             font-weight: 600;
-            color: #667eea;
+            color: #4ba255;
             margin-bottom: 15px;
             font-size: 16px;
         }
@@ -77,7 +77,7 @@
         }
         .action-button {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #66ea75 0%, #4ba255 100%);
             color: #ffffff;
             padding: 12px 30px;
             border-radius: 4px;
@@ -111,7 +111,7 @@
             color: #666;
         }
         .footer a {
-            color: #667eea;
+            color: #4ba255;
             text-decoration: none;
         }
     </style>
@@ -119,7 +119,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Bienvenue! 🎉</h1>
+            <h1>Bienvenue! </h1>
             <p>Votre compte a été créé avec succès</p>
         </div>
 
@@ -127,7 +127,7 @@
             <h2>Bonjour {{ $user['name'] }},</h2>
             
             <p>
-                Merci de vous être inscrit sur notre plateforme. Nous sommes heureux de vous compter parmi nos utilisateurs.
+                Votre compte utilisateur a été créé avec succès. Vous pouvez desormais vous connecter au dashboard administrateur pour gérer les différentes fonctionnalités du site.
             </p>
 
             <p>
@@ -135,7 +135,7 @@
             </p>
 
             <div class="credentials">
-                <div class="credentials-title">📋 Vos identifiants de connexion</div>
+                <div class="credentials-title">Vos identifiants de connexion</div>
                 <div class="credential-item">
                     <span class="credential-label">Email:</span>
                     <span class="credential-value">{{ $user['email'] }}</span>

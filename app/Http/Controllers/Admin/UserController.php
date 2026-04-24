@@ -113,6 +113,18 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        try {
+            $user->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Utilisateur supprimé avec succès.'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false, 
+                'message' => 'Erreur lors de la suppression de l\'utilisateur.', 
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

@@ -27,7 +27,7 @@ class StoreUserRequest extends FormRequest
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'confirmPassword' => 'required|string|min:8|same:password',
-            'role' => 'required',
+            'role' => 'required|string',
         ];
     }
 
@@ -49,6 +49,11 @@ class StoreUserRequest extends FormRequest
             'confirmPassword.required' => 'La confirmation du mot de passe est requise.',
             'confirmPassword.min' => 'La confirmation du mot de passe doit contenir au moins 8 caractères.',
             'confirmPassword.same' => 'La confirmation du mot de passe ne correspond pas au mot de passe.',
+        
+            'role.required' => 'Le rôle est requis.',
         ];
     }
+
+    
+
 }

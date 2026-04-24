@@ -12,6 +12,12 @@ Route::post('/admin/login', [App\Http\Controllers\Auth\LoginController::class, '
 // Admin routes
 Route::get('/admin/', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('admin.login');
 
+// Route pour la page de saisie du code OTP
+Route::get('/admin/otp', [App\Http\Controllers\Auth\LoginController::class, 'showOtpForm'])->name('otp.form');
+// Route pour vérifier le code OTP
+Route::post('/admin/otp', [App\Http\Controllers\Auth\LoginController::class, 'verifyOtp'])->name('otp.verify');
+
+
 Route::middleware('auth')->prefix('/admin')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
     
