@@ -65,6 +65,15 @@
                                     class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500">
                             </div>
                             <div class="flex-1">
+                                <label for="temoignage_location_{{ $i }}"
+                                    class="block text-xs font-bold text-slate-400 uppercase mb-1">Localisation</label>
+                                <input type="text"
+                                    id="temoignage_location_{{ $i }}"
+                                    name="temoignage_location_{{ $i }}[]"
+                                    value="{{ $temoignage->author_location ?? '' }}"
+                                    class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500">
+                            </div>
+                            <div class="flex-1">
                                 <label for="temoignage_photo_url_{{ $i }}"
                                     class="block text-xs font-bold text-slate-400 uppercase mb-1">Url de la photo</label>
                                 <input type="text"

@@ -20,7 +20,7 @@ class SolutionController extends Controller
     public function show(string $slug)
     {
         $solution = Solution::where('slug', $slug)->firstOrFail();
-        $heroSection = $solution->sections()->where('section_key', 'hero-section')->first();
+        // $heroSection = $solution->sections()->where('section_key', 'hero-section')->first();
 
         $solution->load([
             'chiffres', 

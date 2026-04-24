@@ -295,6 +295,10 @@
                             <input type="text" id="temoignage_position_${index}" name="temoignage_position_${index}[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" >
                         </div>
                         <div class="flex-1">
+                            <label for="temoignage_location_${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Localisation</label>
+                            <input type="text" id="temoignage_location_${index}" name="temoignage_location_${index}[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" >
+                        </div>
+                        <div class="flex-1">
                             <label for="temoignage_photo_url_${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Url de la photo</label>
                             <input type="text" id="temoignage_photo_url_${index}" name="temoignage_photo_url_${index}[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" >    
                         </div>
@@ -398,29 +402,7 @@
             }
         }
 
-        // function attachPersonnalisationPreview(input) {
-        //     input.addEventListener('change', function () {
-        //         const file = this.files[0];
-        //         if (!file) return;
-
-        //         const inputId = input.id; 
-
-        //         const reader = new FileReader();
-        //         reader.onload = function (e) {
-        //             const previewDiv = input.closest('[data-personnalisation]').querySelector('.preview .text-center');
-        //             // const newInputId = inputId + '-new';
-        //             previewDiv.innerHTML = `
-        //                 <img src="${e.target.result}" alt="Aperçu image" class="max-w-full max-h-40 object-contain mb-2">
-        //                 <input type="file" name="personnalisation_photo_${inputId}[]" class="hidden" id="personnalisation_photo_${inputId}">
-        //                 <label for="personnalisation_photo_${inputId}" class="mt-2 text-xs bg-white px-3 py-1 rounded border hover:bg-slate-100 cursor-pointer">Changer</label>
-        //             `;
-        //             // Réattacher l'écouteur sur le nouvel input généré
-        //             attachPersonnalisationPreview(previewDiv.querySelector('input[type="file"]'));
-        //     };
-        //         reader.readAsDataURL(file);
-    
-        //     });
-        // }
+        
 
         // Enregistrement de toutes les données
         function saveAll() {
@@ -484,6 +466,7 @@
                 formData.append(`temoignages[${index}][author]`,     item.querySelector(`[name="temoignage_name_${i}[]"]`)?.value ?? '');
                 formData.append(`temoignages[${index}][company]`,    item.querySelector(`[name="temoignage_company_${i}[]"]`)?.value ?? '');
                 formData.append(`temoignages[${index}][position]`,   item.querySelector(`[name="temoignage_position_${i}[]"]`)?.value ?? '');
+                formData.append(`temoignages[${index}][location]`,   item.querySelector(`[name="temoignage_location_${i}[]"]`)?.value ?? '');
                 formData.append(`temoignages[${index}][content]`,    item.querySelector(`[name="temoignage_message_${i}[]"]`)?.value ?? '');
                 formData.append(`temoignages[${index}][photo_url]`,  item.querySelector(`[name="temoignage_photo_url_${i}[]"]`)?.value ?? '');
                 const photoFile = item.querySelector(`[name="temoignage_photo_${i}[]"]`)?.files[0];

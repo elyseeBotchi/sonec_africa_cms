@@ -85,6 +85,8 @@ class UpdateSolutionRequest extends FormRequest
             'temoignages.*.photo_url'   => 'nullable|string|max:500',
             'temoignages.*.section_key' => 'nullable|string|max:255',
             'temoignages.*.page_key'    => 'nullable|string|max:255',
+            'temoignages.*.author_location' => 'nullable|string|max:255',
+
 
 
             // Partenaires

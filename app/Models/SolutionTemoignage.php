@@ -16,6 +16,7 @@ class SolutionTemoignage extends Model
         'solution_id',
         'section_key',
         'page_key',
+        'author_location',
     ];
 
     public function solution()

@@ -25,7 +25,9 @@ class Solution extends Model
         'nombre_demande_demo',
         'page_key',
         'disponibilite',
+        'subtitle',
     ];
+
 
     public function sections()
     {

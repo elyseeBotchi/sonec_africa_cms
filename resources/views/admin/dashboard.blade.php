@@ -8,7 +8,7 @@
             <span id="status-badge" class="px-2 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-md border border-green-200 hidden">Modifications en cours</span>
         </div>
         <div class="flex items-center gap-4">
-            <a href="#" class="text-sm font-semibold text-slate-500 hover:text-sonec-green flex items-center gap-2">
+            <a href="{{ url('/') }}" class="text-sm font-semibold text-slate-500 hover:text-sonec-green flex items-center gap-2">
                 <i class="fas fa-external-link-alt"></i> Voir le site
             </a>
             {{-- <button onclick="saveAll()" class="bg-sonec-dark hover:bg-sonec-green text-white px-5 py-2 rounded-lg font-bold text-sm transition-all flex items-center gap-2 shadow-lg shadow-sonec-green/20">
@@ -26,28 +26,28 @@
                         <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Visiteurs (30j)</span>
                         <span class="text-green-500 text-xs font-bold bg-green-50 px-2 py-1 rounded">+12%</span>
                     </div>
-                    <h3 class="text-3xl font-bold text-sonec-dark">45,200</h3>
+                    <h3 class="text-3xl font-bold text-sonec-dark">{{ $totalVisites ?? 0 }}</h3>
                 </div>
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start mb-2">
                         <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Candidatures</span>
-                        <span class="text-blue-500 text-xs font-bold bg-blue-50 px-2 py-1 rounded">+5</span>
+                        <span class="text-blue-500 text-xs font-bold bg-blue-50 px-2 py-1 rounded">+{{ $recentCandidaturesCount ?? 0 }}</span>
                     </div>
-                    <h3 class="text-3xl font-bold text-sonec-dark">128</h3>
+                    <h3 class="text-3xl font-bold text-sonec-dark">{{ $totalCandidaturesCount ?? 0 }}</h3>
                 </div>
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start mb-2">
                         <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Articles</span>
                         <span class="text-purple-500 text-xs font-bold bg-purple-50 px-2 py-1 rounded">Nouveau</span>
                     </div>
-                    <h3 class="text-3xl font-bold text-sonec-dark">24</h3>
+                    <h3 class="text-3xl font-bold text-sonec-dark">{{ $recentArticlesCount ?? 0 }}</h3>
                 </div>
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start mb-2">
                         <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Demandes Démo</span>
                         <span class="text-orange-500 text-xs font-bold bg-orange-50 px-2 py-1 rounded">Urgent</span>
                     </div>
-                    <h3 class="text-3xl font-bold text-sonec-dark">12</h3>
+                    <h3 class="text-3xl font-bold text-sonec-dark">{{ $demandeDemo ?? 0 }}</h3>
                 </div>
             </div>
 

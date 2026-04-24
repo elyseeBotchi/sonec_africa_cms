@@ -202,12 +202,13 @@ class SolutionController extends Controller
                     \App\Models\SolutionTemoignage::create([
                         'solution_id' => $solution->id,
                         'author_name' => $temoignageData['author'] ?? null,
-                        'author_position' => $temoignageData['author_position'] ?? null,
+                        'author_position' => $temoignageData['position'] ?? null,
                         'content' => $temoignageData['content'] ?? null,
                         'author_photo' => $temoignageImagePath ?? null,
                         'author_photo_url' => $temoignageData['image_url'] ?? null,
                         'section_key' => $temoignageData['section_key'] ?? 'temoignages',
                         'page_key' => $validatedData['page_key'] ?? 'solutions',
+                        'author_location' => $temoignageData['location'] ?? null,
                     ]);
                 }
             }
@@ -447,43 +448,7 @@ class SolutionController extends Controller
                 );
             }
 
-            // Sections de personnalisation de la solution
-            // if (isset($validatedData['personnalisation_sections']) && is_array($validatedData['personnalisation_sections'])) {
-            //     $submittedIds = collect($validatedData['personnalisation_sections'])
-            //                     ->pluck('id')
-            //                     ->filter() 
-            //                     ->values();
-
-            //     SolutionSection::where('solution_id', $solution->id)
-            //                    ->whereNotIn('id', $submittedIds)
-            //                    ->delete();
-
-            //     foreach ($validatedData['personnalisation_sections'] as $sectionData) {
-            //         $sectionImagePath = null;
-            //         if (isset($sectionData['image']) && $sectionData['image']->isValid()) {
-            //             $sectionImagePath = $sectionData['image']->store('solution_section_images', 'public');
-            //         }
-            //         $sectionKey = \Str::slug($sectionData['title'] ?? 'personnalisation_' . uniqid());
-                    
-            //         $sectionRecord = [
-            //             'solution_id' => $solution->id,
-            //             'title' => $sectionData['title'] ?? null,
-            //             // 'subtitle' => $sectionData['subtitle'] ?? null,
-            //             'content' => $sectionData['content'] ?? null,
-            //             'section_key' => $sectionKey,
-            //             'page_key' => $validatedData['page_key'] ?? 'solutions',
-            //         ];
-
-            //         if (isset($sectionData['id'])) {
-            //             SolutionSection::updateOrCreate(
-            //                 ['id' => $sectionData['id'], 'solution_id' => $solution->id],
-            //                 $sectionRecord
-            //             );
-            //         } else {
-            //             SolutionSection::create($sectionRecord);
-            //         }
-            //     }
-            // }
+           
             if (isset($validatedData['personnalisation_sections']) && is_array($validatedData['personnalisation_sections'])) {
 
                 $submittedIds = collect($validatedData['personnalisation_sections'])
@@ -538,6 +503,15 @@ class SolutionController extends Controller
                     $authorPhotoPath = null;
                     if (!empty($temoignageData['photo']) && $temoignageData['photo']->isValid()) {
                         $authorPhotoPath = $temoignageData['photo']->store('temoignage_photos', 'public');
+                    }else{
+                        // Si pas de nouveau fichier uploadé, conserver l'URL existante
+                        $existingTemoignage = \App\Models\SolutionTemoignage::where('id', $temoignageData['id'] ?? null)
+                            ->where('solution_id', $solution->id)
+                            ->first();
+
+                        if ($existingTemoignage) {
+                            $authorPhotoPath = $existingTemoignage->author_photo;
+                        }   
                     }
 
                     $record = [
@@ -549,6 +523,9 @@ class SolutionController extends Controller
                         'author_photo_url' => $temoignageData['photo_url']   ?? null,
                         'section_key'      => $temoignageData['section_key'] ?? 'temoignages',
                         'page_key'         => $validatedData['page_key']     ?? 'solutions',
+                        'author_photo'     => $authorPhotoPath ?? null,
+                        'author_location'  => $temoignageData['location'] ?? null,
+
                     ];
 
                     // N'écrase la photo existante que si un nouveau fichier a été uploadé

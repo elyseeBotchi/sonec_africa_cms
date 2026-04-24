@@ -7,20 +7,26 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    protected $statsService;
+
+    public function __construct(\App\Services\StatsService $statsService)
+    {
+        $this->statsService = $statsService;
+    }
+
     //Methode affichant le dashboard de l'administration
     public function index()
     {
-        // Nombre total d'articles recents
-        $recentArticlesCount = \App\Models\Article::where('created_at', '>=', now()->subDays(7))->count();
+        $recentArticlesCount = $this->statsService->recentArticles();
+        $recentCandidaturesCount = $this->statsService->recentCandidatures();
+        // $recentSpontaneousCandidaturesCount = $this->statsService->recentSpontaneousCandidatures();
+        $totalCandidaturesCount = $this->statsService->totalCandidatures();
+        $totalVisites = $this->statsService->total();
+        $todayVisites = $this->statsService->today();
+        $uniqueTodayVisites = $this->statsService->uniqueToday();
 
-        // Nombre total de candidatures recents
-        $recentCandidaturesCount = \App\Models\Candidature::where('created_at', '>=', now()->subDays(7))->count();
+        $demandeDemo = 0;
 
-        // Candidatures spontanées recents
-        $recentSpontaneousCandidaturesCount = \App\Models\CandidatureSpontanee::where('created_at', '>=', now()->subDays(7))->count();
-
-        $taotalCandidaturesCount = $recentCandidaturesCount + $recentSpontaneousCandidaturesCount;
-
-        return view('admin.dashboard', compact('recentArticlesCount', 'recentCandidaturesCount', 'recentSpontaneousCandidaturesCount', 'totalCandidaturesCount'));
+        return view('admin.dashboard', compact('recentArticlesCount', 'recentCandidaturesCount', 'totalCandidaturesCount', 'totalVisites', 'todayVisites', 'uniqueTodayVisites', 'demandeDemo'));
     }
 }

@@ -117,9 +117,10 @@ class StoreSolutionRequest extends FormRequest
             'temoignages.*.author' => 'nullable|string|max:255',
             'temoignages.*.content' => 'nullable|string',
             'temoignages.*.photo' => 'nullable|string',
-            'temoignages.*.photo_url' => 'nullable|url',
+            'temoignages.*.photo_url' => 'nullable',
             'temoignages.*.section_key' => 'nullable|string|max:255',
             'temoignages.*.page_key' => 'nullable|string|max:255',
+            'temoignages.*.location' => 'nullable|string|max:255',
         ];
     }
 

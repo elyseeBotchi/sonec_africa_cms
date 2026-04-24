@@ -344,6 +344,11 @@
                             <label for="temoignage_position_${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Position/Fonction</label>
                             <input type="text" id="temoignage_position_${index}" name="temoignage_position_${index}[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" >
                         </div>
+                       
+                        <div class="flex-1">
+                            <label for="temoignage_location_${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Localisation</label>
+                            <input type="text" id="temoignage_location_${index}" name="temoignage_location_${index}[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" >
+                        </div>
                         <div class="flex-1">
                             <label for="temoignage_photo_url_${index}" class="block text-xs font-bold text-slate-400 uppercase mb-1">Url de la photo</label>
                             <input type="text" id="temoignage_photo_url_${index}" name="temoignage_photo_url_${index}[]" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-mono text-blue-500" >    
@@ -552,6 +557,9 @@
                 formData.append(`temoignages[${index}][position]`,
                     item.querySelector(`[name="temoignage_position_${i}[]"]`)?.value ?? '');
 
+                formData.append(`temoignages[${index}][location]`,
+                    item.querySelector(`[name="temoignage_location_${i}[]"]`)?.value ?? '');
+                  
                 formData.append(`temoignages[${index}][photo_url]`,
                     item.querySelector(`[name="temoignage_photo_url_${i}[]"]`)?.value ?? '');
 

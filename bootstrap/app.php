@@ -15,6 +15,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo(function ($request) {
             return route('admin.login');
         });
+        $middleware->web(append: [
+            \App\Http\Middleware\TrackVisit::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

@@ -477,3 +477,31 @@ if (!function_exists('get_country_flag')) {
 }
 
 
+// Fonction pour recuperer le contenu de la page solutions
+if (!function_exists('get_solution_content')) {
+    function get_solution_content()
+    {
+        $page_key = 'solutions';
+
+        $solutions_mis_en_avant = \App\Models\Solution::where('mis_avant', true)->get();
+        $autres_solutions = \App\Models\Solution::where('mis_avant', false)->get();
+        $sections = \App\Models\SectionPage::where('page_key', $page_key)->get();
+        $accroche = \App\Models\Accroche::where('page_key', $page_key)->first();
+        $seo = \App\Models\Seo::where('page_key', $page_key)->first();
+        $banniere = \App\Models\BanniereHero::where('page_key', $page_key)->first();
+        $sectionItems = \App\Models\SectionItem::where('page_key', $page_key)->get();
+        $temoignages = \App\Models\SolutionTemoignage::limit(2)->get();
+        return [
+            'solutions_mis_en_avant' => $solutions_mis_en_avant,
+            'autres_solutions' => $autres_solutions,
+            'sections' => $sections,
+            'accroche' => $accroche,
+            'seo' => $seo,
+            'banniere' => $banniere,
+            'sectionItems' => $sectionItems,
+            'temoignages' => $temoignages,
+
+        ];
+    }
+}
+
