@@ -16,7 +16,8 @@ Route::get('/admin/', [App\Http\Controllers\Auth\LoginController::class, 'showLo
 Route::get('/admin/otp', [App\Http\Controllers\Auth\LoginController::class, 'showOtpForm'])->name('otp.form');
 // Route pour vérifier le code OTP
 Route::post('/admin/otp', [App\Http\Controllers\Auth\LoginController::class, 'verifyOtp'])->name('otp.verify');
-
+// Route pour renvoyer le code OTP
+Route::post('/admin/otp/resend', [App\Http\Controllers\Auth\LoginController::class, 'resendOtp'])->name('otp.resend');
 
 Route::middleware('auth')->prefix('/admin')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');

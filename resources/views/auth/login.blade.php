@@ -79,6 +79,13 @@
         {{-- Formulaire de connexion --}}
 
         <div class="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto">
+            <div class="mb-6 flex items-center justify-center">
+                @if(get_general_settings()->site_logo)
+                    <img src="{{ asset('/storage/' . get_general_settings()->site_logo) }}" alt="Logo SONEC Africa" class="max-h-12 max-w-48">
+                @else
+                    <span class="text-sonec-dark font-bold text-xl">SONEC</span>
+                @endif
+            </div>
             <h2 class="text-2xl font-bold text-center text-sonec-dark mb-6">Connexion à l'administration</h2>
             <form method="POST" class="space-y-4" action="{{ route('login') }}">
                 @csrf
