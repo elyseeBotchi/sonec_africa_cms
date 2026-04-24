@@ -24,9 +24,9 @@
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start mb-2">
                         <span class="text-slate-400 text-xs font-bold uppercase tracking-wider">Visiteurs (30j)</span>
-                        <span class="text-green-500 text-xs font-bold bg-green-50 px-2 py-1 rounded">+12%</span>
+                        <span class="text-green-500 text-xs font-bold bg-green-50 px-2 py-1 rounded">{{ $growthPercentage >= 0 ? '+' . $growthPercentage . '%' : '-'. $growthPercentage . '%' }}</span>
                     </div>
-                    <h3 class="text-3xl font-bold text-sonec-dark">{{ $totalVisites ?? 0 }}</h3>
+                    <h3 class="text-3xl font-bold text-sonec-dark">{{ $last30DaysVisites ?? 0 }}</h3>
                 </div>
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start mb-2">

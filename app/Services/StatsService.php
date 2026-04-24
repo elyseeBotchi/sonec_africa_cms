@@ -87,4 +87,20 @@
             return \App\Models\Candidature::where('created_at', '>=', now()->subDays(7))->count() + 
                 \App\Models\CandidatureSpontanee::where('created_at', '>=', now()->subDays(7))->count();
         }
+
+        // Pourcentage de croissance des visites par rapport au mois précédent
+        public function growthPercentage(): float
+        {
+            $lastMonth = $this->last30Days();
+            $previousMonth = $this->last30Days(30, 60);
+
+            $lastMonthTotal = array_sum(array_column($lastMonth, 'total'));
+            $previousMonthTotal = array_sum(array_column($previousMonth, 'total'));
+
+            if ($previousMonthTotal === 0) {
+                return $lastMonthTotal > 0 ? 100 : 0;
+            }
+
+            return (($lastMonthTotal - $previousMonthTotal) / $previousMonthTotal) * 100;
+        }
     }
