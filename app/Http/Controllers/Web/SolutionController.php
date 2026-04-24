@@ -20,13 +20,16 @@ class SolutionController extends Controller
     public function show(string $slug)
     {
         $solution = Solution::where('slug', $slug)->firstOrFail();
+        $heroSection = $solution->sections()->where('section_key', 'hero-section')->first();
 
         $solution->load([
-            'fonctionnalites',
-            'chiffres',
-            'partenaires',
-            'temoignages',
-            'sections',
+            'chiffres', 
+            'fonctionnalites', 
+            'partenaires', 
+            'accroche', 
+            'sections', 
+            'temoignages', 
+            'seo'
         ]);
 
         return view('web.pages.solutions.solution', compact('solution'));
