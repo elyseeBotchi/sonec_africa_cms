@@ -390,6 +390,8 @@
             if (newTextarea) {
                 tinymce.init({
                     selector: 'textarea',
+                    valid_elements: '*[*]',
+                    extended_valid_elements: 'i[class]',
                     ...tinyMCEConfig
                 });
             }

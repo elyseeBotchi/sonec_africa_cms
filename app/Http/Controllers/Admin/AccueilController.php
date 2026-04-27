@@ -4,11 +4,18 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAccueilContentRequest;
+use App\Services\LogActivite;
 use Illuminate\Http\Request;
 
 class AccueilController extends Controller
 {
-    //
+    protected $logActivite;
+
+    public function __construct(LogActivite $logActivite)
+    {
+        $this->logActivite = $logActivite;  
+    }
+
     public function index()
     {
         $carousels = \App\Models\Carousel::orderBy('position')->get();
@@ -224,6 +231,14 @@ class AccueilController extends Controller
         }
         
         
+        // Enregistrer l'activité
+        // $this->logActivite->custom('Mise à jour de la page d\'accueil', 'Contenu de la page d\'accueil', 'L\'administrateur a mis à jour le contenu de la page d\'accueil', [
+        //     'carousels_count' => count($validatedData['carousels'] ?? []),
+        //     'services_count' => count($validatedData['services'] ?? []),
+        //     'partenaires_count' => count($validatedData['partenaires'] ?? []),
+        //     'temoignages_count' => count($validatedData['temoignages'] ?? []),
+        //     'clients_count' => count($validatedData['clients'] ?? []),
+        // ]);
 
 
 

@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserOtp::class);
     }
+
+    public function activites()
+    {
+        return $this->hasMany(Activite::class);
+    }
 }
