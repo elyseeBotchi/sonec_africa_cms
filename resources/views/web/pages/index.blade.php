@@ -231,7 +231,7 @@
                                     @endif
                                 </div>
                                 <h3 class="text-xl font-bold text-sonec-dark mb-3">{{ $secteur->name }}</h3>
-                                <p class="text-gray-700">{{ $secteur->description }}</p>
+                                <p class="text-gray-700">{{ $secteur->subtitle_hero }}</p>
                             </div>
                         @endforeach
                     </div>
@@ -298,7 +298,7 @@
                                     </div>
                                     <h3 class="text-xl font-bold text-sonec-dark mb-3">{{ $article->title }}</h3>
                                     <p class="text-gray-700 mb-4">{!! $article->description_courte !!}</p>
-                                    <a href="#" class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
+                                    <a href="{{ route('web.actualites.show',$article->slug) }}" class="inline-flex items-center gap-2 text-sonec-green font-semibold hover:text-sonec-dark transition-colors">
                                         Lire la suite
                                         <i class="fas fa-arrow-right"></i>
                                     </a>

@@ -319,6 +319,16 @@
             `;
             container.appendChild(temoignageItem);
             attachTemoignagePhotoPreview(temoignageItem.querySelector('input[type="file"]'));
+
+            const newTextarea = temoignageItem.querySelector('textarea');
+            if (newTextarea) {
+                tinymce.init({
+                    selector: 'textarea',
+                    valid_elements: '*[*]',
+                    extended_valid_elements: 'i[class]',
+                    ...tinyMCEConfig
+                });
+            }
         }
 
         function attachTemoignagePhotoPreview(input) {
@@ -552,8 +562,8 @@
                         btn.classList.remove('opacity-75', 'cursor-not-allowed');
                         statusBadge.classList.add('hidden');
 
-                        window.location.href = '{{ route("solutions.index") }}';
-                        // window.location.reload();
+                        // window.location.href = '{{ route("solutions.index") }}';
+                        window.location.reload();
                     }, 1200);
                 } else {
                     // showToastError();

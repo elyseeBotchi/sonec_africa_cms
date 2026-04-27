@@ -39,8 +39,8 @@ if (!function_exists('get_accueil_content')) {
         $clients = \App\Models\Client::where('page_key', 'accueil')->orderBy('created_at', 'desc')->get();
         $temoignages = \App\Models\Temoignage::where('page_key', 'accueil')->orderBy('created_at', 'desc')->get();
         $partenaires = \App\Models\Partenaire::where('page_key', 'accueil')->orderBy('created_at', 'desc')->get();  
-        $secteurs_expertise = \App\Models\SecteurExpertise::where('page_key', 'secteurs_expertise')->where('mis_avant', true)->orderBy('created_at', 'desc')->limit(6)->get();
-        $solutions = \App\Models\Solution::with('fonctionnalites')->where('page_key', 'solutions')->where('mis_avant', true)->orderBy('created_at', 'desc')->limit(6)->get();
+        $secteurs_expertise = \App\Models\SecteurExpertise::where('page_key', 'secteur_expertise')->where('mis_avant', true)->orderBy('created_at', 'asc')->limit(6)->get();
+        $solutions = \App\Models\Solution::with('fonctionnalites')->where('page_key', 'solutions')->where('mis_avant', true)->orderBy('created_at', 'asc')->limit(6)->get();
         $articles = \App\Models\Article::where('page_key', 'actualites')->where('a_la_une', true)->orderBy('created_at', 'desc')->limit(6)->get();
 
         return [

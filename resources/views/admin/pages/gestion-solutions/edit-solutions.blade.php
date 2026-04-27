@@ -370,6 +370,16 @@
             `;
             container.appendChild(temoignageItem);
             attachTemoignagePhotoPreview(temoignageItem.querySelector('input[type="file"]'));
+
+            const newTextarea = temoignageItem.querySelector('textarea');
+            if (newTextarea) {
+                tinymce.init({
+                    selector: 'textarea',
+                    valid_elements: '*[*]',
+                    extended_valid_elements: 'i[class]',
+                    ...tinyMCEConfig
+                });
+            }
         }
 
         function attachTemoignagePhotoPreview(input) {
@@ -460,6 +470,8 @@
             if (typeof tinymce !== 'undefined') {
                 tinymce.init({
                     selector: `#personnalisation_content_${index}`,
+                    valid_elements: '*[*]',
+                    extended_valid_elements: 'i[class]',
                     ...tinyMCEConfig
                 });
             }
@@ -643,10 +655,10 @@
             btn.disabled = true;
             btn.classList.add('opacity-75', 'cursor-not-allowed');
 
-            console.log('FormData entries:');
-            for (let pair of formData.entries()) {
-                console.log(pair[0]+ ': ' + pair[1]);
-            }
+            // console.log('FormData entries:');
+            // for (let pair of formData.entries()) {
+            //     console.log(pair[0]+ ': ' + pair[1]);
+            // }
 
             formData.append('_method', 'PUT');
 
@@ -678,8 +690,8 @@
                         btn.classList.remove('opacity-75', 'cursor-not-allowed');
                         statusBadge.classList.add('hidden');
 
-                        window.location.href = '{{ route("solutions.index") }}';
-                        // window.location.reload();
+                        // window.location.href = '{{ route("solutions.index") }}';
+                        window.location.reload();
                     }, 1200);
                 } else {
                     // showToastError();

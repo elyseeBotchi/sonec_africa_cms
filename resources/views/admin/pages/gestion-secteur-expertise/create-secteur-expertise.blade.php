@@ -406,8 +406,11 @@
                         btn.classList.remove('opacity-75', 'cursor-not-allowed');
                         statusBadge.classList.add('hidden');
 
-                        window.location.href = '{{ route("secteur-expertise.index") }}';
+
+                        // window.location.href = '{{ route("secteur-expertise.index") }}';
                         // window.location.reload();
+                        // Réinitialiser le formulaire
+                        document.getElementById('secteur-expertise-form').reset();
                     }, 1200);
                 } else {
                     // showToastError();

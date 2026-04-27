@@ -65,7 +65,7 @@
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
                                 </div>
-                                <p class="text-gray-700 mb-6 italic">"{!! $temoignage->content !!}"</p>
+                                {!! $temoignage->content !!}
                                 <div class="flex items-center gap-4">
                                     <img src="{{ $temoignage->author_photo_url ?? asset('storage/'.$temoignage->author_photo) }}" alt="{{ $temoignage->author_name }}" class="w-14 h-14 rounded-full object-cover">
                                     <div>

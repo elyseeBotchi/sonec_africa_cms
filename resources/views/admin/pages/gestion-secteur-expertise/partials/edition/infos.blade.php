@@ -42,7 +42,7 @@
     {{-- subtitle --}}
     <div class="mt-6">
         <label for="secteur_expertise_subtitle" class="block text-xs font-bold text-slate-400 uppercase mb-1">Sous-titre du secteur d'expertise</label>
-        <input type="text" id="secteur_expertise_subtitle" name="secteur_expertise_subtitle" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="Sous-titre du secteur d'expertise" value="{{ $secteurExpertise->subtitle ?? '' }}">
+        <input type="text" id="secteur_expertise_subtitle" name="secteur_expertise_subtitle" class="w-full p-3 bg-slate-50 border border-slate-200 rounded-xl font-normal text-sm" placeholder="Sous-titre du secteur d'expertise" value="{{ $secteurExpertise->subtitle_hero ?? '' }}">
     </div>
     <div class="mt-6">
         <label for="secteur_expertise_title_hero" class="block text-xs font-bold text-slate-400 uppercase mb-1">Titre de la section hero</label>
